@@ -15,17 +15,17 @@ public class AddWeapon { ;
         Graphics2D g = (Graphics2D) gr;
         g.setColor(Color.BLACK);
         g.setStroke(new BasicStroke(3));
-        if(weaponQuantity.getNumber() >= 2){
-            g.drawLine(startPosX + 65, startPosY + 5, startPosX + 69, startPosY - 5);
-            g.drawLine(startPosX + 65, startPosY + 55, startPosX + 69, startPosY + 65);
-        }
-        if((weaponQuantity.getNumber() >= 4)){
-            g.drawLine(startPosX + 69, startPosY + 5, startPosX + 73, startPosY - 5);
-            g.drawLine(startPosX + 69, startPosY + 55, startPosX + 73, startPosY + 65);
-        }
-        if((weaponQuantity.getNumber() >= 6)){
-            g.drawLine(startPosX + 73, startPosY + 5, startPosX + 77, startPosY - 5);
-            g.drawLine(startPosX + 73, startPosY + 55, startPosX + 77, startPosY + 65);
+        switch(weaponQuantity){
+            case Six:
+                g.drawLine(startPosX + 73, startPosY + 5, startPosX + 77, startPosY - 5);
+                g.drawLine(startPosX + 73, startPosY + 55, startPosX + 77, startPosY + 65);
+            case Four:
+                g.drawLine(startPosX + 69, startPosY + 5, startPosX + 73, startPosY - 5);
+                g.drawLine(startPosX + 69, startPosY + 55, startPosX + 73, startPosY + 65);
+            case Two:
+                g.drawLine(startPosX + 65, startPosY + 5, startPosX + 69, startPosY - 5);
+                g.drawLine(startPosX + 65, startPosY + 55, startPosX + 69, startPosY + 65);
+                break;
         }
         g.setColor(dopColor);
         g.fillRect(startPosX + 60, startPosY + 5, 20, 15);
