@@ -4,9 +4,8 @@ import java.awt.*;
 
 import static com.company.WeaponEnum.*;
 
-public class AddWeapon implements IWeapon{ ;
+public class TorpedWeapon implements IWeapon{
     private WeaponEnum weaponQuantity;
-
     @Override
     public void setWeaponNumber(int count) {
         if(count == Two.getNumber())weaponQuantity = Two;
@@ -19,9 +18,13 @@ public class AddWeapon implements IWeapon{ ;
         return weaponQuantity.getNumber();
     }
 
-    public void drawWeapons(Graphics gr, Color dopColor, int startPosX, int startPosY){
+    @Override
+    public void drawWeapons(Graphics gr, Color dopColor, int startPosX, int startPosY) {
         Graphics2D g = (Graphics2D) gr;
-        g.setColor(Color.BLACK);
+        g.setColor(dopColor);
+        g.fillRect(startPosX + 60, startPosY + 5, 20, 15);
+        g.fillRect(startPosX + 60, startPosY + 40, 20, 15);
+        g.setColor(Color.darkGray);
         g.setStroke(new BasicStroke(3));
         switch(weaponQuantity){
             case Six:
@@ -35,12 +38,10 @@ public class AddWeapon implements IWeapon{ ;
                 g.drawLine(startPosX + 65, startPosY + 55, startPosX + 69, startPosY + 65);
                 break;
         }
-        g.setColor(dopColor);
-        g.fillRect(startPosX + 60, startPosY + 5, 20, 15);
-        g.fillRect(startPosX + 60, startPosY + 40, 20, 15);
         g.setColor(Color.BLACK);
+        g.drawLine(startPosX + 65, startPosY - 3, startPosX + 83, startPosY - 3);
+        g.drawLine(startPosX + 65, startPosY + 63, startPosX + 83, startPosY + 63);
         g.drawRect(startPosX + 60, startPosY + 5, 20, 15);
         g.drawRect(startPosX + 60, startPosY + 40, 20, 15);
     }
-
 }

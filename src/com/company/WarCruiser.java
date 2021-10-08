@@ -21,7 +21,7 @@ public class WarCruiser extends CruiserSimp{
     public boolean isInit;
 
     //поле ДопКласса
-    AddWeapon weapons;
+    IWeapon weapons;
     public boolean Artillery;
 
     public int getMaxSpeed() {
@@ -84,8 +84,19 @@ public class WarCruiser extends CruiserSimp{
                       boolean locator, boolean helicopterStation, boolean artillery, int cruiserWidth, int cruiserHeight) {
         super(maxSpeed, weight, mainColor, cruiserWidth, cruiserHeight);
         if(artillery){
-            weapons = new AddWeapon();
-            weapons.setCount((rnd.nextInt() % 3 + 1) * 2);
+            int ID = Math.abs(rnd.nextInt()) % 3;
+            switch (ID){
+                case 0:
+                    weapons = new AddWeapon();
+                    break;
+                case 1:
+                    weapons = new ZenitArtillery();
+                    break;
+                case 2:
+                    weapons = new TorpedWeapon();
+                    break;
+            }
+            weapons.setWeaponNumber((rnd.nextInt() % 3 + 1) * 2);
         }
         DopColor = dopColor;
         Locator = locator;
