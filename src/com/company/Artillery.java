@@ -4,7 +4,7 @@ import java.awt.*;
 
 import static com.company.WeaponEnum.*;
 
-public class AddWeapon implements IWeapon{ ;
+public class Artillery implements IWeapon{ ;
     private WeaponEnum weaponQuantity;
 
     @Override

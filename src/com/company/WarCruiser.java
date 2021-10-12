@@ -87,7 +87,7 @@ public class WarCruiser extends CruiserSimp{
             int ID = Math.abs(rnd.nextInt()) % 3;
             switch (ID){
                 case 0:
-                    weapons = new AddWeapon();
+                    weapons = new Artillery();
                     break;
                 case 1:
                     weapons = new ZenitArtillery();
