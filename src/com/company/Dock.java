@@ -27,7 +27,7 @@ public class Dock<T extends ICruiser> extends JPanel {
     /// <summary>
     /// Конструктор
     /// </summary>
-    private final int _parkPlacesWidth = 3;
+    private final int _parkPlacesWidth = 6;
     /// <param name="picWidth">Рамзер парковки - ширина</param>
     /// <param name="picHeight">Рамзер парковки - высота</param>
     public Dock(int picWidth, int picHeight)
