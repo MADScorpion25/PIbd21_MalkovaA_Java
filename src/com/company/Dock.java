@@ -69,7 +69,6 @@ public class Dock<T extends ICruiser> extends JPanel {
     public T Minus(Dock<T> p, int index)
     {
         T removedCruiser;
-
         if (index > -1 && index < p._places.length && p._places[index] != null)
         {
             removedCruiser = p._places[index];
@@ -102,7 +101,7 @@ public class Dock<T extends ICruiser> extends JPanel {
         for (int i = 0; i < _places.length; i++)
         {
             if(_places[i] != null){
-                _places[i].SetPosition((i % _parkPlacesWidth) * (_placeSizeWidth + 10), (i / _parkPlacesWidth) * _placeSizeHeight + 10, pictureWidth, pictureHeight);
+                _places[i].SetPosition((i % _parkPlacesWidth) * (_placeSizeWidth + 8), (i / _parkPlacesWidth) * _placeSizeHeight + 10, pictureWidth, pictureHeight);
             }
         }
     }

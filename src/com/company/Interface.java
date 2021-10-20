@@ -63,7 +63,7 @@ public class Interface extends Frame {
         buttons.setLayout(null);
 
         cruiser = removedCruiser;
-        cruiser.setBounds(0, 0, 1500, 500);
+        cruiser.setBounds(0, 0, 1200, 500);
         //cruiser.setBackground(Color.GRAY);
         cruiser.setLayout(null);
         cruiser.setBackground(new Color(240, 240, 240));

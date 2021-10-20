@@ -74,7 +74,7 @@ public class FormDock extends Frame {
                     mainColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
                     cruiser = new CruiserSimp(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), mainColor, 180, 60);
                     elGroup.add(cruiser);
-                    cruiser.setBounds(0, 0, 1500, 500);
+                    cruiser.setBounds(0, 0, 1200, 500);
                     cruiser.setBackground(new Color(0,0,0,0));
                     //cruiser.setBackground(Color.GRAY);
                     cruiser.setLayout(null);
@@ -85,7 +85,7 @@ public class FormDock extends Frame {
                     addColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
                     cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), mainColor, addColor, true, true, true, 180, 60);
                     elGroup.add(cruiser);
-                    cruiser.setBounds(0, 0, 1500, 500);
+                    cruiser.setBounds(0, 0, 1200, 500);
                     cruiser.setBackground(new Color(0,0,0,0));
                     //cruiser.setBackground(Color.GRAY);
                     cruiser.setLayout(null);
@@ -94,9 +94,10 @@ public class FormDock extends Frame {
                 case "RemoveCruiser":
                     Vehicle cruiser = (Vehicle) dock.Minus(dock, Integer.parseInt(text.getText()));
                     Interface removedCruiser = new Interface(cruiser);
+                    elGroup.remove(cruiser);
+                    cruiser = null;
                     break;
             }
         }
-
     }
 }
