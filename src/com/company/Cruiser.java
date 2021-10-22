@@ -153,5 +153,4 @@ public class Cruiser extends Vehicle {
         g.fillRect(startPosX - 5, startPosY + 10, 5, 17);
         g.fillRect(startPosX - 5, startPosY + 33, 5, 17);
     }
-
 }

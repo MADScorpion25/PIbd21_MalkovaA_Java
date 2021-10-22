@@ -6,7 +6,6 @@ public enum WeaponEnum {
     WeaponEnum(int number){
         this.number = number;
     }
-
     public int getNumber() {
         return number;
     }

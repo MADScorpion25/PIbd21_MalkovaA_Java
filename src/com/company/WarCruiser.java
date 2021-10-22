@@ -18,7 +18,6 @@ public class WarCruiser extends Cruiser{
     /// Признак наличия артиллерийского орудия
     /// </summary>
     public boolean isInit;
-
     //поле ДопКласса
     IWeapon weapons;
     public boolean Artillery;

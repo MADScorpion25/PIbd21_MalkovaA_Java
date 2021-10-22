@@ -1,6 +1,5 @@
 package com.company;
 import java.awt.*;
-
 import static com.company.WeaponEnum.*;
 
 public class ZenitArtillery implements IWeapon {
@@ -49,7 +48,6 @@ public class ZenitArtillery implements IWeapon {
                 g.setStroke(new BasicStroke(3));
                 break;
         }
-
         g.setColor(Color.BLACK);
         g.drawRect(startPosX + 60, startPosY + 5, 20, 15);
         g.drawRect(startPosX + 60, startPosY + 40, 20, 15);

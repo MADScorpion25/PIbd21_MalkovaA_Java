@@ -113,7 +113,6 @@ public class CruiserMove extends JComponent {
                     break;
             }
         }
-
     }
 }
 

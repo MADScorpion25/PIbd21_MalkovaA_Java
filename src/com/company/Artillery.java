@@ -4,7 +4,6 @@ import static com.company.WeaponEnum.*;
 
 public class Artillery implements IWeapon{ ;
     private WeaponEnum weaponQuantity;
-
     @Override
     public void setWeaponNumber(int count) {
         if(count == Two.getNumber())weaponQuantity = Two;
