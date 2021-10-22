@@ -5,22 +5,22 @@ public class WarCruiser extends Cruiser{
     /// <summary>
     /// Дополнительный цвет
     /// </summary>
-    public Color DopColor;
+    private Color DopColor;
     /// <summary>
     /// Признак локатора
     /// </summary>
-    public boolean Locator;
+    private  boolean Locator;
     /// <summary>
     /// Признак наличия вертолетной площадки
     /// </summary>
-    public boolean HelicopterStation;
+    private  boolean HelicopterStation;
     /// <summary>
     /// Признак наличия артиллерийского орудия
     /// </summary>
-    public boolean isInit;
+    private boolean isInit;
     //поле ДопКласса
     IWeapon weapons;
-    public boolean Artillery;
+    private boolean Artillery;
 
     public int getMaxSpeed() {
         return MaxSpeed;
