@@ -129,6 +129,5 @@ public class WarCruiser extends Cruiser{
             g.drawOval(startPosX + 10, startPosY + 15, 30, 30);
         }
     }
-
 }
 
