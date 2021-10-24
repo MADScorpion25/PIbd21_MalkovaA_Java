@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class CruiserMove extends JPanel {
+public class FormCruiser extends JPanel {
     private JButton createSimpCruiser, createWarCruiser, buttonDown, buttonUp, buttonRight, buttonLeft;
     private JFrame cruiserWindow;
     private JPanel buttons;
@@ -13,7 +13,7 @@ public class CruiserMove extends JPanel {
     private Container elGroup;
     Random rnd = new Random();
 
-    public CruiserMove() {
+    public FormCruiser() {
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cruiserWindow.setTitle("Cruiser Moving");

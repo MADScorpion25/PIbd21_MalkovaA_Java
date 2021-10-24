@@ -4,7 +4,7 @@ import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
-        CruiserMove CruiserMoving = new CruiserMove();
+        FormCruiser CruiserMoving = new FormCruiser();
     }
 }
 
