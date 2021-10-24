@@ -77,8 +77,13 @@ public class DockField extends JPanel{
                     cruiser = new Cruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), mainColor, 180, 60);
                     cruiser.setLayout(null);
                     index = dock.Plus(dock, cruiser);
-                    cruiser.SetPosition((index % dock.get_placeSizeWidth() * dock.get_placeSizeWidth()) + 5, (index / dock.get_placeSizeWidth()) * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
-                    dock.add(cruiser);
+                    if(index > -1){
+                        cruiser.SetPosition((index % dock.get_placeSizeWidth() * dock.get_placeSizeWidth()) + 5, (index / dock.get_placeSizeWidth()) * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
+                        dock.add(cruiser);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Dock is full!");
+                    }
                     break;
                 case "CreateWarCruiser":
                     mainColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
@@ -86,11 +91,22 @@ public class DockField extends JPanel{
                     cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), mainColor, addColor, true, true, true, 180, 60);
                     cruiser.setLayout(null);
                     index = dock.Plus(dock, cruiser);
-                    dock.add(cruiser);
+                    if(index > -1){
+                        cruiser.SetPosition((index % dock.get_placeSizeWidth() * dock.get_placeSizeWidth()) + 5, (index / dock.get_placeSizeWidth()) * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
+                        dock.add(cruiser);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Dock is full!");
+                    }
                     break;
                 case "RemoveCruiser":
                     Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(text.getText()));
-                    CruiserMove removedCruiser = new CruiserMove(cruiser);
+                    if(cruiser != null){
+                        CruiserMove removedCruiser = new CruiserMove(cruiser);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "This dock place is empty");
+                    }
                     break;
             }
             Draw();
