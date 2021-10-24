@@ -3,7 +3,7 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 
-public class Dock<T extends ITransport> extends JPanel {
+public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     /// <summary>
     /// Массив объектов, которые храним
     /// </summary>
@@ -45,7 +45,7 @@ public class Dock<T extends ITransport> extends JPanel {
     /// <param name="p">Парковка</param>
     /// <param name="cruiser">Добавляемый крейсер</param>
     /// <returns></returns>
-    public int Plus(Dock<T> p, T cruiser)
+    public int Plus(Dock<T, P> p, T cruiser)
     {
         for(int i = 0; i < p._places.length; i++)
         {
@@ -64,7 +64,7 @@ public class Dock<T extends ITransport> extends JPanel {
     /// <param name="p">Парковка</param>
     /// <param name="index">Индекс места, с которого пытаемся извлечь объект</param>
     /// <returns></returns>
-    public T Minus(Dock<T> p, int index)
+    public T Minus(Dock<T, P> p, int index)
     {
         T removedCruiser;
 
@@ -77,6 +77,31 @@ public class Dock<T extends ITransport> extends JPanel {
         return null;
     }
 
+    public boolean LessOrEqual(Dock<T, P> p, int number){
+        int indexSum = 0;
+        for(int i = 0; i < p._places.length; i++)
+        {
+           if(_places[i] != null){
+               indexSum += i;
+           }
+        }
+        return indexSum <= number;
+    }
+
+    public boolean MoreOrEqual(Dock<T, P> p, int number){
+        int indexSum = 0;
+        for(int i = 0; i < p._places.length; i++)
+        {
+            if(_places[i] != null){
+                indexSum += i;
+            }
+        }
+        return indexSum >= number;
+    }
+    public int get_parkPlacesWidth() {
+        return _parkPlacesWidth;
+    }
+
     public int get_placeSizeWidth() {
         return _placeSizeWidth;
     }
@@ -84,7 +109,6 @@ public class Dock<T extends ITransport> extends JPanel {
     public int get_placeSizeHeight() {
         return _placeSizeHeight;
     }
-
     /// <summary>
     /// Метод отрисовки разметки парковочных мест
     /// </summary>
@@ -103,6 +127,7 @@ public class Dock<T extends ITransport> extends JPanel {
     {
         Graphics2D g = (Graphics2D) gr;
         g.setStroke(new BasicStroke(3));
+        g.setColor(Color.BLACK);
         for (int i = 0; i < pictureWidth / _placeSizeWidth; i++)
         {
             for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j)

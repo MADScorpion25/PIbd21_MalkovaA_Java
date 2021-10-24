@@ -14,7 +14,7 @@ public class CruiserMove extends JPanel {
     Random rnd = new Random();
 
     public CruiserMove(Cruiser cruiser) {
-        this.cruiser = cruiser;
+        this.cruiser = (Vehicle) cruiser;
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cruiserWindow.setTitle("Cruiser Moving");
@@ -61,9 +61,8 @@ public class CruiserMove extends JPanel {
 
         cruiser.setBounds(0, 0, 1500, 500);
         cruiser.setLayout(null);
-        cruiser.setBackground(new Color(240, 240, 240));
+        cruiser.SetPosition(100, 100, 1500, 500);
         elGroup.add(cruiser);
-
 
         buttons.setLayout(null);
         elGroup.add(buttons);
@@ -95,6 +94,7 @@ public class CruiserMove extends JPanel {
             Draw();
         }
         public void Draw(){
+            cruiser.getGraphics().clearRect(0,0,1500, 500);
             cruiser.DrawTransport(cruiser.getGraphics());
         }
     }

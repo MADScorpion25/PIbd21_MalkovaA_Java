@@ -110,7 +110,6 @@ public class Cruiser extends Vehicle {
 
     @Override
     public void DrawTransport(Graphics gr) {
-        //gr.clearRect(0,0,1500, 500);
         Graphics2D g = (Graphics2D) gr;
         g.setColor(Color.BLACK);
         // теперь отрисуем основной кузов крейсера

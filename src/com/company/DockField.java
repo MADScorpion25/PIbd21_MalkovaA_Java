@@ -16,7 +16,7 @@ public class DockField extends JPanel{
     private Container elGroup;
     private JFormattedTextField removeIdInput;
     private JTextField text;
-    private Dock<ITransport> dock;
+    private Dock<ITransport, IWeapon> dock;
     Random rnd = new Random();
     public DockField() throws ParseException {
         cruiserWindow = new JFrame();
@@ -74,7 +74,7 @@ public class DockField extends JPanel{
             switch (e.getActionCommand()) {
                 case "CreateSimpCruiser":
                     mainColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
-                    cruiser = new Cruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), mainColor, 180, 60);
+                    cruiser = new Cruiser(Math.abs(rnd.nextInt() % 20), Math.abs(rnd.nextInt() % 20), mainColor, 180, 60);
                     cruiser.setLayout(null);
                     index = dock.Plus(dock, cruiser);
                     if(index > -1){
@@ -88,11 +88,11 @@ public class DockField extends JPanel{
                 case "CreateWarCruiser":
                     mainColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
                     addColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
-                    cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), mainColor, addColor, true, true, true, 180, 60);
+                    cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 20), Math.abs(rnd.nextInt() % 20), mainColor, addColor, true, true, true, 180, 60);
                     cruiser.setLayout(null);
                     index = dock.Plus(dock, cruiser);
                     if(index > -1){
-                        cruiser.SetPosition((index % dock.get_placeSizeWidth() * dock.get_placeSizeWidth()) + 5, (index / dock.get_placeSizeWidth()) * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
+                        cruiser.SetPosition((index % dock.get_parkPlacesWidth() * dock.get_placeSizeWidth()) + 5, index / 6 * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
                         dock.add(cruiser);
                     }
                     else{
