@@ -2,7 +2,7 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class Vehicle extends JPanel implements ICruiser {
+public abstract class Vehicle extends JPanel implements ITransport {
     /// <summary>
     /// Левая координата отрисовки крейсера
     /// </summary>
@@ -65,6 +65,7 @@ public abstract class Vehicle extends JPanel implements ICruiser {
         startPosY = y;
         pictureWidth = width;
         pictureHeight = height;
+        repaint();
     }
     public abstract void MoveTransport(Direction direction);
 }

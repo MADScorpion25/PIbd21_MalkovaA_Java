@@ -1,5 +1,4 @@
 package com.company;
-
 import java.awt.*;
 import java.util.Random;
 
@@ -67,7 +66,6 @@ public class Cruiser extends Vehicle {
     public int getCruiserHeight() {
         return cruiserHeight;
     }
-
     /// <summary>
     /// Инициализация свойств
     /// </summary>
@@ -78,9 +76,8 @@ public class Cruiser extends Vehicle {
         isInit = true;
         this.pictureWidth= cruiserWidth;
         this.pictureHeight = cruiserHeight;
+        repaint();
     }
-
-
     /// <summary>
     /// Изменение направления пермещения
     /// </summary>

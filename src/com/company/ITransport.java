@@ -1,6 +1,6 @@
 package com.company;
 
-public interface ICruiser {
+public interface ITransport {
     /// <summary>
     /// Установка позиции
     /// </summary>
@@ -15,4 +15,3 @@ public interface ICruiser {
     /// <param name="direction">Направление</param>
     void MoveTransport(Direction direction);
 }
-

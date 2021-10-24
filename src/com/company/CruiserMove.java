@@ -27,7 +27,6 @@ public class CruiserMove extends JComponent {
         createSimpCruiser.setBounds(900, 650, 100, 50);
         buttons.add(createSimpCruiser);
 
-
         createWarCruiser = new JButton("Create War Cruiser");
         createWarCruiser.setActionCommand("CreateWarCruiser");
         createWarCruiser.setBounds(800, 650, 100, 50);
@@ -115,4 +114,3 @@ public class CruiserMove extends JComponent {
         }
     }
 }
-
