@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class CruiserMove extends JPanel {
+public class FormCruiser extends JPanel {
     private JButton buttonDown, buttonUp, buttonRight, buttonLeft;
     private JFrame cruiserWindow;
     private JPanel buttons;
@@ -13,7 +13,7 @@ public class CruiserMove extends JPanel {
     private Container elGroup;
     Random rnd = new Random();
 
-    public CruiserMove(Cruiser cruiser) {
+    public FormCruiser(Cruiser cruiser) {
         this.cruiser = (Vehicle) cruiser;
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

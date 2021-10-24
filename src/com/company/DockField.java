@@ -102,7 +102,7 @@ public class DockField extends JPanel{
                 case "RemoveCruiser":
                     Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(text.getText()));
                     if(cruiser != null){
-                        CruiserMove removedCruiser = new CruiserMove(cruiser);
+                        FormCruiser removedCruiser = new FormCruiser(cruiser);
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "This dock place is empty");
