@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class CruiserMove extends JComponent {
+public class CruiserMove extends JPanel {
     private JButton createSimpCruiser, createWarCruiser, buttonDown, buttonUp, buttonRight, buttonLeft;
     private JFrame cruiserWindow;
     private JPanel buttons;
@@ -81,22 +81,20 @@ public class CruiserMove extends JComponent {
         cruiserWindow.setVisible(true);
     }
 
-    public class ButtonActions extends JFrame implements ActionListener {
+    public class ButtonActions extends JPanel implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
                 case "CreateSimpCruiser":
                     cruiser = new Cruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, 180, 60);
-                    elGroup.add(cruiser);
                     cruiser.setBounds(0, 0, 1500, 500);
-                    cruiser.setLayout(null);
-                    cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
+                    cruiser.SetPosition(10, 10, cruiser.getWidth(), cruiser.getHeight());
+                    elGroup.add(cruiser);
                     break;
                 case "CreateWarCruiser":
                     cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, Color.lightGray, true, true, true, 180, 60);
-                    elGroup.add(cruiser);
                     cruiser.setBounds(0, 0, 1500, 500);
-                    cruiser.setLayout(null);
                     cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
+                    elGroup.add(cruiser);
                     break;
                 case "Down":
                     cruiser.MoveTransport(Direction.Down);
@@ -111,6 +109,10 @@ public class CruiserMove extends JComponent {
                     cruiser.MoveTransport(Direction.Left);
                     break;
             }
+            Draw();
+        }
+        public void Draw(){
+            cruiser.DrawTransport(cruiser.getGraphics());
         }
     }
 }

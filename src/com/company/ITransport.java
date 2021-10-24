@@ -1,5 +1,7 @@
 package com.company;
 
+import java.awt.*;
+
 public interface ITransport {
     /// <summary>
     /// Установка позиции
@@ -14,4 +16,5 @@ public interface ITransport {
     /// </summary>
     /// <param name="direction">Направление</param>
     void MoveTransport(Direction direction);
+    void DrawTransport(Graphics gr);
 }

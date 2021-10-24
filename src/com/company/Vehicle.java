@@ -65,8 +65,9 @@ public abstract class Vehicle extends JPanel implements ITransport {
         startPosY = y;
         pictureWidth = width;
         pictureHeight = height;
-        repaint();
     }
     public abstract void MoveTransport(Direction direction);
+
+    public abstract void DrawTransport(Graphics g);
 }
 

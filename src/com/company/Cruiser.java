@@ -29,8 +29,6 @@ public class Cruiser extends Vehicle {
     /// </summary>
     public Color DopColor;
 
-    public boolean isInit;
-
     public int getMaxSpeed() {
         return MaxSpeed;
     }
@@ -73,10 +71,8 @@ public class Cruiser extends Vehicle {
         MaxSpeed = maxSpeed;
         Weight = weight;
         MainColor = mainColor;
-        isInit = true;
         this.pictureWidth= cruiserWidth;
         this.pictureHeight = cruiserHeight;
-        repaint();
     }
     /// <summary>
     /// Изменение направления пермещения
@@ -110,16 +106,11 @@ public class Cruiser extends Vehicle {
                 }
                 break;
         }
-        repaint();
     }
-    /// <summary>
-    /// Отрисовка крейсера
-    /// </summary>
-    /// <param name="g"></param>
+
     @Override
-    public void paintComponent(Graphics gr) {
-        super.paintComponent(gr);
-        if (!isInit) return;
+    public void DrawTransport(Graphics gr) {
+        gr.clearRect(0,0,1500, 500);
         Graphics2D g = (Graphics2D) gr;
         g.setColor(Color.BLACK);
         // теперь отрисуем основной кузов крейсера
