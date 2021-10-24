@@ -1,6 +1,8 @@
 package com.company;
 
-public interface ICruiser {
+import java.awt.*;
+
+public interface ITransport {
     /// <summary>
     /// Установка позиции
     /// </summary>
@@ -14,5 +16,6 @@ public interface ICruiser {
     /// </summary>
     /// <param name="direction">Направление</param>
     void MoveTransport(Direction direction);
+    void DrawTransport(Graphics g);
 }
 

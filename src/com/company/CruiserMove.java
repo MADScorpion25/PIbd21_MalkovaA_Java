@@ -5,33 +5,23 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class CruiserMove extends JComponent {
-    private JButton createSimpCruiser, createWarCruiser, buttonDown, buttonUp, buttonRight, buttonLeft;
+public class CruiserMove extends JPanel {
+    private JButton buttonDown, buttonUp, buttonRight, buttonLeft;
     private JFrame cruiserWindow;
     private JPanel buttons;
-    Vehicle cruiser;
-    Container elGroup;
+    private Vehicle cruiser;
+    private Container elGroup;
     Random rnd = new Random();
 
-    public CruiserMove() {
+    public CruiserMove(Cruiser cruiser) {
+        this.cruiser = cruiser;
         cruiserWindow = new JFrame();
-        cruiserWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cruiserWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cruiserWindow.setTitle("Cruiser Moving");
         cruiserWindow.setSize(1500, 800);
 
         elGroup = cruiserWindow.getContentPane();
         buttons = new JPanel();
-
-        createSimpCruiser = new JButton("Create Simple Cruiser");
-        createSimpCruiser.setActionCommand("CreateSimpCruiser");
-        createSimpCruiser.setBounds(900, 650, 100, 50);
-        buttons.add(createSimpCruiser);
-
-
-        createWarCruiser = new JButton("Create War Cruiser");
-        createWarCruiser.setActionCommand("CreateWarCruiser");
-        createWarCruiser.setBounds(800, 650, 100, 50);
-        buttons.add(createWarCruiser);
 
         ImageIcon arrowDown = new ImageIcon("src/source/buttondown.jpg");
         Image imgTmp = arrowDown.getImage();
@@ -69,12 +59,16 @@ public class CruiserMove extends JComponent {
         buttonLeft.setBounds(1120, 600, 70, 70);
         buttons.add(buttonLeft);
 
+        cruiser.setBounds(0, 0, 1500, 500);
+        cruiser.setLayout(null);
+        cruiser.setBackground(new Color(240, 240, 240));
+        elGroup.add(cruiser);
+
+
         buttons.setLayout(null);
         elGroup.add(buttons);
 
         ActionListener actionListener = new ButtonActions();
-        createSimpCruiser.addActionListener(actionListener);
-        createWarCruiser.addActionListener(actionListener);
         buttonDown.addActionListener(actionListener);
         buttonUp.addActionListener(actionListener);
         buttonRight.addActionListener(actionListener);
@@ -82,23 +76,9 @@ public class CruiserMove extends JComponent {
         cruiserWindow.setVisible(true);
     }
 
-    public class ButtonActions extends JFrame implements ActionListener {
+    public class ButtonActions extends JPanel implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
-                case "CreateSimpCruiser":
-                    cruiser = new Cruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, 180, 60);
-                    elGroup.add(cruiser);
-                    cruiser.setBounds(0, 0, 1500, 500);
-                    cruiser.setLayout(null);
-                    cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
-                    break;
-                case "CreateWarCruiser":
-                    cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, Color.lightGray, true, true, true, 180, 60);
-                    elGroup.add(cruiser);
-                    cruiser.setBounds(0, 0, 1500, 500);
-                    cruiser.setLayout(null);
-                    cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
-                    break;
                 case "Down":
                     cruiser.MoveTransport(Direction.Down);
                     break;
@@ -112,7 +92,10 @@ public class CruiserMove extends JComponent {
                     cruiser.MoveTransport(Direction.Left);
                     break;
             }
+            Draw();
+        }
+        public void Draw(){
+            cruiser.DrawTransport(cruiser.getGraphics());
         }
     }
 }
-

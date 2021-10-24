@@ -17,7 +17,6 @@ public class WarCruiser extends Cruiser{
     /// <summary>
     /// Признак наличия артиллерийского орудия
     /// </summary>
-    private boolean isInit;
     //поле ДопКласса
     IWeapon weapons;
     private boolean Artillery;
@@ -100,13 +99,10 @@ public class WarCruiser extends Cruiser{
         Locator = locator;
         HelicopterStation = helicopterStation;
         Artillery = artillery;
-        isInit = true;
-        repaint();
     }
     @Override
-    public void paintComponent(Graphics gr) {
-        super.paintComponent(gr);
-        if (!isInit) return;
+    public void DrawTransport(Graphics gr) {
+        super.DrawTransport(gr);
         Graphics2D g = (Graphics2D) gr;
         g.setColor(Color.BLACK);
         //рисуем артиллерийские орудия
@@ -134,4 +130,3 @@ public class WarCruiser extends Cruiser{
         }
     }
 }
-
