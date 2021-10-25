@@ -4,7 +4,7 @@ import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
-        DockField CruiserMoving = new DockField();
+        FormDock CruiserMoving = new FormDock();
     }
 }
 

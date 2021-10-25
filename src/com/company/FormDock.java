@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.Random;
 
-public class DockField extends JPanel{
+public class FormDock extends JPanel{
     private JButton createSimpCruiser, createWarCruiser, removeCruiser;
     private JFrame cruiserWindow;
     private JPanel rulePanel;
@@ -18,7 +18,7 @@ public class DockField extends JPanel{
     private JTextField text;
     private Dock<ITransport, IWeapon> dock;
     Random rnd = new Random();
-    public DockField() throws ParseException {
+    public FormDock() throws ParseException {
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cruiserWindow.setTitle("Cruiser Moving");
@@ -60,7 +60,7 @@ public class DockField extends JPanel{
         rulePanel.setLayout(null);
         elGroup.add(rulePanel);
 
-        ActionListener actionListener = new DockField.ButtonActions();
+        ActionListener actionListener = new FormDock.ButtonActions();
         createSimpCruiser.addActionListener(actionListener);
         createWarCruiser.addActionListener(actionListener);
         removeCruiser.addActionListener(actionListener);
