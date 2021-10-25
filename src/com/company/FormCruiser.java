@@ -113,6 +113,7 @@ public class FormCruiser extends JPanel {
         }
     }
     public void Draw(){
+        cruiser.getGraphics().clearRect(0,0,1500, 500);
         cruiser.DrawTransport(cruiser.getGraphics());
     }
 }
