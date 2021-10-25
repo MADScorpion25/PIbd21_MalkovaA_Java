@@ -87,7 +87,7 @@ public class FormCruiser extends JPanel {
                 case "CreateSimpCruiser":
                     cruiser = new Cruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, 180, 60);
                     cruiser.setBounds(0, 0, 1500, 500);
-                    cruiser.SetPosition(10, 10, cruiser.getWidth(), cruiser.getHeight());
+                    cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
                     elGroup.add(cruiser);
                     break;
                 case "CreateWarCruiser":
