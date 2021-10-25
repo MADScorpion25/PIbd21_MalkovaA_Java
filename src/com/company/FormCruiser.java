@@ -111,8 +111,8 @@ public class FormCruiser extends JPanel {
             }
             Draw();
         }
-        public void Draw(){
-            cruiser.DrawTransport(cruiser.getGraphics());
-        }
+    }
+    public void Draw(){
+        cruiser.DrawTransport(cruiser.getGraphics());
     }
 }
