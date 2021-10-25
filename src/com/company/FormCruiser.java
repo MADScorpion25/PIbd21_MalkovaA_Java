@@ -13,8 +13,7 @@ public class FormCruiser extends JPanel {
     private Container elGroup;
     Random rnd = new Random();
 
-    public FormCruiser(Cruiser cruiser) {
-        this.cruiser = (Vehicle) cruiser;
+    public FormCruiser() {
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cruiserWindow.setTitle("Cruiser Moving");
@@ -59,11 +58,6 @@ public class FormCruiser extends JPanel {
         buttonLeft.setBounds(1120, 600, 70, 70);
         buttons.add(buttonLeft);
 
-        cruiser.setBounds(0, 0, 1500, 500);
-        cruiser.setLayout(null);
-        cruiser.SetPosition(100, 100, 1500, 500);
-        elGroup.add(cruiser);
-
         buttons.setLayout(null);
         elGroup.add(buttons);
 
@@ -73,6 +67,15 @@ public class FormCruiser extends JPanel {
         buttonRight.addActionListener(actionListener);
         buttonLeft.addActionListener(actionListener);
         cruiserWindow.setVisible(true);
+    }
+
+    public void setCruiser(Vehicle cruiser){
+        this.cruiser = cruiser;
+        this.cruiser.setBounds(0, 0, 1500, 500);
+        this.cruiser.setLayout(null);
+        this.cruiser.SetPosition(100, 100, 1500, 500);
+        elGroup.add(this.cruiser);
+        Draw();
     }
 
     public class ButtonActions extends JPanel implements ActionListener {
@@ -93,9 +96,9 @@ public class FormCruiser extends JPanel {
             }
             Draw();
         }
-        public void Draw(){
-            cruiser.getGraphics().clearRect(0,0,1500, 500);
-            cruiser.DrawTransport(cruiser.getGraphics());
-        }
+    }
+    public void Draw(){
+        cruiser.getGraphics().clearRect(0,0,1500, 500);
+        cruiser.DrawTransport(cruiser.getGraphics());
     }
 }

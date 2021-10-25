@@ -78,7 +78,7 @@ public class FormDock extends JPanel{
                     cruiser.setLayout(null);
                     index = dock.Plus(dock, cruiser);
                     if(index > -1){
-                        cruiser.SetPosition((index % dock.get_placeSizeWidth() * dock.get_placeSizeWidth()) + 5, (index / dock.get_placeSizeWidth()) * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
+                        cruiser.SetPosition((index % dock.get_parkPlacesWidth() * dock.get_placeSizeWidth()) + 5, (index / dock.get_parkPlacesWidth()) * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
                         dock.add(cruiser);
                     }
                     else{
@@ -92,7 +92,7 @@ public class FormDock extends JPanel{
                     cruiser.setLayout(null);
                     index = dock.Plus(dock, cruiser);
                     if(index > -1){
-                        cruiser.SetPosition((index % dock.get_parkPlacesWidth() * dock.get_placeSizeWidth()) + 5, index / 6 * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
+                        cruiser.SetPosition((index % dock.get_parkPlacesWidth() * dock.get_placeSizeWidth()) + 5, (index / dock.get_placeSizeWidth()) * dock.get_placeSizeHeight() + 10, cruiser.getWidth(), cruiser.getHeight());
                         dock.add(cruiser);
                     }
                     else{
@@ -102,7 +102,8 @@ public class FormDock extends JPanel{
                 case "RemoveCruiser":
                     Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(text.getText()));
                     if(cruiser != null){
-                        FormCruiser removedCruiser = new FormCruiser(cruiser);
+                        FormCruiser removedCruiser = new FormCruiser();
+                        removedCruiser.setCruiser((Vehicle) cruiser);
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "This dock place is empty");
