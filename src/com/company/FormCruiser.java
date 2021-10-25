@@ -11,6 +11,7 @@ public class FormCruiser extends JPanel {
     private JPanel buttons;
     private Vehicle cruiser;
     private Container elGroup;
+    ActionListener actionListener;
     Random rnd = new Random();
 
     public FormCruiser() {
@@ -61,7 +62,7 @@ public class FormCruiser extends JPanel {
         buttons.setLayout(null);
         elGroup.add(buttons);
 
-        ActionListener actionListener = new ButtonActions();
+        actionListener = new ButtonActions();
         buttonDown.addActionListener(actionListener);
         buttonUp.addActionListener(actionListener);
         buttonRight.addActionListener(actionListener);
