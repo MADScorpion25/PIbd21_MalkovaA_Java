@@ -42,6 +42,10 @@ public class FormDock extends JPanel{
         removeCruiser.setBounds(1310, 270, 150, 30);
         rulePanel.add(removeCruiser);
 
+
+        JLabel label = new JLabel("Index: ");
+        label.setBounds(1320, 220, 50, 30);
+        rulePanel.add(label);
         MaskFormatter mask = new MaskFormatter("##");
         mask.setPlaceholderCharacter('_');
         removeIdInput = new JFormattedTextField(mask);
@@ -111,6 +115,9 @@ public class FormDock extends JPanel{
         }
         public void Draw(){
             dock.Draw(dock.getGraphics());
+        }
+        public void DrawMark(){
+            dock.DrawMarking(dock.getGraphics());
         }
     }
 }
