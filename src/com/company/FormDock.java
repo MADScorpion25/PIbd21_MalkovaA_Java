@@ -45,11 +45,8 @@ public class FormDock extends JPanel{
         MaskFormatter mask = new MaskFormatter("##");
         mask.setPlaceholderCharacter('_');
         removeIdInput = new JFormattedTextField(mask);
-        removeIdInput.setBounds(1380, 220, 20, 30);
+        removeIdInput.setBounds(1380, 220, 30, 30);
         rulePanel.add(removeIdInput);
-        text = new JTextField();
-        text.setBounds(1380, 420, 20, 30);
-        rulePanel.add(text);
 
         dock = new Dock<>(1300, 700);
         dock.setBounds(0, 0, 1300, 700);
@@ -100,7 +97,7 @@ public class FormDock extends JPanel{
                     }
                     break;
                 case "RemoveCruiser":
-                    Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(text.getText()));
+                    Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
                     if(cruiser != null){
                         FormCruiser removedCruiser = new FormCruiser();
                         removedCruiser.setCruiser((Vehicle) cruiser);
