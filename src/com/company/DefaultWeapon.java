@@ -2,7 +2,7 @@ package com.company;
 import java.awt.*;
 import static com.company.WeaponEnum.*;
 
-public class AddWeapon { ;
+public class DefaultWeapon { ;
     private WeaponEnum weaponQuantity;
     public void setCount(int count){
         if(count == Two.getNumber())weaponQuantity = Two;
