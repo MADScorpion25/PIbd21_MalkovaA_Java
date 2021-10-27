@@ -12,11 +12,6 @@ public class ZenitWeapon implements IWeapon {
     }
 
     @Override
-    public int getWeaponNumber() {
-        return weaponQuantity.getNumber();
-    }
-
-    @Override
     public void drawWeapons(Graphics gr, Color dopColor, int startPosX, int startPosY) {
         Graphics2D g = (Graphics2D) gr;
         g.setColor(dopColor);

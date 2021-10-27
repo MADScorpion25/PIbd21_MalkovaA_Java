@@ -10,10 +10,6 @@ public class TorpedWeapon implements IWeapon{
         else if (count == Four.getNumber())weaponQuantity = Four;
         else weaponQuantity = Six;
     }
-    @Override
-    public int getWeaponNumber() {
-        return weaponQuantity.getNumber();
-    }
 
     @Override
     public void drawWeapons(Graphics gr, Color dopColor, int startPosX, int startPosY) {
