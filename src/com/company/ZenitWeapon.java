@@ -2,7 +2,7 @@ package com.company;
 import java.awt.*;
 import static com.company.WeaponEnum.*;
 
-public class ZenitArtillery implements IWeapon {
+public class ZenitWeapon implements IWeapon {
     private WeaponEnum weaponQuantity;
     @Override
     public void setWeaponNumber(int count) {

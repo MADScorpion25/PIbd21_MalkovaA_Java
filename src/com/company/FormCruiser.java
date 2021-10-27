@@ -6,11 +6,11 @@ import java.awt.event.*;
 import java.util.Random;
 
 public class FormCruiser extends JPanel {
-    private JButton createSimpCruiser, createWarCruiser, buttonDown, buttonUp, buttonRight, buttonLeft;
+    private JButton createCruiser, createWarCruiser, buttonDown, buttonUp, buttonRight, buttonLeft;
     private JFrame cruiserWindow;
     private JPanel buttons;
     private Vehicle cruiser;
-    private Container elGroup;
+    private Container elementsGroup;
     Random rnd = new Random();
 
     public FormCruiser() {
@@ -19,13 +19,13 @@ public class FormCruiser extends JPanel {
         cruiserWindow.setTitle("Cruiser Moving");
         cruiserWindow.setSize(1500, 800);
 
-        elGroup = cruiserWindow.getContentPane();
+        elementsGroup = cruiserWindow.getContentPane();
         buttons = new JPanel();
 
-        createSimpCruiser = new JButton("Create Simple Cruiser");
-        createSimpCruiser.setActionCommand("CreateSimpCruiser");
-        createSimpCruiser.setBounds(900, 650, 100, 50);
-        buttons.add(createSimpCruiser);
+        createCruiser = new JButton("Create Simple Cruiser");
+        createCruiser.setActionCommand("createCruiser");
+        createCruiser.setBounds(900, 650, 100, 50);
+        buttons.add(createCruiser);
 
         createWarCruiser = new JButton("Create War Cruiser");
         createWarCruiser.setActionCommand("CreateWarCruiser");
@@ -69,10 +69,10 @@ public class FormCruiser extends JPanel {
         buttons.add(buttonLeft);
 
         buttons.setLayout(null);
-        elGroup.add(buttons);
+        elementsGroup.add(buttons);
 
         ActionListener actionListener = new ButtonActions();
-        createSimpCruiser.addActionListener(actionListener);
+        createCruiser.addActionListener(actionListener);
         createWarCruiser.addActionListener(actionListener);
         buttonDown.addActionListener(actionListener);
         buttonUp.addActionListener(actionListener);
@@ -84,17 +84,17 @@ public class FormCruiser extends JPanel {
     public class ButtonActions extends JPanel implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
-                case "CreateSimpCruiser":
+                case "createCruiser":
                     cruiser = new Cruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, 180, 60);
                     cruiser.setBounds(0, 0, 1500, 500);
                     cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
-                    elGroup.add(cruiser);
+                    elementsGroup.add(cruiser);
                     break;
                 case "CreateWarCruiser":
                     cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, Color.lightGray, true, true, true, 180, 60);
                     cruiser.setBounds(0, 0, 1500, 500);
                     cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
-                    elGroup.add(cruiser);
+                    elementsGroup.add(cruiser);
                     break;
                 case "Down":
                     cruiser.MoveTransport(Direction.Down);
