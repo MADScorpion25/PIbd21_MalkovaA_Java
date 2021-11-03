@@ -139,6 +139,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         for (int i = 0; i < _places.size(); i++)
         {
             if(_places.get(i) != null){
+                _places.get(i).SetPosition(i % _parkPlacesWidth * _placeSizeWidth + 5, i / _placeSizeWidth * _placeSizeHeight + 10, 1300, 700);
                 _places.get(i).DrawTransport(g);
             }
         }
