@@ -112,6 +112,7 @@ public class Cruiser extends Vehicle {
     public void DrawTransport(Graphics gr) {
         Graphics2D g = (Graphics2D) gr;
         g.setColor(Color.BLACK);
+        g.setStroke(new BasicStroke(1));
         // теперь отрисуем основной кузов крейсера
         //границы крейсера и кузов
         Polygon carcass = new Polygon();
