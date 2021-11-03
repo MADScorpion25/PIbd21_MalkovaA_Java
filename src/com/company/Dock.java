@@ -1,5 +1,7 @@
 package com.company;
 
+import sun.misc.Queue;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     /// Массив объектов, которые храним
     /// </summary>
     private final ArrayList<T> _places;
+    final Queue<T> removedStages;
     /// <summary>
     /// Максимальное количество мест на парковке
     /// </summary>
@@ -38,6 +41,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     private String name;
     public Dock(int picWidth, int picHeight)
     {
+        removedStages = new Queue<>();
         int width = picWidth / _placeSizeWidth;
         int height = picHeight / _placeSizeHeight;
         _places = new ArrayList<>();
@@ -77,6 +81,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         {
             removedCruiser = p._places.get(index);
             p._places.remove(index);
+            removedStages.enqueue(removedCruiser);
             return removedCruiser;
         }
         return null;
@@ -158,6 +163,9 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
             }
             g.drawLine(i * _placeSizeWidth, 0, i * _placeSizeWidth, (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
         }
+    }
+    public T indexator(int index){
+        return _places.get(index);
     }
 }
 

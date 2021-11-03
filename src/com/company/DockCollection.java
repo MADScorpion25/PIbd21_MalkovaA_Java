@@ -70,5 +70,12 @@ public class DockCollection {
     {
         return parkingStages.getOrDefault(ind, null);
     }
+    public ITransport indexator(String key, int index)
+    {
+        if(parkingStages.containsKey(key)){
+            return parkingStages.get(key).indexator(index);
+        }
+        return null;
+    }
 }
 
