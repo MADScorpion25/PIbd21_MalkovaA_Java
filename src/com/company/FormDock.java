@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.Random;
 
-public class FormDock extends JPanel{
-    private JButton createSimpCruiser, createWarCruiser, removeCruiser, createDock, removeDock;
+public class FormDock extends JPanel {
+    private JButton createSimpCruiser, createWarCruiser, removeCruiser, createDock, removeDock, getRemovedCruiser;
     private JFrame cruiserWindow;
     private JPanel rulePanel;
     private Vehicle cruiser;
@@ -54,8 +54,13 @@ public class FormDock extends JPanel{
 
         removeDock = new JButton("Remove Dock");
         removeDock.setActionCommand("RemoveDock");
-        removeDock.setBounds(1300, 630, 150, 50);
+        removeDock.setBounds(1300, 600, 150, 50);
         rulePanel.add(removeDock);
+
+        getRemovedCruiser = new JButton("Get Removed Cruiser");
+        getRemovedCruiser.setActionCommand("GetRemovedCruiser");
+        getRemovedCruiser.setBounds(1300, 660, 150, 50);
+        rulePanel.add(getRemovedCruiser);
 
         createSimpCruiser = new JButton("Create Simple Cruiser");
         createSimpCruiser.setActionCommand("CreateSimpCruiser");
@@ -90,6 +95,7 @@ public class FormDock extends JPanel{
         removeCruiser.addActionListener(actionListener);
         createDock.addActionListener(actionListener);
         removeDock.addActionListener(actionListener);
+        getRemovedCruiser.addActionListener(actionListener);
         cruiserWindow.setVisible(true);
         super.repaint();
     }
@@ -148,6 +154,23 @@ public class FormDock extends JPanel{
                     dockCollection.DelParking(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
                     cruiserWindow.getGraphics().clearRect(0,0, 1300, 700);
                     break;
+                case "GetRemovedCruiser":
+                    try {
+                        cruiser = (Cruiser) dock.getRemovedCruiser();
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                        cruiser = null;
+                    }
+                    if(cruiser != null){
+                        FormCruiser removedCruiser = new FormCruiser();
+                        removedCruiser.setCruiser((Vehicle) cruiser);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "The collection is empty");
+                    }
+                    Draw();
+                    break;
+
             }
         }
     }

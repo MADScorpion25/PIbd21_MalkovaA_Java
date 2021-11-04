@@ -87,6 +87,10 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         return null;
     }
 
+    public Vehicle getRemovedCruiser() throws InterruptedException {
+        if(!removedStages.isEmpty()) return (Vehicle) removedStages.dequeue();
+        return null;
+    }
     public boolean LessOrEqual(Dock<T, P> p, int number){
         int indexSum = 0;
         for(int i = 0; i < p._places.size(); i++)
