@@ -143,7 +143,7 @@ public class FormDock extends JPanel {
                     Draw();
                     break;
                 case "CreateDock":
-                    dock = dockCollection.AddParking(parkingName.getText());
+                    dock = dockCollection.AddDock(parkingName.getText());
                     if(dock != null){
                         dock.setBounds(0, 0, 1300, 700);
                         dock.setBackground(new Color(0,0,0,0));
@@ -156,7 +156,7 @@ public class FormDock extends JPanel {
                     }
                     break;
                 case "RemoveDock":
-                    dockCollection.DelParking(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
+                    dockCollection.DelDock(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
                     cruiserWindow.getGraphics().clearRect(0,0, 1300, 700);
                     break;
                 case "GetRemovedCruiser":

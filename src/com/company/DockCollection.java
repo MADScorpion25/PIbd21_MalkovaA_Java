@@ -7,7 +7,7 @@ public class DockCollection {
     /// <summary>
     /// Словарь (хранилище) с парковками
     /// </summary>
-    final HashMap<String, Dock<ITransport, IWeapon>> parkingStages;
+    final HashMap<String, Dock<ITransport, IWeapon>> dockStages;
     /// <summary>
     /// Возвращение списка названий праковок
     /// </summary>
@@ -27,7 +27,7 @@ public class DockCollection {
     /// <param name="pictureHeight"></param>
     public DockCollection(int pictureWidth, int pictureHeight)
     {
-        parkingStages = new HashMap<>();
+        dockStages = new HashMap<>();
         this.pictureWidth = pictureWidth;
         this.pictureHeight = pictureHeight;
         modelList = new DefaultListModel<>();
@@ -36,13 +36,13 @@ public class DockCollection {
     /// Добавление парковки
     /// </summary>
     /// <param name="name">Название парковки</param>
-    public Dock<ITransport, IWeapon> AddParking(String name)
+    public Dock<ITransport, IWeapon> AddDock(String name)
     {
-        if (!parkingStages.containsKey(name))
+        if (!dockStages.containsKey(name))
         {
             Dock<ITransport, IWeapon> dock = new Dock<>(pictureWidth, pictureHeight);
             dock.setName(name);
-            parkingStages.put(name, dock);
+            dockStages.put(name, dock);
             modelList.addElement(dock);
             return dock;
         }
@@ -52,12 +52,12 @@ public class DockCollection {
     /// Удаление парковки
     /// </summary>
     /// <param name="name">Название парковки</param>
-    public void DelParking(String name)
+    public void DelDock(String name)
     {
-        if (parkingStages.containsKey(name))
+        if (dockStages.containsKey(name))
         {
-            Dock dock = parkingStages.get(name);
-            parkingStages.remove(name);
+            Dock dock = dockStages.get(name);
+            dockStages.remove(name);
             modelList.removeElement(dock);
         }
     }
@@ -68,12 +68,12 @@ public class DockCollection {
     /// <returns></returns>
     public Dock<ITransport, IWeapon> indexator(String ind)
     {
-        return parkingStages.getOrDefault(ind, null);
+        return dockStages.getOrDefault(ind, null);
     }
     public ITransport indexator(String key, int index)
     {
-        if(parkingStages.containsKey(key)){
-            return parkingStages.get(key).indexator(index);
+        if(dockStages.containsKey(key)){
+            return dockStages.get(key).indexator(index);
         }
         return null;
     }
