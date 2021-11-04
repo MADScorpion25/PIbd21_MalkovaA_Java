@@ -3,7 +3,6 @@ package com.company;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Random;
 
 public class FormCruiser extends JPanel {
     private JButton buttonDown, buttonUp, buttonRight, buttonLeft;
@@ -12,8 +11,6 @@ public class FormCruiser extends JPanel {
     private Vehicle cruiser;
     private Container elGroup;
     ActionListener actionListener;
-    Random rnd = new Random();
-
     public FormCruiser() {
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
