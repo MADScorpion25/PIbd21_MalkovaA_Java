@@ -116,9 +116,6 @@ public class FormDock extends JPanel{
         public void Draw(){
             dock.Draw(dock.getGraphics());
         }
-        public void DrawMark(){
-            dock.DrawMarking(dock.getGraphics());
-        }
     }
 }
 
