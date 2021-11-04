@@ -3,7 +3,6 @@ package com.company;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Random;
 
 public class FormCruiser extends JPanel {
     private JButton buttonDown, buttonUp, buttonRight, buttonLeft;
