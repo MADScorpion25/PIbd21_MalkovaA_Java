@@ -42,7 +42,6 @@ public class FormDock extends JPanel{
         removeCruiser.setBounds(1310, 270, 150, 30);
         rulePanel.add(removeCruiser);
 
-
         JLabel indexLabel = new JLabel("Index: ");
         indexLabel.setBounds(1320, 220, 50, 30);
         rulePanel.add(indexLabel);
