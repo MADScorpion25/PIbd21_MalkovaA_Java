@@ -82,7 +82,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         for(int i = 0; i < p._places.length; i++)
         {
            if(_places[i] != null){
-               indexSum ++;
+               indexSum++;
            }
         }
         return indexSum <= number;
@@ -93,7 +93,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         for(int i = 0; i < p._places.length; i++)
         {
             if(_places[i] != null){
-                indexSum ++;
+                indexSum++;
             }
         }
         return indexSum >= number;
