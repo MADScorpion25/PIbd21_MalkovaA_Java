@@ -154,10 +154,16 @@ public class FormDock extends JPanel {
                     else{
                         JOptionPane.showMessageDialog(null, "The dock with this name is already created");
                     }
+                    parkingName.setText("");
                     break;
                 case "RemoveDock":
-                    dockCollection.DelDock(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
-                    cruiserWindow.getGraphics().clearRect(0,0, 1300, 700);
+                    if(dockCollection.modelList.indexOf(dock) > -1){
+                        dockCollection.DelDock(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
+                        cruiserWindow.getGraphics().clearRect(0,0, 1300, 700);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "The collection of docks is empty");
+                    }
                     break;
                 case "GetRemovedCruiser":
                     try {
@@ -171,7 +177,7 @@ public class FormDock extends JPanel {
                         removedCruiser.setCruiser((Vehicle) cruiser);
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "The collection is empty");
+                        JOptionPane.showMessageDialog(null, "The collection of removed cruisers is empty");
                     }
                     Draw();
                     break;
