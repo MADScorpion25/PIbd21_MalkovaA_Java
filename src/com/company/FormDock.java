@@ -144,11 +144,16 @@ public class FormDock extends JPanel {
                     break;
                 case "CreateDock":
                     dock = dockCollection.AddParking(parkingName.getText());
-                    dock.setBounds(0, 0, 1300, 700);
-                    dock.setBackground(new Color(0,0,0,0));
-                    elGroup.add(dock);
-                    dock.setLayout(null);
-                    Draw();
+                    if(dock != null){
+                        dock.setBounds(0, 0, 1300, 700);
+                        dock.setBackground(new Color(0,0,0,0));
+                        elGroup.add(dock);
+                        dock.setLayout(null);
+                        Draw();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "The dock with this name is already created");
+                    }
                     break;
                 case "RemoveDock":
                     dockCollection.DelParking(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
@@ -170,7 +175,6 @@ public class FormDock extends JPanel {
                     }
                     Draw();
                     break;
-
             }
         }
     }
