@@ -12,7 +12,6 @@ public class FormCruiser extends JPanel {
     private Vehicle cruiser;
     private Container elGroup;
     ActionListener actionListener;
-    Random rnd = new Random();
 
     public FormCruiser() {
         cruiserWindow = new JFrame();
