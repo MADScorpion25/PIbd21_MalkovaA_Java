@@ -78,25 +78,25 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     }
 
     public boolean LessOrEqual(Dock<T, P> p, int number){
-        int indexSum = 0;
+        int count = 0;
         for(int i = 0; i < p._places.length; i++)
         {
            if(_places[i] != null){
-               indexSum++;
+               count++;
            }
         }
-        return indexSum <= number;
+        return count <= number;
     }
 
     public boolean MoreOrEqual(Dock<T, P> p, int number){
-        int indexSum = 0;
+        int count = 0;
         for(int i = 0; i < p._places.length; i++)
         {
             if(_places[i] != null){
-                indexSum++;
+                count++;
             }
         }
-        return indexSum >= number;
+        return count >= number;
     }
     public int get_parkPlacesWidth() {
         return _parkPlacesWidth;
