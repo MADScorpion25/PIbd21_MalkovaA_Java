@@ -130,4 +130,3 @@ public class WarCruiser extends Cruiser{
         }
     }
 }
-

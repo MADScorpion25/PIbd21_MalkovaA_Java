@@ -3,34 +3,22 @@ package com.company;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Random;
 
 public class FormCruiser extends JPanel {
-    private JButton createCruiser, createWarCruiser, buttonDown, buttonUp, buttonRight, buttonLeft;
+    private JButton buttonDown, buttonUp, buttonRight, buttonLeft;
     private JFrame cruiserWindow;
     private JPanel buttons;
     private Vehicle cruiser;
-    private Container elementsGroup;
-    Random rnd = new Random();
-
+    private Container elGroup;
+    ActionListener actionListener;
     public FormCruiser() {
         cruiserWindow = new JFrame();
-        cruiserWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cruiserWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cruiserWindow.setTitle("Cruiser Moving");
         cruiserWindow.setSize(1500, 800);
 
-        elementsGroup = cruiserWindow.getContentPane();
+        elGroup = cruiserWindow.getContentPane();
         buttons = new JPanel();
-
-        createCruiser = new JButton("Create Simple Cruiser");
-        createCruiser.setActionCommand("createCruiser");
-        createCruiser.setBounds(900, 650, 100, 50);
-        buttons.add(createCruiser);
-
-        createWarCruiser = new JButton("Create War Cruiser");
-        createWarCruiser.setActionCommand("CreateWarCruiser");
-        createWarCruiser.setBounds(800, 650, 100, 50);
-        buttons.add(createWarCruiser);
 
         ImageIcon arrowDown = new ImageIcon("src/source/buttondown.jpg");
         Image imgTmp = arrowDown.getImage();
@@ -69,11 +57,9 @@ public class FormCruiser extends JPanel {
         buttons.add(buttonLeft);
 
         buttons.setLayout(null);
-        elementsGroup.add(buttons);
+        elGroup.add(buttons);
 
-        ActionListener actionListener = new ButtonActions();
-        createCruiser.addActionListener(actionListener);
-        createWarCruiser.addActionListener(actionListener);
+        actionListener = new ButtonActions();
         buttonDown.addActionListener(actionListener);
         buttonUp.addActionListener(actionListener);
         buttonRight.addActionListener(actionListener);
@@ -81,21 +67,18 @@ public class FormCruiser extends JPanel {
         cruiserWindow.setVisible(true);
     }
 
+    public void setCruiser(Vehicle cruiser){
+        this.cruiser = cruiser;
+        this.cruiser.setBounds(0, 0, 1500, 500);
+        this.cruiser.setLayout(null);
+        this.cruiser.SetPosition(100, 100, 1500, 500);
+        elGroup.add(this.cruiser);
+        Draw();
+    }
+
     public class ButtonActions extends JPanel implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
-                case "createCruiser":
-                    cruiser = new Cruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, 180, 60);
-                    cruiser.setBounds(0, 0, 1500, 500);
-                    cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
-                    elementsGroup.add(cruiser);
-                    break;
-                case "CreateWarCruiser":
-                    cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 100), Math.abs(rnd.nextInt() % 100), Color.gray, Color.lightGray, true, true, true, 180, 60);
-                    cruiser.setBounds(0, 0, 1500, 500);
-                    cruiser.SetPosition(Math.abs(rnd.nextInt() % (cruiser.getWidth() - cruiser.getCruiserWidth())), Math.abs(rnd.nextInt() % (cruiser.getHeight() - cruiser.getCruiserHeight())), cruiser.getWidth(), cruiser.getHeight());
-                    elementsGroup.add(cruiser);
-                    break;
                 case "Down":
                     cruiser.MoveTransport(Direction.Down);
                     break;

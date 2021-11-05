@@ -16,5 +16,6 @@ public interface ITransport {
     /// </summary>
     /// <param name="direction">Направление</param>
     void MoveTransport(Direction direction);
-    void DrawTransport(Graphics gr);
+    void DrawTransport(Graphics g);
 }
+
