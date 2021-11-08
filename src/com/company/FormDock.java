@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.util.Random;
 
 public class FormDock extends JPanel {
-    private JButton createSimpCruiser, createWarCruiser, removeCruiser, createDock, removeDock, getRemovedCruiser;
+    private JButton createCruiser, removeCruiser, createDock, removeDock, getRemovedCruiser;
     private JFrame cruiserWindow;
     private JPanel rulePanel;
     private Vehicle cruiser;
@@ -62,15 +62,11 @@ public class FormDock extends JPanel {
         getRemovedCruiser.setBounds(1300, 660, 150, 50);
         rulePanel.add(getRemovedCruiser);
 
-        createSimpCruiser = new JButton("Create Simple Cruiser");
-        createSimpCruiser.setActionCommand("CreateSimpCruiser");
-        createSimpCruiser.setBounds(1310, 10, 150, 30);
-        rulePanel.add(createSimpCruiser);
+        createCruiser = new JButton("CreateCruiser");
+        createCruiser.setActionCommand("CreateCruiser");
+        createCruiser.setBounds(1310, 10, 150, 30);
+        rulePanel.add(createCruiser);
 
-        createWarCruiser = new JButton("Create War Cruiser");
-        createWarCruiser.setActionCommand("CreateWarCruiser");
-        createWarCruiser.setBounds(1310, 45, 150, 30);
-        rulePanel.add(createWarCruiser);
 
         removeCruiser = new JButton("Remove Cruiser");
         removeCruiser.setActionCommand("RemoveCruiser");
@@ -90,8 +86,7 @@ public class FormDock extends JPanel {
         elGroup.add(rulePanel);
 
         ActionListener actionListener = new FormDock.ButtonActions();
-        createSimpCruiser.addActionListener(actionListener);
-        createWarCruiser.addActionListener(actionListener);
+        createCruiser.addActionListener(actionListener);
         removeCruiser.addActionListener(actionListener);
         createDock.addActionListener(actionListener);
         removeDock.addActionListener(actionListener);
@@ -101,34 +96,10 @@ public class FormDock extends JPanel {
     }
     public class ButtonActions extends JPanel implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Color mainColor, addColor;
-            int index;
             switch (e.getActionCommand()) {
-                case "CreateSimpCruiser":
-                    mainColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
-                    cruiser = new Cruiser(Math.abs(rnd.nextInt() % 20), Math.abs(rnd.nextInt() % 20), mainColor, 180, 60);
-                    cruiser.setLayout(null);
-                    index = dock.Plus(dock, cruiser);
-                    if(index > -1){
-                        dock.add(cruiser);
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Dock is full!");
-                    }
-                    Draw();
-                    break;
-                case "CreateWarCruiser":
-                    mainColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
-                    addColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
-                    cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 20), Math.abs(rnd.nextInt() % 20), mainColor, addColor, true, true, true, 180, 60);
-                    cruiser.setLayout(null);
-                    index = dock.Plus(dock, cruiser);
-                    if(index > -1){
-                        dock.add(cruiser);
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Dock is full!");
-                    }
+                case "CreateCruiser":
+                    FormCruiserConfig config = new FormCruiserConfig(cruiser, cruiserWindow);
+                    dock.Plus(dock, cruiser);
                     Draw();
                     break;
                 case "RemoveCruiser":
