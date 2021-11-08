@@ -66,11 +66,11 @@ public class DockCollection {
     /// </summary>
     /// <param name="ind"></param>
     /// <returns></returns>
-    public Dock<ITransport, IWeapon> indexator(String ind)
+    public Dock<ITransport, IWeapon> index(String ind)
     {
         return dockStages.getOrDefault(ind, null);
     }
-    public ITransport indexator(String key, int index)
+    public ITransport index(String key, int index)
     {
         if(dockStages.containsKey(key)){
             return dockStages.get(key).indexator(index);
