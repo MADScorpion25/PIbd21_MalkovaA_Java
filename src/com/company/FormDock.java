@@ -1,5 +1,7 @@
 package com.company;
 
+import sun.misc.Queue;
+
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
@@ -19,6 +21,7 @@ public class FormDock extends JPanel {
     private JList<Dock<ITransport, IWeapon>> listBoxDock;
     private Dock<ITransport, IWeapon> dock;
     private DockCollection dockCollection;
+    private Queue<ITransport> removedStages;
     Random rnd = new Random();
     public FormDock() throws ParseException {
         cruiserWindow = new JFrame();
@@ -27,6 +30,8 @@ public class FormDock extends JPanel {
         cruiserWindow.setSize(1500, 800);
 
         dockCollection = new DockCollection(1300, 700);
+
+        removedStages = new Queue<>();
 
         elGroup = cruiserWindow.getContentPane();
         rulePanel = new JPanel();
@@ -137,15 +142,17 @@ public class FormDock extends JPanel {
                     }
                     break;
                 case "GetRemovedCruiser":
-                    try {
-                        cruiser = (Cruiser) dock.getRemovedCruiser();
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
-                        cruiser = null;
+                    cruiser = null;
+                    if(!removedStages.isEmpty()){
+                        try {
+                            cruiser = (Cruiser) removedStages.dequeue();
+                        } catch (InterruptedException interruptedException) {
+                            interruptedException.printStackTrace();
+                        }
                     }
                     if(cruiser != null){
                         FormCruiser removedCruiser = new FormCruiser();
-                        removedCruiser.setCruiser((Vehicle) cruiser);
+                        removedCruiser.setCruiser(cruiser);
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "The collection of removed cruisers is empty");
