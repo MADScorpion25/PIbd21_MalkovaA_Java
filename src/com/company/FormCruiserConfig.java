@@ -65,54 +65,32 @@ public class FormCruiserConfig extends JFrame {
         MouseListener ml = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 JLabel c = (JLabel)e.getSource();
-                String text = c.getText();
-                if(text.equals("Simple Cruiser")){
-                    pictureCruiser = new Cruiser(100, 100, new Color(100, 100, 100), 180, 60);
-                }
-                else if(text.equals("War Cruiser")){
-                    pictureCruiser = new WarCruiser(100, 100, new Color(100, 100, 100), Color.lightGray, true, true, true, 180, 60);
-                }
+                TransferHandler th = new TransferType();
+                th.exportAsDrag(c, e, TransferHandler.COPY);
+            }
 
-            }
-            public void mouseReleased(MouseEvent e) {
-                if(e.getX() < 150 || e.getX() > 350 || e.getY() < 10 || e.getY() > 160){
-                    return;
-                }
-                if(pictureCruiser == null)return;
-                pictureCruiser.setBounds(155, 15, 190,190);
-                confPanel.add(pictureCruiser);
-                pictureCruiser.getGraphics().clearRect(0,0, pictureCruiser.getWidth(), pictureCruiser.getHeight());
-                pictureCruiser.SetPosition(165, 50, pictureCruiser.getWidth(), pictureCruiser.getHeight());
-                pictureCruiser.DrawTransport(confPanel.getGraphics());
-            }
         };
         MouseListener ml2 = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 JPanel c = (JPanel)e.getSource();
                 Color color = c.getBackground();
-                Cruiser cr = (Cruiser) pictureCruiser;
-                cr.setMainColor(color);
-                pictureCruiser.DrawTransport(confPanel.getGraphics());
-                tc.exportAsDrag(pictureCruiser, e, TransferHandler.COPY);
+                TransferHandler th = new TransferColor();
+                th.exportAsDrag(pictureCruiser, e, TransferHandler.COPY);
             }
         };
         grayColor.setTransferHandler(tc);
         warCruiser.setTransferHandler(tr);
         cruiser.setTransferHandler(tr);
-        cruiser.addMouseListener(ml);
+        picture.setTransferHandler(tr);
         warCruiser.addMouseListener(ml);
-        picture.addMouseListener(ml);
-        grayColor.addMouseListener(ml2);
+        cruiser.addMouseListener(ml);
 
         ButtonActions actionListener = new ButtonActions();
         addCruiser.addActionListener(actionListener);
         formConfig.add(confPanel);
         formConfig.setVisible(true);
     }
-    public static class TransferType extends TransferHandler{
-        public TransferType(){
-            super();
-        }
+    public class TransferType extends TransferHandler{
         public int getSourceActions(JComponent c){
             return COPY;
         }
@@ -122,23 +100,53 @@ public class FormCruiserConfig extends JFrame {
             StringSelection str = new StringSelection(label.getText());
             return str;
         }
-
         @Override
         public boolean canImport(TransferSupport support) {
             return support.isDataFlavorSupported(DataFlavor.stringFlavor);
         }
+
+        @Override
+        protected void exportDone(JComponent source, Transferable data, int action) {
+            JLabel l = (JLabel) source;
+            if(action == TransferHandler.NONE){
+                if(l.getText().equals("Simple Cruiser")){
+                    pictureCruiser = new Cruiser(100,100, Color.GRAY, 180,60);
+                    picture.getGraphics().clearRect(0,0, pictureCruiser.getWidth(),pictureCruiser.getHeight());
+                    Cruiser cr = (Cruiser) pictureCruiser;
+                    cr.SetPosition(210, 60, pictureCruiser.getWidth(),pictureCruiser.getHeight());
+                }
+                else if(l.getText().equals("War Cruiser")){
+                    pictureCruiser = new WarCruiser(100,100, Color.GRAY, Color.BLACK, true,true,true, 180,60);
+                    picture.getGraphics().clearRect(0,0, pictureCruiser.getWidth(),pictureCruiser.getHeight());
+                    Cruiser cr = (Cruiser) pictureCruiser;
+                    cr.SetPosition(210, 60, pictureCruiser.getWidth(),pictureCruiser.getHeight());
+                }
+                pictureCruiser.DrawTransport(formConfig.getGraphics());
+            }
+        }
+
         @Override
         public boolean importData(TransferSupport support) {
             Transferable data = support.getTransferable();
+            String type = "";
             try {
-                String type = (String) data.getTransferData(DataFlavor.stringFlavor);
+                type = (String) data.getTransferData(DataFlavor.stringFlavor);
             } catch (UnsupportedFlavorException | IOException e) {
                 e.printStackTrace();
             }
             JPanel DropTarget = (JPanel) support.getComponent();
+            if(DropTarget.contains(200, 50)){
+                if(type.equals("Simple Cruiser")){
+                    pictureCruiser = new Cruiser(100,100, Color.GRAY, 180,60);
+                }
+                else if(type.equals("War Cruiser")){
+                    pictureCruiser = new WarCruiser(100,100, Color.GRAY, Color.BLACK, true,true,true, 180,60);
+                }
+                pictureCruiser.DrawTransport(formConfig.getGraphics());
+            }
             return true;
-
         }
+
     }
     public static class TransferColor extends TransferHandler{
         public int getSourceActions(JComponent c){
@@ -152,7 +160,10 @@ public class FormCruiserConfig extends JFrame {
         }
         @Override
         public boolean canImport(TransferSupport support) {
-            return super.canImport(support);
+            if(support.isDataFlavorSupported(DataFlavor.stringFlavor)){
+                return true;
+            }
+            return false;
         }
 
         @Override
@@ -164,6 +175,7 @@ public class FormCruiserConfig extends JFrame {
                 e.printStackTrace();
             }
             JPanel DropTarget = (JPanel) support.getComponent();
+
             return true;
 
         }
