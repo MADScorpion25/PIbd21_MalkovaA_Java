@@ -41,7 +41,7 @@ public class WarCruiser extends Cruiser{
         return MainColor;
     }
 
-    private void setMainColor(Color mainColor) {
+    public void setMainColor(Color mainColor) {
         MainColor = mainColor;
     }
 

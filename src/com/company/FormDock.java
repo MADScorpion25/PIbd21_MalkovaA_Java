@@ -103,7 +103,7 @@ public class FormDock extends JPanel {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
                 case "CreateCruiser":
-                    FormCruiserConfig config = new FormCruiserConfig(cruiser, cruiserWindow);
+                    FormCruiserConfig config = new FormCruiserConfig(cruiserWindow);
                     dock.Plus(dock, cruiser);
                     Draw();
                     break;
