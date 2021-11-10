@@ -160,7 +160,8 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         }
     }
     public T indexator(int index){
-        return _places.get(index);
+        if(index > -1 && index < _places.size()) return _places.get(index);
+        return null;
     }
 }
 

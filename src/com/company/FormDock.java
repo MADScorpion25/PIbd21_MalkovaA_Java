@@ -112,12 +112,17 @@ public class FormDock extends JPanel {
                     mainColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
                     cruiser = new Cruiser(Math.abs(rnd.nextInt() % 20), Math.abs(rnd.nextInt() % 20), mainColor, 180, 60);
                     cruiser.setLayout(null);
-                    index = dock.Plus(dock, cruiser);
-                    if(index > -1){
-                        dock.add(cruiser);
+                    if(dock == null){
+                        JOptionPane.showMessageDialog(null, "Dock is not chosen or created");
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Dock is full!");
+                        index = dock.Plus(dock, cruiser);
+                        if(index > -1){
+                            dock.add(cruiser);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Dock is full!");
+                        }
                     }
                     Draw();
                     break;
@@ -126,20 +131,23 @@ public class FormDock extends JPanel {
                     addColor = JColorChooser.showDialog(null, "Color Chooser", Color.GRAY);
                     cruiser = new WarCruiser(Math.abs(rnd.nextInt() % 20), Math.abs(rnd.nextInt() % 20), mainColor, addColor, true, true, true, 180, 60);
                     cruiser.setLayout(null);
-                    index = dock.Plus(dock, cruiser);
-                    if(index > -1){
-                        dock.add(cruiser);
+                    if(dock == null){
+                        JOptionPane.showMessageDialog(null, "Dock is not chosen or created");
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Dock is full!");
+                        index = dock.Plus(dock, cruiser);
+                        if(index > -1){
+                            dock.add(cruiser);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Dock is full!");
+                        }
                     }
                     Draw();
                     break;
                 case "RemoveCruiser":
                     Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
                     if(cruiser != null){
-                        FormCruiser removedCruiser = new FormCruiser();
-                        removedCruiser.setCruiser(cruiser);
                         removedStages.enqueue(cruiser);
                     }
                     else{
@@ -171,7 +179,7 @@ public class FormDock extends JPanel {
                     }
                     break;
                 case "GetRemovedCruiser":
-                    cruiser = null;
+                    cruiser = null; 
                     if(!removedStages.isEmpty()){
                         try {
                             cruiser = (Cruiser) removedStages.dequeue();
