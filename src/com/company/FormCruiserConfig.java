@@ -12,7 +12,7 @@ public class FormCruiserConfig extends JFrame {
     private JButton addCruiser;
     private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor;
     private MouseReaction mouseType, mouseColor;
-    private Vehicle pictureCruiser;
+    private Cruiser pictureCruiser;
     private JPanel confPanel, drawPanel, grayColor, darkRedColor, blueColor, whiteColor, purpleColor, cyanColor, greenColor, yellowColor;
     public FormCruiserConfig(JFrame fdock){
         formConfig = new JDialog(fdock, "Choose cruiser configuration", true);
@@ -161,8 +161,7 @@ public class FormCruiserConfig extends JFrame {
         PropertyChangeListener colorChangeListener = PropertyChangeEvent ->{
             if(pictureCruiser == null)return;
             if(pictureCruiser.getClass().equals(Cruiser.class) || pictureCruiser.getClass().equals(WarCruiser.class)){
-                Cruiser cruiser = (Cruiser) pictureCruiser;
-                cruiser.setMainColor(mainColor.getBackground());
+                pictureCruiser.setMainColor(mainColor.getBackground());
                 repaintModel();
             }
             if(pictureCruiser.getClass().equals(WarCruiser.class)){
