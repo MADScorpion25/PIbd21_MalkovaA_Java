@@ -4,26 +4,24 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DropTarget;
 import java.awt.event.*;
-import java.io.IOException;
-import java.util.function.Consumer;
+import java.beans.PropertyChangeListener;
 
 public class FormCruiserConfig extends JFrame {
     final JDialog formConfig;
-    private Consumer<ITransport> addEvent;
     private JButton addCruiser;
-    private JLabel cruiser, warCruiser;
+    private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor;
+    private MouseReaction mouseType, mouseColor;
     private Vehicle pictureCruiser;
-    private JPanel confPanel, picture, grayColor, darkGrayColor, blueColor;
-    private TransferType tr = new TransferType();
-    private TransferColor tc = new TransferColor();
+    private JPanel confPanel, drawPanel, grayColor, darkRedColor, blueColor, whiteColor, purpleColor, cyanColor, greenColor, yellowColor;
     public FormCruiserConfig(JFrame fdock){
         formConfig = new JDialog(fdock, "Choose cruiser configuration", true);
+        Init();
+    }
+    public void Init(){
+        mouseType = new MouseReaction();
+        MouseReaction mouseType = new MouseReaction();
+        mouseColor = new MouseReaction();
         formConfig.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         formConfig.setSize(800, 500);
         formConfig.setLayout(null);
@@ -32,162 +30,169 @@ public class FormCruiserConfig extends JFrame {
         confPanel.setLayout(null);
         confPanel.setBounds(0,0, formConfig.getWidth(), formConfig.getHeight());
 
-        picture = new JPanel();
-        picture.setLayout(null);
-        picture.setBounds(150, 10, 200,150);
-        picture.setBorder(new LineBorder(new Color(0,0,0)));
-        picture.setDropTarget(new DropTarget());
-        confPanel.add(picture);
+        pictureCruiser = new Cruiser(100, 100, Color.GRAY, 180,60);
+
+        pictureMask = new JLabel();
+        pictureMask.setLayout(new GridLayout(0, 1));
+        pictureMask.setBounds(150, 10, 200,150);
+        pictureMask.setBorder(new LineBorder(new Color(0,0,0)));
+        pictureMask.setTransferHandler(new TransferHandler("text"));
+        confPanel.add(pictureMask);
 
         cruiser = new JLabel("Simple Cruiser");
         cruiser.setBounds(10,10, 100, 50);
         cruiser.setBorder(new BevelBorder(0));
+        cruiser.setTransferHandler(new TransferHandler("text"));
+        cruiser.addMouseListener(mouseType);
         cruiser.setDropTarget(null);
         confPanel.add(cruiser);
 
         warCruiser = new JLabel("War Cruiser");
         warCruiser.setBounds(10,70, 100, 50);
         warCruiser.setBorder(new BevelBorder(0));
+        warCruiser.setTransferHandler(new TransferHandler("text"));
+        warCruiser.addMouseListener(mouseType);
         warCruiser.setDropTarget(null);
         confPanel.add(warCruiser);
+
+        mainColor = new JLabel("Main Color");
+        mainColor.setBounds(400, 10, 90, 30);
+        mainColor.setBorder(new LineBorder(Color.BLACK));
+        mainColor.setHorizontalAlignment(JLabel.CENTER);
+        mainColor.setTransferHandler(new TransferHandler("background"));
+        confPanel.add(mainColor);
 
         grayColor = new JPanel();
         grayColor.setLayout(null);
         grayColor.setBounds(400, 50, 40,40);
-        grayColor.setBackground(Color.GRAY);
+        grayColor.setBackground(new Color(139, 139, 139));
+        grayColor.setTransferHandler(new TransferHandler("background"));
+        grayColor.addMouseListener(mouseColor);
+        grayColor.setDropTarget(null);
         confPanel.add(grayColor);
 
-        addCruiser = new JButton("Add Cruiser");
-        addCruiser.setBounds(400, 400, 100, 40);
-        addCruiser.setActionCommand("Add");
-        confPanel.add(addCruiser);
+        darkRedColor = new JPanel();
+        darkRedColor.setLayout(null);
+        darkRedColor.setBounds(450, 50, 40,40);
+        darkRedColor.setBackground(new Color(168, 112, 112));
+        darkRedColor.setTransferHandler(new TransferHandler("background"));
+        darkRedColor.addMouseListener(mouseColor);
+        darkRedColor.setDropTarget(null);
+        confPanel.add(darkRedColor);
 
-        MouseListener ml = new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                JLabel c = (JLabel)e.getSource();
-                TransferHandler th = new TransferType();
-                th.exportAsDrag(c, e, TransferHandler.COPY);
+        blueColor = new JPanel();
+        blueColor.setLayout(null);
+        blueColor.setBounds(400, 100, 40,40);
+        blueColor.setBackground(new Color(160, 229, 238, 215));
+        blueColor.setTransferHandler(new TransferHandler("background"));
+        blueColor.addMouseListener(mouseColor);
+        blueColor.setDropTarget(null);
+        confPanel.add(blueColor);
+
+        whiteColor = new JPanel();
+        whiteColor.setLayout(null);
+        whiteColor.setBounds(450, 100, 40,40);
+        whiteColor.setBackground(Color.WHITE);
+        whiteColor.setTransferHandler(new TransferHandler("background"));
+        whiteColor.addMouseListener(mouseColor);
+        whiteColor.setDropTarget(null);
+        confPanel.add(whiteColor);
+
+        addColor = new JLabel("Addition Color");
+        addColor.setBounds(600, 10, 90, 30);
+        addColor.setBorder(new LineBorder(Color.BLACK));
+        addColor.setHorizontalAlignment(JLabel.CENTER);
+        addColor.setTransferHandler(new TransferHandler("background"));
+        confPanel.add(addColor);
+
+        purpleColor = new JPanel();
+        purpleColor.setLayout(null);
+        purpleColor.setBounds(600, 50, 40,40);
+        purpleColor.setBackground(new Color(124, 82, 227));
+        purpleColor.setTransferHandler(new TransferHandler("background"));
+        purpleColor.addMouseListener(mouseColor);
+        purpleColor.setDropTarget(null);
+        confPanel.add(purpleColor);
+
+        cyanColor = new JPanel();
+        cyanColor.setLayout(null);
+        cyanColor.setBounds(650, 50, 40,40);
+        cyanColor.setBackground(new Color(151, 224, 200));
+        cyanColor.setTransferHandler(new TransferHandler("background"));
+        cyanColor.addMouseListener(mouseColor);
+        cyanColor.setDropTarget(null);
+        confPanel.add(cyanColor);
+
+        greenColor = new JPanel();
+        greenColor.setLayout(null);
+        greenColor.setBounds(600, 100, 40,40);
+        greenColor.setBackground(new Color(168, 238, 160, 215));
+        greenColor.setTransferHandler(new TransferHandler("background"));
+        greenColor.addMouseListener(mouseColor);
+        greenColor.setDropTarget(null);
+        confPanel.add(greenColor);
+
+        yellowColor = new JPanel();
+        yellowColor.setLayout(null);
+        yellowColor.setBounds(650, 100, 40,40);
+        yellowColor.setBackground(new Color(229, 207, 152));
+        yellowColor.setTransferHandler(new TransferHandler("background"));
+        yellowColor.addMouseListener(mouseColor);
+        yellowColor.setDropTarget(null);
+        confPanel.add(yellowColor);
+
+        PropertyChangeListener typeChangeListener = PropertyChangeEvent ->{
+            if(pictureMask.getText().equals("Simple Cruiser")){
+                confPanel.getGraphics().clearRect(150, 10, 200,150);
+                pictureCruiser = new Cruiser(100, 100, Color.GRAY, 180,60);
+                pictureCruiser.SetPosition(160, 50, formConfig.getWidth(), formConfig.getHeight());
+                mainColor.setBackground(Color.GRAY);
+                repaintModel();
             }
-
+            else if(pictureMask.getText().equals("War Cruiser")){
+                pictureCruiser = new WarCruiser(100, 100, Color.GRAY, Color.CYAN, true, true, true, 180,60);
+                pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
+                pictureCruiser.DrawTransport(confPanel.getGraphics());
+                mainColor.setBackground(Color.GRAY);
+                repaintModel();
+            }
+            pictureMask.setText("");
         };
-        MouseListener ml2 = new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                JPanel c = (JPanel)e.getSource();
-                Color color = c.getBackground();
-                TransferHandler th = new TransferColor();
-                th.exportAsDrag(pictureCruiser, e, TransferHandler.COPY);
+        PropertyChangeListener colorChangeListener = PropertyChangeEvent ->{
+            if(pictureCruiser == null)return;
+            if(pictureCruiser.getClass().equals(Cruiser.class) || pictureCruiser.getClass().equals(WarCruiser.class)){
+                Cruiser cruiser = (Cruiser) pictureCruiser;
+                cruiser.setMainColor(mainColor.getBackground());
+                repaintModel();
+            }
+            if(pictureCruiser.getClass().equals(WarCruiser.class)){
+                WarCruiser cruiser = (WarCruiser) pictureCruiser;
+                cruiser.setDopColor(addColor.getBackground());
+                repaintModel();
             }
         };
-        grayColor.setTransferHandler(tc);
-        warCruiser.setTransferHandler(tr);
-        cruiser.setTransferHandler(tr);
-        picture.setTransferHandler(tr);
-        warCruiser.addMouseListener(ml);
-        cruiser.addMouseListener(ml);
-
-        ButtonActions actionListener = new ButtonActions();
-        addCruiser.addActionListener(actionListener);
+        mainColor.addPropertyChangeListener(colorChangeListener);
+        addColor.addPropertyChangeListener(colorChangeListener);
+        pictureMask.addPropertyChangeListener(typeChangeListener);
         formConfig.add(confPanel);
         formConfig.setVisible(true);
     }
-    public class TransferType extends TransferHandler{
-        public int getSourceActions(JComponent c){
-            return COPY;
-        }
+    public class MouseReaction extends MouseAdapter{
         @Override
-        protected Transferable createTransferable(JComponent c) {
-            JLabel label = (JLabel) c;
-            StringSelection str = new StringSelection(label.getText());
-            return str;
-        }
-        @Override
-        public boolean canImport(TransferSupport support) {
-            return support.isDataFlavorSupported(DataFlavor.stringFlavor);
-        }
-
-        @Override
-        protected void exportDone(JComponent source, Transferable data, int action) {
-            JLabel l = (JLabel) source;
-            if(action == TransferHandler.NONE){
-                if(l.getText().equals("Simple Cruiser")){
-                    pictureCruiser = new Cruiser(100,100, Color.GRAY, 180,60);
-                    picture.getGraphics().clearRect(0,0, pictureCruiser.getWidth(),pictureCruiser.getHeight());
-                    Cruiser cr = (Cruiser) pictureCruiser;
-                    cr.SetPosition(210, 60, pictureCruiser.getWidth(),pictureCruiser.getHeight());
-                }
-                else if(l.getText().equals("War Cruiser")){
-                    pictureCruiser = new WarCruiser(100,100, Color.GRAY, Color.BLACK, true,true,true, 180,60);
-                    picture.getGraphics().clearRect(0,0, pictureCruiser.getWidth(),pictureCruiser.getHeight());
-                    Cruiser cr = (Cruiser) pictureCruiser;
-                    cr.SetPosition(210, 60, pictureCruiser.getWidth(),pictureCruiser.getHeight());
-                }
-                pictureCruiser.DrawTransport(formConfig.getGraphics());
+        public void mousePressed(MouseEvent e) {
+            if(e.getSource().getClass().equals(JLabel.class)){
+                JLabel element = (JLabel) e.getSource();
+                TransferHandler handler = element.getTransferHandler();
+                handler.exportAsDrag(element, e, TransferHandler.COPY);
             }
-        }
-
-        @Override
-        public boolean importData(TransferSupport support) {
-            Transferable data = support.getTransferable();
-            String type = "";
-            try {
-                type = (String) data.getTransferData(DataFlavor.stringFlavor);
-            } catch (UnsupportedFlavorException | IOException e) {
-                e.printStackTrace();
+            else if(e.getSource().getClass().equals(JPanel.class)){
+                JPanel element = (JPanel) e.getSource();
+                TransferHandler handler = element.getTransferHandler();
+                handler.exportAsDrag(element, e, TransferHandler.COPY);
             }
-            JPanel DropTarget = (JPanel) support.getComponent();
-            if(DropTarget.contains(200, 50)){
-                if(type.equals("Simple Cruiser")){
-                    pictureCruiser = new Cruiser(100,100, Color.GRAY, 180,60);
-                }
-                else if(type.equals("War Cruiser")){
-                    pictureCruiser = new WarCruiser(100,100, Color.GRAY, Color.BLACK, true,true,true, 180,60);
-                }
-                pictureCruiser.DrawTransport(formConfig.getGraphics());
-            }
-            return true;
-        }
-
-    }
-    public static class TransferColor extends TransferHandler{
-        public int getSourceActions(JComponent c){
-            return COPY;
-        }
-        @Override
-        protected Transferable createTransferable(JComponent c) {
-            JPanel colorPanel = (JPanel) c;
-            StringSelection str = new StringSelection(colorPanel.getBackground().toString());
-            return str;
-        }
-        @Override
-        public boolean canImport(TransferSupport support) {
-            if(support.isDataFlavorSupported(DataFlavor.stringFlavor)){
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public boolean importData(TransferSupport support) {
-            Transferable data = support.getTransferable();
-            try {
-                String type = (String) data.getTransferData(DataFlavor.stringFlavor);
-            } catch (UnsupportedFlavorException | IOException e) {
-                e.printStackTrace();
-            }
-            JPanel DropTarget = (JPanel) support.getComponent();
-
-            return true;
-
         }
     }
-    public class ButtonActions extends JPanel implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            switch (e.getActionCommand()) {
-                case "Add":
-
-                    formConfig.setVisible(false);
-                    break;
-            }
-        }
+    public void repaintModel(){
+        pictureCruiser.DrawTransport(confPanel.getGraphics());
     }
 }

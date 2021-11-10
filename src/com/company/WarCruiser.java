@@ -49,7 +49,7 @@ public class WarCruiser extends Cruiser{
         return DopColor;
     }
 
-    private void setDopColor(Color dopColor) {
+    public void setDopColor(Color dopColor) {
         DopColor = dopColor;
     }
 
