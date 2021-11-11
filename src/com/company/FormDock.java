@@ -14,7 +14,6 @@ public class FormDock extends JFrame {
     private JButton createCruiser, removeCruiser, createDock, removeDock, getRemovedCruiser;
     private JFrame cruiserWindow;
     private JPanel rulePanel;
-    private Vehicle cruiser;
     private Container elGroup;
     private JFormattedTextField removeIdInput;
     private JTextField parkingName;
@@ -103,8 +102,7 @@ public class FormDock extends JFrame {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
                 case "CreateCruiser":
-                    FormCruiserConfig config = new FormCruiserConfig(cruiserWindow, dock);
-                    config.dispose();
+                    FormCruiserConfig config = new FormCruiserConfig(dock);
                     break;
                 case "RemoveCruiser":
                     Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
@@ -163,16 +161,6 @@ public class FormDock extends JFrame {
     }
     public void Draw(){
         dock.Draw(dock.getGraphics());
-    }
-    public void addCruiser(Vehicle cruiser){
-        int index = dock.Plus(dock, cruiser);
-        if(index > -1){
-            dock.add(cruiser);
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Dock is full!");
-        }
-        Draw();
     }
 }
 

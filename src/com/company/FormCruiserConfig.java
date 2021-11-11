@@ -9,8 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class FormCruiserConfig extends JFrame {
-    final JDialog formConfig;
-    private FormDock parentPanel;
+    private JFrame formConfig;
     private Dock dock;
     private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor, speedLabel, weightLabel, artilleryType, torpedType, zenitType;
     private MouseReaction mouseType, mouseColor;
@@ -19,9 +18,9 @@ public class FormCruiserConfig extends JFrame {
     private JSpinner chooseSpeed, chooseWeight, weaponCount;
     private JCheckBox setLocator, setHelicopterStation, setWeapons;
     private JButton createCruiser, cancel;
-    public FormCruiserConfig(JFrame fdock, Dock dock){
+    public FormCruiserConfig(Dock dock){
         this.dock = dock;
-        formConfig = new JDialog(fdock, "Choose cruiser configuration", true);
+        formConfig = new JFrame("Choose Configuration");
         Init();
     }
     public void Init(){
@@ -269,20 +268,22 @@ public class FormCruiserConfig extends JFrame {
             }
         };
         createCruiser.addActionListener(ActionEvent -> {
-            int index = dock.Plus(dock, pictureCruiser);
-            if(index > -1){
-                dock.add(cruiser);
+            if(pictureCruiser != null){
+                int index = dock.Plus(dock, pictureCruiser);
+                if(index > -1){
+                    dock.add(cruiser);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Dock is full!");
+                }
+                dock.Draw(dock.getGraphics());
             }
-            else{
-                JOptionPane.showMessageDialog(null, "Dock is full!");
-            }
-            dock.Draw(dock.getGraphics());
-            this.dispose();
-            this.setVisible(false);
+            formConfig.setVisible(false);
+            formConfig.dispose();
         });
         cancel.addActionListener(ActionEvent ->  {
-            this.dispose();
-            this.setVisible(false);
+            formConfig.setVisible(false);
+            formConfig.dispose();
         });
         mainColor.addPropertyChangeListener(colorChangeListener);
         addColor.addPropertyChangeListener(colorChangeListener);
