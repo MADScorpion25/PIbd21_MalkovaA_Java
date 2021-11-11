@@ -6,7 +6,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
-import java.util.Calendar;
 
 public class FormCruiserConfig extends JFrame {
     final JDialog formConfig;
