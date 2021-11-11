@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.Random;
 
-public class FormDock extends JPanel {
+public class FormDock extends JFrame {
     private JButton createCruiser, removeCruiser, createDock, removeDock, getRemovedCruiser;
     private JFrame cruiserWindow;
     private JPanel rulePanel;
@@ -103,9 +103,8 @@ public class FormDock extends JPanel {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
                 case "CreateCruiser":
-                    FormCruiserConfig config = new FormCruiserConfig(cruiserWindow);
-                    dock.Plus(dock, cruiser);
-                    Draw();
+                    FormCruiserConfig config = new FormCruiserConfig(cruiserWindow, dock);
+                    config.dispose();
                     break;
                 case "RemoveCruiser":
                     Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
@@ -164,6 +163,16 @@ public class FormDock extends JPanel {
     }
     public void Draw(){
         dock.Draw(dock.getGraphics());
+    }
+    public void addCruiser(Vehicle cruiser){
+        int index = dock.Plus(dock, cruiser);
+        if(index > -1){
+            dock.add(cruiser);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Dock is full!");
+        }
+        Draw();
     }
 }
 

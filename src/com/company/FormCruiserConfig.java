@@ -5,18 +5,22 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class FormCruiserConfig extends JFrame {
     final JDialog formConfig;
-    private JButton addCruiser;
-    private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor, speedLabel, weightLabel;
+    private FormDock parentPanel;
+    private Dock dock;
+    private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor, speedLabel, weightLabel, artilleryType, torpedType, zenitType;
     private MouseReaction mouseType, mouseColor;
     private Cruiser pictureCruiser;
     private JPanel confPanel, drawPanel, grayColor, darkRedColor, blueColor, whiteColor, purpleColor, cyanColor, greenColor, yellowColor;
-    private JSpinner chooseSpeed, chooseWeight;
+    private JSpinner chooseSpeed, chooseWeight, weaponCount;
     private JCheckBox setLocator, setHelicopterStation, setWeapons;
-    public FormCruiserConfig(JFrame fdock){
+    private JButton createCruiser, cancel;
+    public FormCruiserConfig(JFrame fdock, Dock dock){
+        this.dock = dock;
         formConfig = new JDialog(fdock, "Choose cruiser configuration", true);
         Init();
     }
@@ -24,7 +28,7 @@ public class FormCruiserConfig extends JFrame {
         mouseType = new MouseReaction();
         MouseReaction mouseType = new MouseReaction();
         mouseColor = new MouseReaction();
-        formConfig.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        formConfig.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         formConfig.setSize(800, 500);
         formConfig.setLayout(null);
 
@@ -39,7 +43,14 @@ public class FormCruiserConfig extends JFrame {
         pictureMask.setBounds(150, 10, 200,150);
         pictureMask.setBorder(new LineBorder(new Color(0,0,0)));
         pictureMask.setTransferHandler(new TransferHandler("text"));
+        pictureMask.setOpaque(true);
         confPanel.add(pictureMask);
+
+        drawPanel = new JPanel();
+        drawPanel.setLayout(new GridLayout(0, 1));
+        drawPanel.setBounds(150, 10, 200,150);
+        drawPanel.setBorder(new LineBorder(new Color(0,0,0)));
+        confPanel.add(drawPanel);
 
         cruiser = new JLabel("Simple Cruiser");
         cruiser.setBounds(10,10, 100, 50);
@@ -163,18 +174,55 @@ public class FormCruiserConfig extends JFrame {
 
         setWeapons = new JCheckBox("Set Weapons");
         setWeapons.setSelected(true);
-        setWeapons.setBounds(150, 280, 120, 30);
+        setWeapons.setBounds(180, 280, 120, 30);
         confPanel.add(setWeapons);
 
         setLocator = new JCheckBox("Set Locator");
         setLocator.setSelected(true);
-        setLocator.setBounds(150, 310, 120, 30);
+        setLocator.setBounds(180, 310, 120, 30);
         confPanel.add(setLocator);
 
         setHelicopterStation = new JCheckBox("Set Helicopter Station");
         setHelicopterStation.setSelected(true);
-        setHelicopterStation.setBounds(150, 340, 150, 30);
+        setHelicopterStation.setBounds(180, 340, 150, 30);
         confPanel.add(setHelicopterStation);
+
+        artilleryType = new JLabel("Artillery Type");
+        artilleryType.setBounds(400,220, 100, 50);
+        artilleryType.setBorder(new BevelBorder(0));
+        artilleryType.setTransferHandler(new TransferHandler("text"));
+        artilleryType.addMouseListener(mouseType);
+        artilleryType.setDropTarget(null);
+        confPanel.add(artilleryType);
+
+        torpedType = new JLabel("Torped Type");
+        torpedType.setBounds(400,280, 100, 50);
+        torpedType.setBorder(new BevelBorder(0));
+        torpedType.setTransferHandler(new TransferHandler("text"));
+        torpedType.addMouseListener(mouseType);
+        torpedType.setDropTarget(null);
+        confPanel.add(torpedType);
+
+        zenitType = new JLabel("Zenit Type");
+        zenitType.setBounds(400,340, 100, 50);
+        zenitType.setBorder(new BevelBorder(0));
+        zenitType.setTransferHandler(new TransferHandler("text"));
+        zenitType.addMouseListener(mouseType);
+        zenitType.setDropTarget(null);
+        confPanel.add(zenitType);
+
+        weaponCount = new JSpinner();
+        weaponCount.setBounds(400, 410, 60, 20);
+        weaponCount.setModel(new SpinnerNumberModel(1, 1, 3, 1));
+        confPanel.add(weaponCount);
+
+        createCruiser = new JButton("Create Cruiser");
+        createCruiser.setBounds(600, 250, 140, 50);
+        confPanel.add(createCruiser);
+
+        cancel = new JButton("Cancel");
+        cancel.setBounds(600, 310, 140, 50);
+        confPanel.add(cancel);
 
         PropertyChangeListener typeChangeListener = PropertyChangeEvent ->{
             if(pictureMask.getText().equals("Simple Cruiser")){
@@ -182,18 +230,31 @@ public class FormCruiserConfig extends JFrame {
                 pictureCruiser = new Cruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, 180,60);
                 pictureCruiser.SetPosition(160, 50, formConfig.getWidth(), formConfig.getHeight());
                 mainColor.setBackground(Color.GRAY);
-                repaintModel();
             }
             else if(pictureMask.getText().equals("War Cruiser")){
                 pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60);
                 pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
-                pictureCruiser.DrawTransport(confPanel.getGraphics());
                 mainColor.setBackground(Color.GRAY);
-                repaintModel();
+            }
+            if(pictureCruiser != null && pictureCruiser.getClass().equals(WarCruiser.class)){
+                if(pictureMask.getText().equals("Artillery Type")){
+                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 0, (int)weaponCount.getValue() * 2);
+                    pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
+                    mainColor.setBackground(Color.GRAY);
+                }
+                else if(pictureMask.getText().equals("Zenit Type")){
+                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 1, (int)weaponCount.getValue() * 2);
+                    pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
+                    mainColor.setBackground(Color.GRAY);
+                }
+                else if(pictureMask.getText().equals("Torped Type")){
+                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 2, (int)weaponCount.getValue() * 2);
+                    pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
+                    mainColor.setBackground(Color.GRAY);
+                }
             }
             pictureMask.setText("");
             repaintModel();
-            confPanel.repaint();
         };
         PropertyChangeListener colorChangeListener = PropertyChangeEvent ->{
             if(pictureCruiser == null)return;
@@ -207,6 +268,22 @@ public class FormCruiserConfig extends JFrame {
                 repaintModel();
             }
         };
+        createCruiser.addActionListener(ActionEvent -> {
+            int index = dock.Plus(dock, pictureCruiser);
+            if(index > -1){
+                dock.add(cruiser);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Dock is full!");
+            }
+            dock.Draw(dock.getGraphics());
+            this.dispose();
+            this.setVisible(false);
+        });
+        cancel.addActionListener(ActionEvent ->  {
+            this.dispose();
+            this.setVisible(false);
+        });
         mainColor.addPropertyChangeListener(colorChangeListener);
         addColor.addPropertyChangeListener(colorChangeListener);
         pictureMask.addPropertyChangeListener(typeChangeListener);

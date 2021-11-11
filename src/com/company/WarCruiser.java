@@ -100,6 +100,29 @@ public class WarCruiser extends Cruiser{
         HelicopterStation = helicopterStation;
         Artillery = artillery;
     }
+    public WarCruiser(int maxSpeed, float weight, Color mainColor, Color dopColor,
+                      boolean locator, boolean helicopterStation, boolean artillery, int cruiserWidth, int cruiserHeight, int ID, int count) {
+        super(maxSpeed, weight, mainColor, cruiserWidth, cruiserHeight);
+        setWeaponType(ID, count);
+        DopColor = dopColor;
+        Locator = locator;
+        HelicopterStation = helicopterStation;
+        Artillery = artillery;
+    }
+    public void setWeaponType(int ID, int count){
+        switch (ID){
+            case 0:
+                weapons = new Artillery();
+                break;
+            case 1:
+                weapons = new ZenitArtillery();
+                break;
+            case 2:
+                weapons = new TorpedWeapon();
+                break;
+        }
+        weapons.setWeaponNumber(count);
+    }
     @Override
     public void DrawTransport(Graphics gr) {
         super.DrawTransport(gr);
