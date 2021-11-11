@@ -6,14 +6,17 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
+import java.util.Calendar;
 
 public class FormCruiserConfig extends JFrame {
     final JDialog formConfig;
     private JButton addCruiser;
-    private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor;
+    private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor, speedLabel, weightLabel;
     private MouseReaction mouseType, mouseColor;
     private Cruiser pictureCruiser;
     private JPanel confPanel, drawPanel, grayColor, darkRedColor, blueColor, whiteColor, purpleColor, cyanColor, greenColor, yellowColor;
+    private JSpinner chooseSpeed, chooseWeight;
+    private JCheckBox setLocator, setHelicopterStation, setWeapons;
     public FormCruiserConfig(JFrame fdock){
         formConfig = new JDialog(fdock, "Choose cruiser configuration", true);
         Init();
@@ -141,22 +144,57 @@ public class FormCruiserConfig extends JFrame {
         yellowColor.setDropTarget(null);
         confPanel.add(yellowColor);
 
+        speedLabel = new JLabel("Speed:");
+        speedLabel.setBounds(30, 270, 60, 20);
+        confPanel.add(speedLabel);
+
+        chooseSpeed = new JSpinner();
+        chooseSpeed.setBounds(30, 290, 60, 20);
+        chooseSpeed.setModel(new SpinnerNumberModel(100, 1, 200, 1));
+        confPanel.add(chooseSpeed);
+
+        weightLabel = new JLabel("Weight:");
+        weightLabel.setBounds(30, 320, 60, 20);
+        confPanel.add(weightLabel);
+
+        chooseWeight = new JSpinner();
+        chooseWeight.setBounds(30, 340, 60, 20);
+        chooseWeight.setModel(new SpinnerNumberModel(100, 1, 200, 1));
+        confPanel.add(chooseWeight);
+
+        setWeapons = new JCheckBox("Set Weapons");
+        setWeapons.setSelected(true);
+        setWeapons.setBounds(150, 280, 120, 30);
+        confPanel.add(setWeapons);
+
+        setLocator = new JCheckBox("Set Locator");
+        setLocator.setSelected(true);
+        setLocator.setBounds(150, 310, 120, 30);
+        confPanel.add(setLocator);
+
+        setHelicopterStation = new JCheckBox("Set Helicopter Station");
+        setHelicopterStation.setSelected(true);
+        setHelicopterStation.setBounds(150, 340, 150, 30);
+        confPanel.add(setHelicopterStation);
+
         PropertyChangeListener typeChangeListener = PropertyChangeEvent ->{
             if(pictureMask.getText().equals("Simple Cruiser")){
                 confPanel.getGraphics().clearRect(150, 10, 200,150);
-                pictureCruiser = new Cruiser(100, 100, Color.GRAY, 180,60);
+                pictureCruiser = new Cruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, 180,60);
                 pictureCruiser.SetPosition(160, 50, formConfig.getWidth(), formConfig.getHeight());
                 mainColor.setBackground(Color.GRAY);
                 repaintModel();
             }
             else if(pictureMask.getText().equals("War Cruiser")){
-                pictureCruiser = new WarCruiser(100, 100, Color.GRAY, Color.CYAN, true, true, true, 180,60);
+                pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60);
                 pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
                 pictureCruiser.DrawTransport(confPanel.getGraphics());
                 mainColor.setBackground(Color.GRAY);
                 repaintModel();
             }
             pictureMask.setText("");
+            repaintModel();
+            confPanel.repaint();
         };
         PropertyChangeListener colorChangeListener = PropertyChangeEvent ->{
             if(pictureCruiser == null)return;
