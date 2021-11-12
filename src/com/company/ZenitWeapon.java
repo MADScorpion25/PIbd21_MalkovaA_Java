@@ -2,18 +2,13 @@ package com.company;
 import java.awt.*;
 import static com.company.WeaponEnum.*;
 
-public class ZenitArtillery implements IWeapon {
+public class ZenitWeapon implements IWeapon {
     private WeaponEnum weaponQuantity;
     @Override
     public void setWeaponNumber(int count) {
         if(count == Two.getNumber())weaponQuantity = Two;
         else if (count == Four.getNumber())weaponQuantity = Four;
         else weaponQuantity = Six;
-    }
-
-    @Override
-    public int getWeaponNumber() {
-        return weaponQuantity.getNumber();
     }
 
     @Override
