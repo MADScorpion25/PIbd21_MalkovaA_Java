@@ -11,6 +11,7 @@ public class FormCruiser extends JPanel {
     private Vehicle cruiser;
     private Container elGroup;
     ActionListener actionListener;
+
     public FormCruiser() {
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

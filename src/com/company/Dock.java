@@ -1,13 +1,20 @@
 package com.company;
 
+import sun.misc.Queue;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     /// <summary>
     /// Массив объектов, которые храним
     /// </summary>
-    private final T[] _places;
+    private final ArrayList<T> _places;
+    /// <summary>
+    /// Максимальное количество мест на парковке
+    /// </summary>
+    private final int _maxCount = 48;
     /// <summary>
     /// Ширина окна отрисовки
     /// </summary>
@@ -30,11 +37,12 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     private final int _parkPlacesWidth = 6;
     /// <param name="picWidth">Рамзер парковки - ширина</param>
     /// <param name="picHeight">Рамзер парковки - высота</param>
+    private String name;
     public Dock(int picWidth, int picHeight)
     {
         int width = picWidth / _placeSizeWidth;
         int height = picHeight / _placeSizeHeight;
-        _places = (T[]) new ITransport[width * height];
+        _places = new ArrayList<>();
         pictureWidth = picWidth;
         pictureHeight = picHeight;
     }
@@ -47,13 +55,12 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     /// <returns></returns>
     public int Plus(Dock<T, P> p, T cruiser)
     {
-        for(int i = 0; i < p._places.length; i++)
+        if (p._maxCount <= p._places.size()) return -1;
+
+        for(int i = 0; i < p._places.size() + 1; i++)
         {
-            if(p._places[i] == null)
-            {
-                p._places[i] = cruiser;
-                return i;
-            }
+            p._places.add(cruiser);
+            return p._places.indexOf(cruiser);
         }
         return -1;
     }
@@ -68,20 +75,19 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     {
         T removedCruiser;
 
-        if (index > -1 && index < p._places.length && p._places[index] != null)
+        if (index > -1 && index < p._places.size() && p._places.get(index) != null)
         {
-            removedCruiser = p._places[index];
-            p._places[index] = null;
+            removedCruiser = p._places.get(index);
+            p._places.remove(index);
             return removedCruiser;
         }
         return null;
     }
-
     public boolean LessOrEqual(Dock<T, P> p, int number){
         int count = 0;
-        for(int i = 0; i < p._places.length; i++)
+        for(int i = 0; i < p._places.size(); i++)
         {
-           if(_places[i] != null){
+           if(_places.get(i) != null){
                count++;
            }
         }
@@ -90,9 +96,9 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
 
     public boolean MoreOrEqual(Dock<T, P> p, int number){
         int count = 0;
-        for(int i = 0; i < p._places.length; i++)
+        for(int i = 0; i < p._places.size(); i++)
         {
-            if(_places[i] != null){
+            if(_places.get(i) != null){
                 count++;
             }
         }
@@ -109,16 +115,32 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     public int get_placeSizeHeight() {
         return _placeSizeHeight;
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
     /// <summary>
     /// Метод отрисовки разметки парковочных мест
     /// </summary>
     /// <param name="g"></param>
     public void Draw(Graphics g){
-        g.clearRect(0,0,1500, 500);
-        for (int i = 0; i < _places.length; i++)
+        g.clearRect(0,0,1300, 500);
+        for (int i = 0; i < _places.size(); i++)
         {
-            if(_places[i] != null){
-                _places[i].DrawTransport(g);
+            if(_places.get(i) != null){
+                _places.get(i).SetPosition(i % _parkPlacesWidth * _placeSizeWidth + 5, i / _placeSizeWidth * _placeSizeHeight + 10, 1300, 700);
+                _places.get(i).DrawTransport(g);
             }
         }
         DrawMarking(g);
@@ -136,6 +158,10 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
             }
             g.drawLine(i * _placeSizeWidth, 0, i * _placeSizeWidth, (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
         }
+    }
+    public T indexator(int index){
+        if(index > -1 && index < _places.size()) return _places.get(index);
+        return null;
     }
 }
 
