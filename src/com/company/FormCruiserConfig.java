@@ -36,20 +36,14 @@ public class FormCruiserConfig extends JFrame {
         confPanel.setBounds(0,0, formConfig.getWidth(), formConfig.getHeight());
 
         pictureCruiser = new Cruiser(100, 100, Color.GRAY, 180,60);
+        pictureCruiser.setBounds(150, 10, 200,150);
 
         pictureMask = new JLabel();
-        pictureMask.setLayout(new GridLayout(0, 1));
+        pictureMask.setLayout(null);
         pictureMask.setBounds(150, 10, 200,150);
         pictureMask.setBorder(new LineBorder(new Color(0,0,0)));
         pictureMask.setTransferHandler(new TransferHandler("text"));
-        pictureMask.setOpaque(true);
         confPanel.add(pictureMask);
-
-        drawPanel = new JPanel();
-        drawPanel.setLayout(new GridLayout(0, 1));
-        drawPanel.setBounds(150, 10, 200,150);
-        drawPanel.setBorder(new LineBorder(new Color(0,0,0)));
-        confPanel.add(drawPanel);
 
         cruiser = new JLabel("Simple Cruiser");
         cruiser.setBounds(10,10, 100, 50);
@@ -223,38 +217,6 @@ public class FormCruiserConfig extends JFrame {
         cancel.setBounds(600, 310, 140, 50);
         confPanel.add(cancel);
 
-        PropertyChangeListener typeChangeListener = PropertyChangeEvent ->{
-            if(pictureMask.getText().equals("Simple Cruiser")){
-                confPanel.getGraphics().clearRect(150, 10, 200,150);
-                pictureCruiser = new Cruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, 180,60);
-                pictureCruiser.SetPosition(160, 50, formConfig.getWidth(), formConfig.getHeight());
-                mainColor.setBackground(Color.GRAY);
-            }
-            else if(pictureMask.getText().equals("War Cruiser")){
-                pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60);
-                pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
-                mainColor.setBackground(Color.GRAY);
-            }
-            if(pictureCruiser != null && pictureCruiser.getClass().equals(WarCruiser.class)){
-                if(pictureMask.getText().equals("Artillery Type")){
-                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 0, (int)weaponCount.getValue() * 2);
-                    pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
-                    mainColor.setBackground(Color.GRAY);
-                }
-                else if(pictureMask.getText().equals("Zenit Type")){
-                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 1, (int)weaponCount.getValue() * 2);
-                    pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
-                    mainColor.setBackground(Color.GRAY);
-                }
-                else if(pictureMask.getText().equals("Torped Type")){
-                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 2, (int)weaponCount.getValue() * 2);
-                    pictureCruiser.SetPosition(160, 50, confPanel.getWidth(),  confPanel.getHeight());
-                    mainColor.setBackground(Color.GRAY);
-                }
-            }
-            pictureMask.setText("");
-            repaintModel();
-        };
         PropertyChangeListener colorChangeListener = PropertyChangeEvent ->{
             if(pictureCruiser == null)return;
             if(pictureCruiser.getClass().equals(Cruiser.class) || pictureCruiser.getClass().equals(WarCruiser.class)){
@@ -266,6 +228,39 @@ public class FormCruiserConfig extends JFrame {
                 cruiser.setDopColor(addColor.getBackground());
                 repaintModel();
             }
+        };
+        PropertyChangeListener typeChangeListener = PropertyChangeEvent ->{
+            if(pictureMask.getText().equals("Simple Cruiser")){
+                confPanel.getGraphics().clearRect(150, 10, 200,150);
+                pictureCruiser = new Cruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, 180,60);
+                pictureCruiser.SetPosition(150, 50, formConfig.getWidth(), formConfig.getHeight());
+                repaintModel();
+            }
+            else if(pictureMask.getText().equals("War Cruiser")){
+                pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60);
+                pictureCruiser.SetPosition(150, 50, confPanel.getWidth(),  confPanel.getHeight());
+                repaintModel();
+            }
+            if(pictureCruiser != null && pictureCruiser.getClass().equals(WarCruiser.class)){
+                if(pictureMask.getText().equals("Artillery Type")){
+                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 0, (int)weaponCount.getValue() * 2);
+                    pictureCruiser.SetPosition(150, 50, confPanel.getWidth(),  confPanel.getHeight());
+                    repaintModel();
+                }
+                else if(pictureMask.getText().equals("Zenit Type")){
+                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 1, (int)weaponCount.getValue() * 2);
+                    pictureCruiser.SetPosition(150, 50, confPanel.getWidth(),  confPanel.getHeight());
+                    repaintModel();
+                }
+                else if(pictureMask.getText().equals("Torped Type")){
+                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 2, (int)weaponCount.getValue() * 2);
+                    pictureCruiser.SetPosition(150, 50, confPanel.getWidth(),  confPanel.getHeight());
+                    repaintModel();
+                }
+            }
+            pictureMask.setVisible(false);
+            pictureMask.setOpaque(false);
+            mainColor.setBackground(Color.GRAY);
         };
         createCruiser.addActionListener(ActionEvent -> {
             if(pictureCruiser != null){
@@ -288,12 +283,14 @@ public class FormCruiserConfig extends JFrame {
         mainColor.addPropertyChangeListener(colorChangeListener);
         addColor.addPropertyChangeListener(colorChangeListener);
         pictureMask.addPropertyChangeListener(typeChangeListener);
+        pictureMask.addPropertyChangeListener(colorChangeListener);
         formConfig.add(confPanel);
         formConfig.setVisible(true);
     }
     public class MouseReaction extends MouseAdapter{
         @Override
         public void mousePressed(MouseEvent e) {
+            pictureMask.setVisible(true);
             if(e.getSource().getClass().equals(JLabel.class)){
                 JLabel element = (JLabel) e.getSource();
                 TransferHandler handler = element.getTransferHandler();
