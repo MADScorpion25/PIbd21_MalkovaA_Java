@@ -89,10 +89,10 @@ public class DockCollection {
             for(int i = 0; i < list.size(); i++){
                 ITransport cruiser = dock.getValue().indexator(i);
                 if(cruiser.getClass().equals(Cruiser.class)){
-                    writer.println("Cruiser"+separator+((Cruiser)cruiser).toString());
+                    writer.println("Cruiser"+separator+cruiser.toString());
                 }
                 if(cruiser.getClass().equals(WarCruiser.class)){
-                    writer.println("WarCruiser"+separator+((WarCruiser)cruiser).toString());
+                    writer.println("WarCruiser"+separator+cruiser.toString());
                 }
             }
         }
@@ -128,9 +128,6 @@ public class DockCollection {
                     return false;
                 }
                 dockStages.get(key).add(cruiser);
-            }
-            else{
-                continue;
             }
         }
         return true;
@@ -181,9 +178,6 @@ public class DockCollection {
                     return false;
                 }
                 dockStages.get(key).add(cruiser);
-            }
-            else{
-                continue;
             }
         }
         return true;
