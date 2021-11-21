@@ -135,5 +135,58 @@ public class DockCollection {
         }
         return true;
     }
+    public boolean saveDataFromDock(String filename, Dock<ITransport, IWeapon> dock) throws FileNotFoundException {
+        File file = new File(filename);
+        PrintWriter writer = new PrintWriter(file);
+        writer.println("Dock"+separator+dock.getName());
+        ArrayList list = dock.get_places();
+        for(int i = 0; i < list.size(); i++){
+            ITransport cruiser = dock.indexator(i);
+            if(cruiser.getClass().equals(Cruiser.class)){
+                writer.println("Cruiser"+separator+((Cruiser)cruiser).toString());
+            }
+            if(cruiser.getClass().equals(WarCruiser.class)){
+                writer.println("WarCruiser"+separator+((WarCruiser)cruiser).toString());
+            }
+        }
+        writer.close();
+        return true;
+    }
+    public boolean loadDataFromDock(String filename) throws FileNotFoundException {
+        Vehicle cruiser;
+        File file = new File(filename);
+        Scanner scanner = new Scanner(file);
+        String line, key = "";
+        while(scanner.hasNextLine()){
+            line = scanner.nextLine();
+            if(line.contains("Dock")){
+                key = line.split(String.valueOf(separator))[1];
+                if(dockStages.containsKey(key)){
+                    DelDock(key);
+                }
+                AddDock(key);
+            }
+            else if(line.split(String.valueOf(separator))[0].equals("Cruiser")){
+                cruiser = new Cruiser(line.split(String.valueOf(separator))[1]);
+                int result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
+                if(result < 0){
+                    return false;
+                }
+                dockStages.get(key).add(cruiser);
+            }
+            else if(line.split(String.valueOf(separator))[0].equals("WarCruiser")){
+                cruiser = new WarCruiser(line.split(String.valueOf(separator))[1]);
+                int result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
+                if(result < 0){
+                    return false;
+                }
+                dockStages.get(key).add(cruiser);
+            }
+            else{
+                continue;
+            }
+        }
+        return true;
+    }
 }
 

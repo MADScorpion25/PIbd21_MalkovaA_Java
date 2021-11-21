@@ -25,7 +25,7 @@ public class FormDock extends JPanel {
     private Queue<ITransport> removedStages;
     private JMenuBar menuBar;
     private JMenu file;
-    private JMenuItem save, load;
+    private JMenuItem save, load, saveDock, loadDock;
     Random rnd = new Random();
     public FormDock() throws ParseException {
         cruiserWindow = new JFrame();
@@ -38,11 +38,17 @@ public class FormDock extends JPanel {
 
         save = new JMenuItem("Save");
         load = new JMenuItem("Load");
+        saveDock = new JMenuItem("Save Dock");
+        loadDock = new JMenuItem("Load Dock");
         file.add(save);
         file.add(load);
+        file.add(loadDock);
+        file.add(saveDock);
         menuBar.add(file);
         save.setActionCommand("Save");
         load.setActionCommand("Load");
+        loadDock.setActionCommand("LoadDock");
+        saveDock.setActionCommand("SaveDock");
         cruiserWindow.setJMenuBar(menuBar);
 
         dockCollection = new DockCollection(1300, 700);
@@ -64,8 +70,7 @@ public class FormDock extends JPanel {
 
         listBoxDock.getSelectionModel().addListSelectionListener(e -> {
             dock = listBoxDock.getSelectedValue();
-            if(dock == null) cruiserWindow.getGraphics().clearRect(0,0, 1300, 700);
-
+            if(dock == null) cruiserWindow.getGraphics().clearRect(0,40, 1300, 740);
             else {
                 dock.setBounds(0, 40, 1300, 740);
                 dock.setBackground(new Color(0,0,0,0));
@@ -121,6 +126,8 @@ public class FormDock extends JPanel {
         getRemovedCruiser.addActionListener(actionListener);
         save.addActionListener(actionListener);
         load.addActionListener(actionListener);
+        saveDock.addActionListener(actionListener);
+        loadDock.addActionListener(actionListener);
         cruiserWindow.setVisible(true);
         super.repaint();
     }
@@ -205,6 +212,30 @@ public class FormDock extends JPanel {
                         File file = dialog.getSelectedFile();
                         try {
                             dockCollection.loadData(file.getAbsolutePath());
+                        } catch (FileNotFoundException fileNotFoundException) {
+                            fileNotFoundException.printStackTrace();
+                        }
+                    }
+                    break;
+                case "SaveDock":
+                    dialog = new JFileChooser();
+                    ret = dialog.showDialog(null, "Открыть файл");
+                    if(ret == JFileChooser.APPROVE_OPTION) {
+                        File file = dialog.getSelectedFile();
+                        try {
+                            dockCollection.saveDataFromDock(file.getAbsolutePath(), dock);
+                        } catch (FileNotFoundException fileNotFoundException) {
+                            fileNotFoundException.printStackTrace();
+                        }
+                    }
+                    break;
+                case "LoadDock":
+                    dialog = new JFileChooser();
+                    ret = dialog.showDialog(null, "Открыть файл");
+                    if(ret == JFileChooser.APPROVE_OPTION) {
+                        File file = dialog.getSelectedFile();
+                        try {
+                            dockCollection.loadDataFromDock(file.getAbsolutePath());
                         } catch (FileNotFoundException fileNotFoundException) {
                             fileNotFoundException.printStackTrace();
                         }
