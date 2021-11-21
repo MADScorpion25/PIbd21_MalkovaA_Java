@@ -3,6 +3,8 @@ package com.company;
 import sun.misc.Queue;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -136,7 +138,9 @@ public class FormDock extends JPanel {
     }
     public class ButtonActions extends JPanel implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            JFileChooser dialog;
+            JFileChooser dialog = new JFileChooser();
+            FileFilter filter = new FileNameExtensionFilter("TXT file", "txt");
+            dialog.setFileFilter(filter);
             int ret;
             switch (e.getActionCommand()) {
                 case "CreateCruiser":
@@ -194,7 +198,6 @@ public class FormDock extends JPanel {
                     Draw();
                     break;
                 case "Save":
-                    dialog = new JFileChooser();
                     ret = dialog.showDialog(null, "Открыть файл");
                     if(ret == JFileChooser.APPROVE_OPTION) {
                         File file = dialog.getSelectedFile();
@@ -206,7 +209,6 @@ public class FormDock extends JPanel {
                     }
                     break;
                 case "Load":
-                    dialog = new JFileChooser();
                     ret = dialog.showDialog(null, "Открыть файл");
                     if(ret == JFileChooser.APPROVE_OPTION) {
                         File file = dialog.getSelectedFile();
@@ -218,7 +220,6 @@ public class FormDock extends JPanel {
                     }
                     break;
                 case "SaveDock":
-                    dialog = new JFileChooser();
                     ret = dialog.showDialog(null, "Открыть файл");
                     if(ret == JFileChooser.APPROVE_OPTION) {
                         File file = dialog.getSelectedFile();
@@ -230,7 +231,6 @@ public class FormDock extends JPanel {
                     }
                     break;
                 case "LoadDock":
-                    dialog = new JFileChooser();
                     ret = dialog.showDialog(null, "Открыть файл");
                     if(ret == JFileChooser.APPROVE_OPTION) {
                         File file = dialog.getSelectedFile();
