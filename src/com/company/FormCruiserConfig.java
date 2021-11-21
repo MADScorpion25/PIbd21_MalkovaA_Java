@@ -13,7 +13,7 @@ public class FormCruiserConfig extends JFrame {
     private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor, speedLabel, weightLabel, artilleryType, torpedType, zenitType;
     private MouseReaction mouseType, mouseColor;
     private ITransport pictureCruiser;
-    private JPanel confPanel, grayColor, darkRedColor, blueColor, whiteColor, purpleColor, cyanColor, greenColor, yellowColor;
+    private JPanel confPanel, grayColor, darkRedColor, blueColor, whiteColor, purpleColor, cyanColor, greenColor, yellowColor, underGround;
     private DrawPanel drawPanel;
     private JSpinner chooseSpeed, chooseWeight, weaponCount;
     private JCheckBox setLocator, setHelicopterStation, setWeapons;
@@ -42,6 +42,7 @@ public class FormCruiserConfig extends JFrame {
         confPanel.add(pictureMask);
 
         drawPanel = new DrawPanel();
+        drawPanel.setLayout(null);
         drawPanel.setBounds(150, 10, 200,150);
         drawPanel.setBorder(new LineBorder(new Color(0,0,0)));
         confPanel.add(drawPanel);
@@ -312,12 +313,14 @@ public class FormCruiserConfig extends JFrame {
         cruiser.setMainColor(mainColor.getBackground());
         drawPanel.setCruiser(pictureCruiser);
         drawPanel.repaint();
+        pictureMask.repaint();
     }
     public void setAddColor(){
         WarCruiser cruiser = (WarCruiser) pictureCruiser;
         cruiser.setDopColor(addColor.getBackground());
         drawPanel.setCruiser(pictureCruiser);
         drawPanel.repaint();
+        pictureMask.repaint();
     }
     public class DrawPanel extends JPanel{
         private ITransport cruiser;
