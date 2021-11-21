@@ -291,31 +291,31 @@ public class FormCruiserConfig extends JFrame {
         pictureCruiser = new Cruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, 180,60);
         pictureCruiser.SetPosition(20, 50, formConfig.getWidth(), formConfig.getHeight());
         drawPanel.setCruiser(pictureCruiser);
-        drawPanel.paintComponent(drawPanel.getGraphics());
+        drawPanel.repaint();
     }
     public void setWarCruiser(){
         pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60);
         pictureCruiser.SetPosition(20, 50, confPanel.getWidth(),  confPanel.getHeight());
         drawPanel.setCruiser(pictureCruiser);
-        drawPanel.paintComponent(drawPanel.getGraphics());
+        drawPanel.repaint();
     }
     public void setWeapon(int ID){
         pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, ID, (int)weaponCount.getValue() * 2);
         pictureCruiser.SetPosition(20, 50, confPanel.getWidth(),  confPanel.getHeight());
         drawPanel.setCruiser(pictureCruiser);
-        drawPanel.paintComponent(drawPanel.getGraphics());
+        drawPanel.repaint();
     }
     public void setMainColor(){
         Cruiser cruiser = (Cruiser) pictureCruiser;
         cruiser.setMainColor(mainColor.getBackground());
         drawPanel.setCruiser(cruiser);
-        drawPanel.paintComponent(drawPanel.getGraphics());
+        drawPanel.repaint();
     }
     public void setAddColor(){
         WarCruiser cruiser = (WarCruiser) pictureCruiser;
         cruiser.setDopColor(addColor.getBackground());
         drawPanel.setCruiser(cruiser);
-        drawPanel.paintComponent(drawPanel.getGraphics());
+        drawPanel.repaint();
     }
     public class DrawPanel extends JPanel{
         private ITransport cruiser;
