@@ -107,8 +107,7 @@ public class FormDock extends JFrame {
                 case "RemoveCruiser":
                     Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
                     if(cruiser != null){
-                        FormCruiser removedCruiser = new FormCruiser();
-                        removedCruiser.setCruiser((Vehicle) cruiser);
+                        removedStages.enqueue(cruiser);
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "This dock place is empty");
