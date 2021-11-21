@@ -26,7 +26,7 @@ public class FormDock extends JPanel {
     private DockCollection dockCollection;
     private Queue<ITransport> removedStages;
     private JMenuBar menuBar;
-    private JMenu file;
+    private JMenu file, fileDock;
     private JMenuItem save, load, saveDock, loadDock;
     Random rnd = new Random();
     public FormDock() throws ParseException {
@@ -36,7 +36,8 @@ public class FormDock extends JPanel {
         cruiserWindow.setSize(1500, 800);
 
         menuBar = new JMenuBar();
-        file = new JMenu("File");
+        file = new JMenu("Collection");
+        fileDock = new JMenu("Dock");
 
         save = new JMenuItem("Save");
         load = new JMenuItem("Load");
@@ -44,9 +45,10 @@ public class FormDock extends JPanel {
         loadDock = new JMenuItem("Load Dock");
         file.add(save);
         file.add(load);
-        file.add(loadDock);
-        file.add(saveDock);
+        fileDock.add(loadDock);
+        fileDock.add(saveDock);
         menuBar.add(file);
+        menuBar.add(fileDock);
         save.setActionCommand("Save");
         load.setActionCommand("Load");
         loadDock.setActionCommand("LoadDock");
@@ -72,9 +74,9 @@ public class FormDock extends JPanel {
 
         listBoxDock.getSelectionModel().addListSelectionListener(e -> {
             dock = listBoxDock.getSelectedValue();
-            if(dock == null) cruiserWindow.getGraphics().clearRect(0,40, 1300, 740);
+            if(dock == null) cruiserWindow.getGraphics().clearRect(0,50, 1300, 750);
             else {
-                dock.setBounds(0, 40, 1300, 740);
+                dock.setBounds(0, 50, 1300, 750);
                 dock.setBackground(new Color(0,0,0,0));
                 elGroup.add(dock);
                 dock.setLayout(null);
@@ -159,7 +161,7 @@ public class FormDock extends JPanel {
                 case "CreateDock":
                     dock = dockCollection.AddDock(parkingName.getText());
                     if(dock != null){
-                        dock.setBounds(0, 40, 1300, 740);
+                        dock.setBounds(0, 50, 1300, 750);
                         dock.setBackground(new Color(0,0,0,0));
                         elGroup.add(dock);
                         dock.setLayout(null);
@@ -173,7 +175,7 @@ public class FormDock extends JPanel {
                 case "RemoveDock":
                     if(dockCollection.modelList.indexOf(dock) > -1){
                         dockCollection.DelDock(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
-                        cruiserWindow.getGraphics().clearRect(0,40, 1300, 740);
+                        cruiserWindow.getGraphics().clearRect(0,50, 1300, 750);
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "The collection of docks is empty");
@@ -258,6 +260,7 @@ public class FormDock extends JPanel {
     }
     public void Draw(){
         dock.Draw(dock.getGraphics());
+        repaint();
     }
 }
 
