@@ -66,6 +66,7 @@ public class FormCruiserConfig extends JFrame {
         mainColor.setBounds(400, 10, 90, 30);
         mainColor.setBorder(new LineBorder(Color.BLACK));
         mainColor.setHorizontalAlignment(JLabel.CENTER);
+        mainColor.setBackground(Color.GRAY);
         mainColor.setTransferHandler(new TransferHandler("background"));
         confPanel.add(mainColor);
 
@@ -109,6 +110,7 @@ public class FormCruiserConfig extends JFrame {
         addColor.setBounds(600, 10, 90, 30);
         addColor.setBorder(new LineBorder(Color.BLACK));
         addColor.setHorizontalAlignment(JLabel.CENTER);
+        addColor.setBackground(Color.CYAN);
         addColor.setTransferHandler(new TransferHandler("background"));
         confPanel.add(addColor);
 
@@ -308,13 +310,13 @@ public class FormCruiserConfig extends JFrame {
     public void setMainColor(){
         Cruiser cruiser = (Cruiser) pictureCruiser;
         cruiser.setMainColor(mainColor.getBackground());
-        drawPanel.setCruiser(cruiser);
+        drawPanel.setCruiser(pictureCruiser);
         drawPanel.repaint();
     }
     public void setAddColor(){
         WarCruiser cruiser = (WarCruiser) pictureCruiser;
         cruiser.setDopColor(addColor.getBackground());
-        drawPanel.setCruiser(cruiser);
+        drawPanel.setCruiser(pictureCruiser);
         drawPanel.repaint();
     }
     public class DrawPanel extends JPanel{
