@@ -5,7 +5,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class FormCruiserConfig extends JFrame {
@@ -13,8 +12,9 @@ public class FormCruiserConfig extends JFrame {
     private Dock dock;
     private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor, speedLabel, weightLabel, artilleryType, torpedType, zenitType;
     private MouseReaction mouseType, mouseColor;
-    private Cruiser pictureCruiser;
-    private JPanel confPanel, drawPanel, grayColor, darkRedColor, blueColor, whiteColor, purpleColor, cyanColor, greenColor, yellowColor;
+    private ITransport pictureCruiser;
+    private JPanel confPanel, grayColor, darkRedColor, blueColor, whiteColor, purpleColor, cyanColor, greenColor, yellowColor;
+    private DrawPanel drawPanel;
     private JSpinner chooseSpeed, chooseWeight, weaponCount;
     private JCheckBox setLocator, setHelicopterStation, setWeapons;
     private JButton createCruiser, cancel;
@@ -35,15 +35,16 @@ public class FormCruiserConfig extends JFrame {
         confPanel.setLayout(null);
         confPanel.setBounds(0,0, formConfig.getWidth(), formConfig.getHeight());
 
-        pictureCruiser = new Cruiser(100, 100, Color.GRAY, 180,60);
-        pictureCruiser.setBounds(150, 10, 200,150);
-
         pictureMask = new JLabel();
-        pictureMask.setLayout(null);
         pictureMask.setBounds(150, 10, 200,150);
         pictureMask.setBorder(new LineBorder(new Color(0,0,0)));
         pictureMask.setTransferHandler(new TransferHandler("text"));
         confPanel.add(pictureMask);
+
+        drawPanel = new DrawPanel();
+        drawPanel.setBounds(150, 10, 200,150);
+        drawPanel.setBorder(new LineBorder(new Color(0,0,0)));
+        confPanel.add(drawPanel);
 
         cruiser = new JLabel("Simple Cruiser");
         cruiser.setBounds(10,10, 100, 50);
@@ -220,47 +221,31 @@ public class FormCruiserConfig extends JFrame {
         PropertyChangeListener colorChangeListener = PropertyChangeEvent ->{
             if(pictureCruiser == null)return;
             if(pictureCruiser.getClass().equals(Cruiser.class) || pictureCruiser.getClass().equals(WarCruiser.class)){
-                pictureCruiser.setMainColor(mainColor.getBackground());
-                repaintModel();
+                setMainColor();
             }
             if(pictureCruiser.getClass().equals(WarCruiser.class)){
-                WarCruiser cruiser = (WarCruiser) pictureCruiser;
-                cruiser.setDopColor(addColor.getBackground());
-                repaintModel();
+                setAddColor();
             }
         };
         PropertyChangeListener typeChangeListener = PropertyChangeEvent ->{
             if(pictureMask.getText().equals("Simple Cruiser")){
-                confPanel.getGraphics().clearRect(150, 10, 200,150);
-                pictureCruiser = new Cruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, 180,60);
-                pictureCruiser.SetPosition(150, 50, formConfig.getWidth(), formConfig.getHeight());
-                repaintModel();
+                setCruiser();
             }
             else if(pictureMask.getText().equals("War Cruiser")){
-                pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60);
-                pictureCruiser.SetPosition(150, 50, confPanel.getWidth(),  confPanel.getHeight());
-                repaintModel();
+                setWarCruiser();
             }
             if(pictureCruiser != null && pictureCruiser.getClass().equals(WarCruiser.class)){
                 if(pictureMask.getText().equals("Artillery Type")){
-                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 0, (int)weaponCount.getValue() * 2);
-                    pictureCruiser.SetPosition(150, 50, confPanel.getWidth(),  confPanel.getHeight());
-                    repaintModel();
+                    setWeapon(0);
                 }
                 else if(pictureMask.getText().equals("Zenit Type")){
-                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 1, (int)weaponCount.getValue() * 2);
-                    pictureCruiser.SetPosition(150, 50, confPanel.getWidth(),  confPanel.getHeight());
-                    repaintModel();
+                    setWeapon(1);
                 }
                 else if(pictureMask.getText().equals("Torped Type")){
-                    pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, 2, (int)weaponCount.getValue() * 2);
-                    pictureCruiser.SetPosition(150, 50, confPanel.getWidth(),  confPanel.getHeight());
-                    repaintModel();
+                    setWeapon(2);
                 }
             }
-            pictureMask.setVisible(false);
-            pictureMask.setOpaque(false);
-            mainColor.setBackground(Color.GRAY);
+            pictureMask.setText("");
         };
         createCruiser.addActionListener(ActionEvent -> {
             if(pictureCruiser != null){
@@ -290,7 +275,6 @@ public class FormCruiserConfig extends JFrame {
     public class MouseReaction extends MouseAdapter{
         @Override
         public void mousePressed(MouseEvent e) {
-            pictureMask.setVisible(true);
             if(e.getSource().getClass().equals(JLabel.class)){
                 JLabel element = (JLabel) e.getSource();
                 TransferHandler handler = element.getTransferHandler();
@@ -303,7 +287,43 @@ public class FormCruiserConfig extends JFrame {
             }
         }
     }
-    public void repaintModel(){
-        pictureCruiser.DrawTransport(confPanel.getGraphics());
+    public void setCruiser(){
+        pictureCruiser = new Cruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, 180,60);
+        pictureCruiser.SetPosition(20, 50, formConfig.getWidth(), formConfig.getHeight());
+        drawPanel.setCruiser(pictureCruiser);
+        drawPanel.paintComponent(drawPanel.getGraphics());
+    }
+    public void setWarCruiser(){
+        pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60);
+        pictureCruiser.SetPosition(20, 50, confPanel.getWidth(),  confPanel.getHeight());
+        drawPanel.setCruiser(pictureCruiser);
+        drawPanel.paintComponent(drawPanel.getGraphics());
+    }
+    public void setWeapon(int ID){
+        pictureCruiser = new WarCruiser((int)chooseSpeed.getValue(), (int)chooseWeight.getValue(), Color.GRAY, Color.CYAN, setLocator.isSelected(), setHelicopterStation.isSelected(), setWeapons.isSelected(), 180,60, ID, (int)weaponCount.getValue() * 2);
+        pictureCruiser.SetPosition(20, 50, confPanel.getWidth(),  confPanel.getHeight());
+        drawPanel.setCruiser(pictureCruiser);
+        drawPanel.paintComponent(drawPanel.getGraphics());
+    }
+    public void setMainColor(){
+        Cruiser cruiser = (Cruiser) pictureCruiser;
+        cruiser.setMainColor(mainColor.getBackground());
+        drawPanel.setCruiser(cruiser);
+        drawPanel.paintComponent(drawPanel.getGraphics());
+    }
+    public void setAddColor(){
+        WarCruiser cruiser = (WarCruiser) pictureCruiser;
+        cruiser.setDopColor(addColor.getBackground());
+        drawPanel.setCruiser(cruiser);
+        drawPanel.paintComponent(drawPanel.getGraphics());
+    }
+    public class DrawPanel extends JPanel{
+        private ITransport cruiser;
+        public void setCruiser(ITransport cruiser) {
+            this.cruiser = cruiser;
+        }
+        public void paintComponent(Graphics gr) {
+            if (cruiser != null) cruiser.DrawTransport(gr);
+        }
     }
 }
