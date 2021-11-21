@@ -323,7 +323,9 @@ public class FormCruiserConfig extends JFrame {
             this.cruiser = cruiser;
         }
         public void paintComponent(Graphics gr) {
-            if(cruiser != null) cruiser.DrawTransport(gr);
+            if(cruiser != null) {
+                cruiser.DrawTransport(gr);
+            }
         }
     }
 }
