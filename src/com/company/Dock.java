@@ -129,6 +129,10 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         return name;
     }
 
+    public ArrayList<T> get_places() {
+        return _places;
+    }
+
     /// <summary>
     /// Метод отрисовки разметки парковочных мест
     /// </summary>

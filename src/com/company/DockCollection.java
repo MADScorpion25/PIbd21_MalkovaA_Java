@@ -1,6 +1,11 @@
 package com.company;
 
+import sun.invoke.empty.Empty;
+
 import javax.swing.*;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 import java.util.*;
 
 public class DockCollection {
@@ -20,6 +25,7 @@ public class DockCollection {
     /// Высота окна отрисовки
     /// </summary>
     private final int pictureHeight;
+    private final char separator = ':';
     /// <summary>
     /// Конструктор
     /// </summary>
@@ -61,11 +67,7 @@ public class DockCollection {
             modelList.removeElement(dock);
         }
     }
-    /// <summary>
-    /// Доступ к парковке
-    /// </summary>
-    /// <param name="ind"></param>
-    /// <returns></returns>
+
     public Dock<ITransport, IWeapon> indexator(String ind)
     {
         return dockStages.getOrDefault(ind, null);
@@ -76,6 +78,62 @@ public class DockCollection {
             return dockStages.get(key).indexator(index);
         }
         return null;
+    }
+    public boolean saveData(String filename) throws FileNotFoundException {
+        File file = new File(filename);
+        PrintWriter writer = new PrintWriter(file);
+        writer.println("DockCollection");
+        for(Map.Entry<String, Dock<ITransport, IWeapon>> dock : dockStages.entrySet()){
+            writer.println("Dock"+separator+dock.getKey());
+            ArrayList list = dock.getValue().get_places();
+            for(int i = 0; i < list.size(); i++){
+                ITransport cruiser = dock.getValue().indexator(i);
+                if(cruiser.getClass().equals(Cruiser.class)){
+                    writer.println("Cruiser"+separator+((Cruiser)cruiser).toString());
+                }
+                if(cruiser.getClass().equals(WarCruiser.class)){
+                    writer.println("WarCruiser"+separator+((WarCruiser)cruiser).toString());
+                }
+            }
+        }
+        writer.close();
+        return true;
+    }
+    public boolean loadData(String filename) throws FileNotFoundException {
+        Vehicle cruiser;
+        File file = new File(filename);
+        Scanner scanner = new Scanner(file);
+        String line = scanner.nextLine(), key = "";
+        if(!line.contains("DockCollection")){
+            return false;
+        }
+        while(scanner.hasNextLine()){
+            line = scanner.nextLine();
+            if(line.contains("Dock")){
+                key = line.split(String.valueOf(separator))[1];
+                AddDock(key);
+            }
+            else if(line.split(String.valueOf(separator))[0].equals("Cruiser")){
+                cruiser = new Cruiser(line.split(String.valueOf(separator))[1]);
+                int result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
+                if(result < 0){
+                    return false;
+                }
+                dockStages.get(key).add(cruiser);
+            }
+            else if(line.split(String.valueOf(separator))[0].equals("WarCruiser")){
+                cruiser = new WarCruiser(line.split(String.valueOf(separator))[1]);
+                int result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
+                if(result < 0){
+                    return false;
+                }
+                dockStages.get(key).add(cruiser);
+            }
+            else{
+                continue;
+            }
+        }
+        return true;
     }
 }
 
