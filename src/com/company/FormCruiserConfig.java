@@ -9,7 +9,7 @@ import java.beans.PropertyChangeListener;
 
 public class FormCruiserConfig extends JFrame {
     private JFrame formConfig;
-    private Dock dock;
+    private FormDock parentFrame;
     private JLabel pictureMask, cruiser, warCruiser, mainColor, addColor, speedLabel, weightLabel, artilleryType, torpedType, zenitType;
     private MouseReaction mouseType, mouseColor;
     private ITransport pictureCruiser;
@@ -18,8 +18,8 @@ public class FormCruiserConfig extends JFrame {
     private JSpinner chooseSpeed, chooseWeight, weaponCount;
     private JCheckBox setLocator, setHelicopterStation, setWeapons;
     private JButton createCruiser, cancel;
-    public FormCruiserConfig(Dock dock){
-        this.dock = dock;
+    public FormCruiserConfig(FormDock parentFrame){
+        this.parentFrame = parentFrame;
         formConfig = new JFrame("Choose Configuration");
         Init();
     }
@@ -251,16 +251,7 @@ public class FormCruiserConfig extends JFrame {
             pictureMask.setText("");
         };
         createCruiser.addActionListener(ActionEvent -> {
-            if(pictureCruiser != null){
-                int index = dock.Plus(dock, pictureCruiser);
-                if(index > -1){
-                    dock.add(cruiser);
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Dock is full!");
-                }
-                dock.Draw(dock.getGraphics());
-            }
+            parentFrame.addCruiser((Vehicle)pictureCruiser);
             formConfig.setVisible(false);
             formConfig.dispose();
         });
