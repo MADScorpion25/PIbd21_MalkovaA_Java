@@ -205,6 +205,7 @@ public class FormDock extends JPanel {
                         File file = dialog.getSelectedFile();
                         try {
                             dockCollection.saveData(file.getAbsolutePath());
+                            JOptionPane.showMessageDialog(null, "Collection saved successfully");
                         } catch (FileNotFoundException fileNotFoundException) {
                             fileNotFoundException.printStackTrace();
                         }
@@ -216,6 +217,7 @@ public class FormDock extends JPanel {
                         File file = dialog.getSelectedFile();
                         try {
                             dockCollection.loadData(file.getAbsolutePath());
+                            JOptionPane.showMessageDialog(null, "Collection loaded successfully");
                         } catch (FileNotFoundException fileNotFoundException) {
                             fileNotFoundException.printStackTrace();
                         }
@@ -227,6 +229,7 @@ public class FormDock extends JPanel {
                         File file = dialog.getSelectedFile();
                         try {
                             dockCollection.saveDataFromDock(file.getAbsolutePath(), dock);
+                            JOptionPane.showMessageDialog(null, "Dock saved successfully");
                         } catch (FileNotFoundException fileNotFoundException) {
                             fileNotFoundException.printStackTrace();
                         }
@@ -238,6 +241,7 @@ public class FormDock extends JPanel {
                         File file = dialog.getSelectedFile();
                         try {
                             dockCollection.loadDataFromDock(file.getAbsolutePath());
+                            JOptionPane.showMessageDialog(null, "Dock loaded successfully");
                         } catch (FileNotFoundException fileNotFoundException) {
                             fileNotFoundException.printStackTrace();
                         }
