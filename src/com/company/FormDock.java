@@ -104,7 +104,6 @@ public class FormDock extends JPanel {
         createCruiser.setBounds(1310, 10, 150, 30);
         rulePanel.add(createCruiser);
 
-
         removeCruiser = new JButton("Remove Cruiser");
         removeCruiser.setActionCommand("RemoveCruiser");
         removeCruiser.setBounds(1310, 100, 150, 30);
