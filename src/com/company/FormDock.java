@@ -249,6 +249,7 @@ public class FormDock extends JPanel {
                             fileNotFoundException.printStackTrace();
                         }
                     }
+                    dock.Draw(dock.getGraphics());
                     break;
             }
         }

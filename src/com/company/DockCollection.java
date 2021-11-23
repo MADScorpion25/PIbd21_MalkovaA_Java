@@ -159,9 +159,11 @@ public class DockCollection {
             if(line.contains("Dock")){
                 key = line.split(String.valueOf(separator))[1];
                 if(dockStages.containsKey(key)){
-                    DelDock(key);
+                    dockStages.get(key).get_places().clear();
                 }
-                AddDock(key);
+                else{
+                    AddDock(key);
+                }
             }
             else if(line.split(String.valueOf(separator))[0].equals("Cruiser")){
                 cruiser = new Cruiser(line.split(String.valueOf(separator))[1]);
