@@ -3,10 +3,14 @@ package com.company;
 import sun.misc.Queue;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.Random;
 
@@ -21,12 +25,35 @@ public class FormDock extends JPanel {
     private Dock<ITransport, IWeapon> dock;
     private DockCollection dockCollection;
     private Queue<ITransport> removedStages;
+    private JMenuBar menuBar;
+    private JMenu file, fileDock;
+    private JMenuItem save, load, saveDock, loadDock;
     Random rnd = new Random();
     public FormDock() throws ParseException {
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cruiserWindow.setTitle("Cruiser Moving");
         cruiserWindow.setSize(1500, 800);
+
+        menuBar = new JMenuBar();
+        file = new JMenu("Collection");
+        fileDock = new JMenu("Dock");
+
+        save = new JMenuItem("Save");
+        load = new JMenuItem("Load");
+        saveDock = new JMenuItem("Save Dock");
+        loadDock = new JMenuItem("Load Dock");
+        file.add(save);
+        file.add(load);
+        fileDock.add(loadDock);
+        fileDock.add(saveDock);
+        menuBar.add(file);
+        menuBar.add(fileDock);
+        save.setActionCommand("Save");
+        load.setActionCommand("Load");
+        loadDock.setActionCommand("LoadDock");
+        saveDock.setActionCommand("SaveDock");
+        cruiserWindow.setJMenuBar(menuBar);
 
         dockCollection = new DockCollection(1300, 700);
 
@@ -47,8 +74,14 @@ public class FormDock extends JPanel {
 
         listBoxDock.getSelectionModel().addListSelectionListener(e -> {
             dock = listBoxDock.getSelectedValue();
-            if(dock == null) cruiserWindow.getGraphics().clearRect(0,0, 1300, 700);
-            else Draw();
+            if(dock == null) cruiserWindow.getGraphics().clearRect(0,50, 1300, 750);
+            else {
+                dock.setBounds(0, 50, 1300, 750);
+                dock.setBackground(new Color(0,0,0,0));
+                elGroup.add(dock);
+                dock.setLayout(null);
+                Draw();
+            }
         });
 
         createDock = new JButton("Create Dock");
@@ -70,7 +103,6 @@ public class FormDock extends JPanel {
         createCruiser.setActionCommand("CreateCruiser");
         createCruiser.setBounds(1310, 10, 150, 30);
         rulePanel.add(createCruiser);
-
 
         removeCruiser = new JButton("Remove Cruiser");
         removeCruiser.setActionCommand("RemoveCruiser");
@@ -95,6 +127,10 @@ public class FormDock extends JPanel {
         createDock.addActionListener(actionListener);
         removeDock.addActionListener(actionListener);
         getRemovedCruiser.addActionListener(actionListener);
+        save.addActionListener(actionListener);
+        load.addActionListener(actionListener);
+        saveDock.addActionListener(actionListener);
+        loadDock.addActionListener(actionListener);
         cruiserWindow.setVisible(true);
         super.repaint();
     }
@@ -103,6 +139,10 @@ public class FormDock extends JPanel {
     }
     public class ButtonActions extends JPanel implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            JFileChooser dialog = new JFileChooser();
+            FileFilter filter = new FileNameExtensionFilter("TXT file", "txt");
+            dialog.setFileFilter(filter);
+            int ret;
             switch (e.getActionCommand()) {
                 case "CreateCruiser":
                     createConfigWindow();
@@ -120,7 +160,7 @@ public class FormDock extends JPanel {
                 case "CreateDock":
                     dock = dockCollection.AddDock(parkingName.getText());
                     if(dock != null){
-                        dock.setBounds(0, 0, 1300, 700);
+                        dock.setBounds(0, 50, 1300, 750);
                         dock.setBackground(new Color(0,0,0,0));
                         elGroup.add(dock);
                         dock.setLayout(null);
@@ -134,7 +174,7 @@ public class FormDock extends JPanel {
                 case "RemoveDock":
                     if(dockCollection.modelList.indexOf(dock) > -1){
                         dockCollection.DelDock(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
-                        cruiserWindow.getGraphics().clearRect(0,0, 1300, 700);
+                        cruiserWindow.getGraphics().clearRect(0,50, 1300, 750);
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "The collection of docks is empty");
@@ -158,6 +198,59 @@ public class FormDock extends JPanel {
                     }
                     Draw();
                     break;
+                case "Save":
+                    ret = dialog.showDialog(null, "Открыть файл");
+                    if(ret == JFileChooser.APPROVE_OPTION) {
+                        File file = dialog.getSelectedFile();
+                        try {
+                            if(dockCollection.saveData(file.getAbsolutePath())){
+                                JOptionPane.showMessageDialog(null, "Collection saved successfully");
+                            }
+                        } catch (FileNotFoundException fileNotFoundException) {
+                            fileNotFoundException.printStackTrace();
+                        }
+                    }
+                    break;
+                case "Load":
+                    ret = dialog.showDialog(null, "Открыть файл");
+                    if(ret == JFileChooser.APPROVE_OPTION) {
+                        File file = dialog.getSelectedFile();
+                        try {
+                            if(dockCollection.loadData(file.getAbsolutePath())){
+                                JOptionPane.showMessageDialog(null, "Collection loaded successfully");
+                            }
+                        } catch (FileNotFoundException fileNotFoundException) {
+                            fileNotFoundException.printStackTrace();
+                        }
+                    }
+                    break;
+                case "SaveDock":
+                    ret = dialog.showDialog(null, "Открыть файл");
+                    if(ret == JFileChooser.APPROVE_OPTION) {
+                        File file = dialog.getSelectedFile();
+                        try {
+                            if(dockCollection.saveDataFromDock(file.getAbsolutePath(), dock)){
+                                JOptionPane.showMessageDialog(null, "Dock saved successfully");
+                            }
+                        } catch (FileNotFoundException fileNotFoundException) {
+                            fileNotFoundException.printStackTrace();
+                        }
+                    }
+                    break;
+                case "LoadDock":
+                    ret = dialog.showDialog(null, "Открыть файл");
+                    if(ret == JFileChooser.APPROVE_OPTION) {
+                        File file = dialog.getSelectedFile();
+                        try {
+                            if(dockCollection.loadDataFromDock(file.getAbsolutePath())){
+                                JOptionPane.showMessageDialog(null, "Dock loaded successfully");
+                            }
+                        } catch (FileNotFoundException fileNotFoundException) {
+                            fileNotFoundException.printStackTrace();
+                        }
+                    }
+                    dock.Draw(dock.getGraphics());
+                    break;
             }
         }
     }
@@ -175,6 +268,7 @@ public class FormDock extends JPanel {
     }
     public void Draw(){
         dock.Draw(dock.getGraphics());
+        repaint();
     }
 }
 

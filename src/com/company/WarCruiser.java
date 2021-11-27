@@ -19,6 +19,7 @@ public class WarCruiser extends Cruiser{
     /// </summary>
     //поле ДопКласса
     IWeapon weapons;
+    private int weaponID = -1, weaponCount = 0;
     private boolean Artillery;
 
     public int getMaxSpeed() {
@@ -85,15 +86,20 @@ public class WarCruiser extends Cruiser{
             switch (ID){
                 case 0:
                     weapons = new Artillery();
+                    weaponID = 0;
                     break;
                 case 1:
-                    weapons = new ZenitWeapon();
+                    weapons = new ZenitArtillery();
+                    weaponID = 1;
                     break;
                 case 2:
                     weapons = new TorpedWeapon();
+                    weaponID = 2;
                     break;
             }
-            weapons.setWeaponNumber((rnd.nextInt() % 3 + 1) * 2);
+            int count = Math.abs((rnd.nextInt() % 3 + 1) * 2);
+            weapons.setWeaponNumber(count);
+            weaponCount = count;
         }
         DopColor = dopColor;
         Locator = locator;
@@ -109,6 +115,23 @@ public class WarCruiser extends Cruiser{
         HelicopterStation = helicopterStation;
         Artillery = artillery;
     }
+    public WarCruiser(String info) {
+        super(info);
+        String[] strs = info.split(String.valueOf(separator));
+        if (strs.length == 9)
+        {
+            MaxSpeed = Integer.parseInt(strs[0]);
+            Weight = Float.parseFloat(strs[1]);
+            MainColor = Color.decode(strs[2]);
+            DopColor = Color.decode(strs[3]);
+            Locator = Boolean.parseBoolean(strs[4]);
+            HelicopterStation = Boolean.parseBoolean(strs[5]);
+            Artillery = Boolean.parseBoolean(strs[6]);
+            weaponID = Integer.parseInt(strs[7]);
+            weaponCount = Integer.parseInt(strs[8]);
+            setWeaponType(weaponID, weaponCount);
+        }
+    }
     public void setWeaponType(int ID, int count){
         switch (ID){
             case 0:
@@ -121,6 +144,8 @@ public class WarCruiser extends Cruiser{
                 weapons = new TorpedWeapon();
                 break;
         }
+        weaponID = ID;
+        weaponCount = count;
         weapons.setWeaponNumber(count);
     }
     @Override
@@ -151,5 +176,11 @@ public class WarCruiser extends Cruiser{
             g.setColor(Color.white);
             g.drawOval(startPosX + 10, startPosY + 15, 30, 30);
         }
+    }
+
+    @Override
+    public String toString() {
+        String res = super.toString();
+        return res+separator+super.toHexString(DopColor)+separator+Locator+separator+HelicopterStation+separator+Artillery+separator+String.valueOf(weaponID)+separator+String.valueOf(weaponCount);
     }
 }

@@ -28,6 +28,7 @@ public class Cruiser extends Vehicle {
     /// Дополнительный цвет
     /// </summary>
     public Color DopColor;
+    protected final char separator = ';';
 
     public int getMaxSpeed() {
         return MaxSpeed;
@@ -73,6 +74,16 @@ public class Cruiser extends Vehicle {
         MainColor = mainColor;
         this.pictureWidth= cruiserWidth;
         this.pictureHeight = cruiserHeight;
+    }
+    public Cruiser(String info)
+    {
+        String[] strs = info.split(String.valueOf(separator));
+        if (strs.length == 3)
+        {
+            MaxSpeed = Integer.parseInt(strs[0]);
+            Weight = Float.parseFloat(strs[1]);
+            MainColor = Color.decode(strs[2]);
+        }
     }
     /// <summary>
     /// Изменение направления пермещения
@@ -140,5 +151,15 @@ public class Cruiser extends Vehicle {
         g.setColor(Color.BLACK);
         g.fillRect(startPosX - 5, startPosY + 10, 5, 17);
         g.fillRect(startPosX - 5, startPosY + 33, 5, 17);
+    }
+
+    @Override
+    public String toString() {
+        String res = String.valueOf(MaxSpeed)+separator+String.valueOf(Weight)+separator+toHexString(MainColor);
+        return res;
+    }
+    public String toHexString(Color color) {
+        String res = "#"+Integer.toHexString(color.getRGB()).substring(2);;
+        return res;
     }
 }
