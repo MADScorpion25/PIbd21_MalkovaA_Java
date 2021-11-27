@@ -87,7 +87,7 @@ public class WarCruiser extends Cruiser{
                     weapons = new Artillery();
                     break;
                 case 1:
-                    weapons = new ZenitArtillery();
+                    weapons = new ZenitWeapon();
                     break;
                 case 2:
                     weapons = new TorpedWeapon();

@@ -11,11 +11,6 @@ public class Artillery implements IWeapon{ ;
         else weaponQuantity = Six;
     }
 
-    @Override
-    public int getWeaponNumber() {
-        return weaponQuantity.getNumber();
-    }
-
     public void drawWeapons(Graphics gr, Color dopColor, int startPosX, int startPosY){
         Graphics2D g = (Graphics2D) gr;
         g.setColor(Color.BLACK);

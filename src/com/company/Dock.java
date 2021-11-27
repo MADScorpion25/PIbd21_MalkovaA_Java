@@ -82,25 +82,25 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         return null;
     }
     public boolean LessOrEqual(Dock<T, P> p, int number){
-        int indexSum = 0;
+        int count = 0;
         for(int i = 0; i < p._places.size(); i++)
         {
            if(_places.get(i) != null){
-               indexSum += i;
+               count++;
            }
         }
-        return indexSum <= number;
+        return count <= number;
     }
 
     public boolean MoreOrEqual(Dock<T, P> p, int number){
-        int indexSum = 0;
+        int count = 0;
         for(int i = 0; i < p._places.size(); i++)
         {
             if(_places.get(i) != null){
-                indexSum += i;
+                count++;
             }
         }
-        return indexSum >= number;
+        return count >= number;
     }
     public int get_parkPlacesWidth() {
         return _parkPlacesWidth;
@@ -128,7 +128,6 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     public String toString() {
         return name;
     }
-
     /// <summary>
     /// Метод отрисовки разметки парковочных мест
     /// </summary>
@@ -159,7 +158,8 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         }
     }
     public T indexator(int index){
-        return _places.get(index);
+        if(index > -1 && index < _places.size()) return _places.get(index);
+        return null;
     }
 }
 
