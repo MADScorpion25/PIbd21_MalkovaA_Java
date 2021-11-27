@@ -49,7 +49,7 @@ public class Cruiser extends Vehicle {
         return MainColor;
     }
 
-    private void setMainColor(Color mainColor) {
+    public void setMainColor(Color mainColor) {
         MainColor = mainColor;
     }
 

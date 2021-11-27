@@ -41,7 +41,7 @@ public class WarCruiser extends Cruiser{
         return MainColor;
     }
 
-    private void setMainColor(Color mainColor) {
+    public void setMainColor(Color mainColor) {
         MainColor = mainColor;
     }
 
@@ -49,7 +49,7 @@ public class WarCruiser extends Cruiser{
         return DopColor;
     }
 
-    private void setDopColor(Color dopColor) {
+    public void setDopColor(Color dopColor) {
         DopColor = dopColor;
     }
 
@@ -99,6 +99,29 @@ public class WarCruiser extends Cruiser{
         Locator = locator;
         HelicopterStation = helicopterStation;
         Artillery = artillery;
+    }
+    public WarCruiser(int maxSpeed, float weight, Color mainColor, Color dopColor,
+                      boolean locator, boolean helicopterStation, boolean artillery, int cruiserWidth, int cruiserHeight, int ID, int count) {
+        super(maxSpeed, weight, mainColor, cruiserWidth, cruiserHeight);
+        setWeaponType(ID, count);
+        DopColor = dopColor;
+        Locator = locator;
+        HelicopterStation = helicopterStation;
+        Artillery = artillery;
+    }
+    public void setWeaponType(int ID, int count){
+        switch (ID){
+            case 0:
+                weapons = new Artillery();
+                break;
+            case 1:
+                weapons = new ZenitArtillery();
+                break;
+            case 2:
+                weapons = new TorpedWeapon();
+                break;
+        }
+        weapons.setWeaponNumber(count);
     }
     @Override
     public void DrawTransport(Graphics gr) {
