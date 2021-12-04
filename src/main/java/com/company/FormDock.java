@@ -1,5 +1,8 @@
 package com.company;
 
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import sun.misc.Queue;
 
 import javax.swing.*;
@@ -11,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Random;
 
@@ -28,13 +32,15 @@ public class FormDock extends JPanel {
     private JMenuBar menuBar;
     private JMenu file, fileDock;
     private JMenuItem save, load, saveDock, loadDock;
+    //private static final Logger logger = Logger.getLogger(FormDock.class);
     Random rnd = new Random();
-    public FormDock() throws ParseException {
+    public FormDock() throws ParseException{
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cruiserWindow.setTitle("Cruiser Moving");
         cruiserWindow.setSize(1500, 800);
 
+       // logger.log(Level.FATAL, "Fat Hello");
         menuBar = new JMenuBar();
         file = new JMenu("Collection");
         fileDock = new JMenu("Dock");
@@ -148,9 +154,15 @@ public class FormDock extends JPanel {
                     createConfigWindow();
                     break;
                 case "RemoveCruiser":
-                    Cruiser cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
+                    Cruiser cruiser = null;
+                    try {
+                        cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
+                    } catch (DockNotFoundException dockNotFoundException) {
+                        dockNotFoundException.printStackTrace();
+                    }
                     if(cruiser != null){
                         removedStages.enqueue(cruiser);
+                        //logger.info("Cruiser removed: "+cruiser.toString());
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "This dock place is empty");
@@ -160,6 +172,7 @@ public class FormDock extends JPanel {
                 case "CreateDock":
                     dock = dockCollection.AddDock(parkingName.getText());
                     if(dock != null){
+                        //logger.info("Dock is created: "+dock.getName());
                         dock.setBounds(0, 50, 1300, 750);
                         dock.setBackground(new Color(0,0,0,0));
                         elGroup.add(dock);
@@ -254,10 +267,10 @@ public class FormDock extends JPanel {
             }
         }
     }
-    public void addCruiser(Vehicle cruiser){
+    public void addCruiser(Vehicle cruiser) throws DockOverflowException {
         if(cruiser != null){
-            int index = dock.Plus(dock, cruiser);
-            if(index > -1){
+            boolean index = dock.Plus(dock, cruiser);
+            if(index){
                 dock.add(cruiser);
             }
             else{

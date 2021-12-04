@@ -1,11 +1,7 @@
 package com.company;
 
-import sun.invoke.empty.Empty;
-
 import javax.swing.*;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 import java.util.*;
 
 public class DockCollection {
@@ -102,6 +98,9 @@ public class DockCollection {
     public boolean loadData(String filename) throws FileNotFoundException {
         Vehicle cruiser;
         File file = new File(filename);
+        if(!file.exists()){
+            throw new FileNotFoundException();
+        }
         Scanner scanner = new Scanner(file);
         String line = scanner.nextLine(), key = "";
         if(!line.contains("DockCollection")){
@@ -115,16 +114,26 @@ public class DockCollection {
             }
             else if(line.split(String.valueOf(separator))[0].equals("Cruiser")){
                 cruiser = new Cruiser(line.split(String.valueOf(separator))[1]);
-                int result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
-                if(result < 0){
+                boolean result = false;
+                try {
+                    result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
+                } catch (DockOverflowException e) {
+                    e.printStackTrace();
+                }
+                if(!result){
                     return false;
                 }
                 dockStages.get(key).add(cruiser);
             }
             else if(line.split(String.valueOf(separator))[0].equals("WarCruiser")){
                 cruiser = new WarCruiser(line.split(String.valueOf(separator))[1]);
-                int result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
-                if(result < 0){
+                boolean result = false;
+                try {
+                    result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
+                } catch (DockOverflowException e) {
+                    e.printStackTrace();
+                }
+                if(!result){
                     return false;
                 }
                 dockStages.get(key).add(cruiser);
@@ -152,6 +161,9 @@ public class DockCollection {
     public boolean loadDataFromDock(String filename) throws FileNotFoundException {
         Vehicle cruiser;
         File file = new File(filename);
+        if(!file.exists()){
+            throw new FileNotFoundException();
+        }
         Scanner scanner = new Scanner(file);
         String line, key = "";
         while(scanner.hasNextLine()){
@@ -167,16 +179,26 @@ public class DockCollection {
             }
             else if(line.split(String.valueOf(separator))[0].equals("Cruiser")){
                 cruiser = new Cruiser(line.split(String.valueOf(separator))[1]);
-                int result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
-                if(result < 0){
+                boolean result = false;
+                try {
+                    result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
+                } catch (DockOverflowException e) {
+                    e.printStackTrace();
+                }
+                if(!result){
                     return false;
                 }
                 dockStages.get(key).add(cruiser);
             }
             else if(line.split(String.valueOf(separator))[0].equals("WarCruiser")){
                 cruiser = new WarCruiser(line.split(String.valueOf(separator))[1]);
-                int result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
-                if(result < 0){
+                boolean result = false;
+                try {
+                    result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
+                } catch (DockOverflowException e) {
+                    e.printStackTrace();
+                }
+                if(!result){
                     return false;
                 }
                 dockStages.get(key).add(cruiser);

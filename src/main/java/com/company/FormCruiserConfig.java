@@ -251,7 +251,11 @@ public class FormCruiserConfig extends JFrame {
             pictureMask.setText("");
         };
         createCruiser.addActionListener(ActionEvent -> {
-            parentFrame.addCruiser((Vehicle)pictureCruiser);
+            try {
+                parentFrame.addCruiser((Vehicle)pictureCruiser);
+            } catch (DockOverflowException e) {
+                e.printStackTrace();
+            }
             formConfig.setVisible(false);
             formConfig.dispose();
         });

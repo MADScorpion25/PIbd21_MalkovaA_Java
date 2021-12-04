@@ -51,16 +51,12 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     /// <param name="p">Парковка</param>
     /// <param name="cruiser">Добавляемый крейсер</param>
     /// <returns></returns>
-    public int Plus(Dock<T, P> p, T cruiser)
-    {
-        if (p._maxCount <= p._places.size()) return -1;
-
-        for(int i = 0; i < p._places.size() + 1; i++)
-        {
-            p._places.add(cruiser);
-            return p._places.indexOf(cruiser);
+    public boolean Plus(Dock<T, P> p, T cruiser) throws DockOverflowException {
+        if (p._maxCount <= p._places.size()) {
+            throw new DockOverflowException();
         }
-        return -1;
+        p._places.add(cruiser);
+        return true;
     }
     /// <summary>
     /// Перегрузка оператора вычитания
@@ -69,17 +65,17 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     /// <param name="p">Парковка</param>
     /// <param name="index">Индекс места, с которого пытаемся извлечь объект</param>
     /// <returns></returns>
-    public T Minus(Dock<T, P> p, int index)
-    {
+    public T Minus(Dock<T, P> p, int index) throws DockNotFoundException {
         T removedCruiser;
-
         if (index > -1 && index < p._places.size() && p._places.get(index) != null)
         {
             removedCruiser = p._places.get(index);
             p._places.remove(index);
             return removedCruiser;
         }
-        return null;
+        else{
+            throw new DockNotFoundException(index);
+        }
     }
     public boolean LessOrEqual(Dock<T, P> p, int number){
         int indexSum = 0;
