@@ -37,7 +37,6 @@ public class FormDock extends JPanel {
         cruiserWindow.setTitle("Cruiser Moving");
         cruiserWindow.setSize(1500, 800);
 
-       logger.log(Level.FATAL, "Fat Hello");
         menuBar = new JMenuBar();
         file = new JMenu("Collection");
         fileDock = new JMenu("Dock");
@@ -154,15 +153,11 @@ public class FormDock extends JPanel {
                     Cruiser cruiser = null;
                     try {
                         cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
-                    } catch (DockNotFoundException dockNotFoundException) {
-                        dockNotFoundException.printStackTrace();
-                    }
-                    if(cruiser != null){
                         removedStages.enqueue(cruiser);
                         logger.info("Cruiser removed: "+cruiser.toString());
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "This dock place is empty");
+                    } catch (DockNotFoundException dockNotFoundException) {
+                        logger.log(Level.WARN, "Dock not found: "+Integer.parseInt(removeIdInput.getText()));
+                        JOptionPane.showMessageDialog(null, "Dock not found", "Warning!", JOptionPane.WARNING_MESSAGE);
                     }
                     Draw();
                     break;
