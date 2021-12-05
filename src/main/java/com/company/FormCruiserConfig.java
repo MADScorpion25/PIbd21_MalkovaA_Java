@@ -1,5 +1,8 @@
 package com.company;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
@@ -251,13 +254,14 @@ public class FormCruiserConfig extends JFrame {
             pictureMask.setText("");
         };
         createCruiser.addActionListener(ActionEvent -> {
-            try {
-                parentFrame.addCruiser((Vehicle)pictureCruiser);
-            } catch (DockOverflowException e) {
-                e.printStackTrace();
+            if(pictureCruiser == null){
+                throw new NullPointerException();
             }
-            formConfig.setVisible(false);
-            formConfig.dispose();
+            else{
+                parentFrame.addCruiser((Vehicle)pictureCruiser);
+                formConfig.setVisible(false);
+                formConfig.dispose();
+            }
         });
         cancel.addActionListener(ActionEvent ->  {
             formConfig.setVisible(false);

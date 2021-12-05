@@ -156,6 +156,7 @@ public class FormDock extends JPanel {
                         cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
                         removedStages.enqueue(cruiser);
                         logger.info("Cruiser removed: "+cruiser.toString());
+                        Draw();
                     } catch (DockNotFoundException dockNotFoundException) {
                         logger.log(Level.WARN, "Dock not found: "+Integer.parseInt(removeIdInput.getText()));
                         JOptionPane.showMessageDialog(null, "Dock not found", "Warning!", JOptionPane.WARNING_MESSAGE);
@@ -165,7 +166,6 @@ public class FormDock extends JPanel {
                     } catch (Exception exception){
                         logger.log(Level.FATAL, "Fatal unexpected error");
                     }
-                    Draw();
                     break;
                 case "CreateDock":
                     if(parkingName.getText().equals("")){
@@ -241,6 +241,8 @@ public class FormDock extends JPanel {
                         } catch (FileNotFoundException fileNotFoundException) {
                             logger.log(Level.ERROR, "File not found");
                             JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
+                        } catch (Exception exception) {
+                            logger.log(Level.FATAL, "Fatal unexpected error");
                         }
                     }
                     break;
@@ -265,29 +267,35 @@ public class FormDock extends JPanel {
                             if(dockCollection.loadDataFromDock(file.getAbsolutePath())){
                                 JOptionPane.showMessageDialog(null, "Dock loaded successfully");
                             }
+                            dock.Draw(dock.getGraphics());
                         } catch (DockOverflowException dockOverflowException) {
                             logger.log(Level.WARN, "Dock overflow exception");
                             JOptionPane.showMessageDialog(null, "Dock overflow", "Waring", JOptionPane.WARNING_MESSAGE);
                         } catch (FileNotFoundException fileNotFoundException) {
                             logger.log(Level.ERROR, "File not found");
                             JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
+                        } catch (Exception exception) {
+                            logger.log(Level.FATAL, "Fatal unexpected error");
                         }
                     }
-                    dock.Draw(dock.getGraphics());
                     break;
             }
         }
     }
-    public void addCruiser(Vehicle cruiser) throws DockOverflowException {
+    public void addCruiser(Vehicle cruiser){
         if(cruiser != null){
-            boolean index = dock.Plus(dock, cruiser);
-            if(index){
-                dock.add(cruiser);
+            try {
+                dock.Plus(dock, cruiser);
+                dock.Draw(dock.getGraphics());
+            } catch (DockOverflowException dockOverflowException) {
+                logger.log(Level.WARN, "Dock overflow exception");
+                JOptionPane.showMessageDialog(null, "Dock is full", "Warning", JOptionPane.WARNING_MESSAGE);
+            } catch (NullPointerException nullPointerException) {
+                logger.log(Level.ERROR, "Dock is not created or chosen");
+                JOptionPane.showMessageDialog(null, "Dock is not created or chosen", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception exception) {
+                logger.log(Level.FATAL, "Fatal unexpected error");
             }
-            else{
-                JOptionPane.showMessageDialog(null, "Dock is full!");
-            }
-            dock.Draw(dock.getGraphics());
         }
     }
     public void Draw(){
