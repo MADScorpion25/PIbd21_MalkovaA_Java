@@ -158,10 +158,18 @@ public class FormDock extends JPanel {
                     } catch (DockNotFoundException dockNotFoundException) {
                         logger.log(Level.WARN, "Dock not found: "+Integer.parseInt(removeIdInput.getText()));
                         JOptionPane.showMessageDialog(null, "Dock not found", "Warning!", JOptionPane.WARNING_MESSAGE);
+                    } catch (NumberFormatException numberFormatException) {
+                        logger.log(Level.WARN, "Not correct enter format");
+                        JOptionPane.showMessageDialog(null, "Not correct enter format", "Warning!", JOptionPane.WARNING_MESSAGE);
+                    } catch (Exception exception){
+                        logger.log(Level.FATAL, "Fatal unexpected error");
                     }
                     Draw();
                     break;
                 case "CreateDock":
+                    if(parkingName.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Enter dock name", "Warning", JOptionPane.ERROR_MESSAGE);
+                    }
                     dock = dockCollection.AddDock(parkingName.getText());
                     if(dock != null){
                         logger.log(Level.INFO, "Dock is created: "+dock.getName());
@@ -212,7 +220,8 @@ public class FormDock extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Collection saved successfully");
                             }
                         } catch (FileNotFoundException fileNotFoundException) {
-                            fileNotFoundException.printStackTrace();
+                            logger.log(Level.ERROR, "File not found");
+                            JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                     break;
@@ -225,7 +234,8 @@ public class FormDock extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Collection loaded successfully");
                             }
                         } catch (FileNotFoundException fileNotFoundException) {
-                            fileNotFoundException.printStackTrace();
+                            logger.log(Level.ERROR, "File not found");
+                            JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                     break;
