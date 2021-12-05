@@ -219,9 +219,7 @@ public class FormDock extends JPanel {
                             if(dockCollection.saveData(file.getAbsolutePath())){
                                 JOptionPane.showMessageDialog(null, "Collection saved successfully");
                             }
-                        } catch (FileNotFoundException fileNotFoundException) {
-                            logger.log(Level.ERROR, "File not found");
-                            JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
+                        } catch (Exception exception) {
                         }
                     }
                     break;
@@ -247,8 +245,7 @@ public class FormDock extends JPanel {
                             if(dockCollection.saveDataFromDock(file.getAbsolutePath(), dock)){
                                 JOptionPane.showMessageDialog(null, "Dock saved successfully");
                             }
-                        } catch (FileNotFoundException fileNotFoundException) {
-                            fileNotFoundException.printStackTrace();
+                        } catch (Exception exception) {
                         }
                     }
                     break;
@@ -261,7 +258,8 @@ public class FormDock extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Dock loaded successfully");
                             }
                         } catch (FileNotFoundException fileNotFoundException) {
-                            fileNotFoundException.printStackTrace();
+                            logger.log(Level.ERROR, "File not found");
+                            JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                     dock.Draw(dock.getGraphics());
