@@ -29,7 +29,7 @@ public class FormDock extends JPanel {
     private JMenuBar menuBar;
     private JMenu file, fileDock;
     private JMenuItem save, load, saveDock, loadDock;
-    //private static final Logger logger = Logger.getLogger(FormDock.class);
+    private static final Logger logger = Logger.getLogger(FormDock.class);
     Random rnd = new Random();
     public FormDock() throws ParseException{
         cruiserWindow = new JFrame();
@@ -37,7 +37,7 @@ public class FormDock extends JPanel {
         cruiserWindow.setTitle("Cruiser Moving");
         cruiserWindow.setSize(1500, 800);
 
-       // logger.log(Level.FATAL, "Fat Hello");
+       logger.log(Level.FATAL, "Fat Hello");
         menuBar = new JMenuBar();
         file = new JMenu("Collection");
         fileDock = new JMenu("Dock");
@@ -159,7 +159,7 @@ public class FormDock extends JPanel {
                     }
                     if(cruiser != null){
                         removedStages.enqueue(cruiser);
-                        //logger.info("Cruiser removed: "+cruiser.toString());
+                        logger.info("Cruiser removed: "+cruiser.toString());
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "This dock place is empty");
@@ -169,7 +169,7 @@ public class FormDock extends JPanel {
                 case "CreateDock":
                     dock = dockCollection.AddDock(parkingName.getText());
                     if(dock != null){
-                        //logger.info("Dock is created: "+dock.getName());
+                        logger.log(Level.INFO, "Dock is created: "+dock.getName());
                         dock.setBounds(0, 50, 1300, 750);
                         dock.setBackground(new Color(0,0,0,0));
                         elGroup.add(dock);
