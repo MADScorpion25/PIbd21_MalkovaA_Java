@@ -95,7 +95,7 @@ public class DockCollection {
         writer.close();
         return true;
     }
-    public boolean loadData(String filename) throws FileNotFoundException {
+    public boolean loadData(String filename) throws FileNotFoundException, DockOverflowException {
         Vehicle cruiser;
         File file = new File(filename);
         if(!file.exists()){
@@ -128,11 +128,7 @@ public class DockCollection {
             else if(line.split(String.valueOf(separator))[0].equals("WarCruiser")){
                 cruiser = new WarCruiser(line.split(String.valueOf(separator))[1]);
                 boolean result = false;
-                try {
-                    result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
-                } catch (DockOverflowException e) {
-                    e.printStackTrace();
-                }
+                result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
                 if(!result){
                     return false;
                 }
@@ -158,7 +154,7 @@ public class DockCollection {
         writer.close();
         return true;
     }
-    public boolean loadDataFromDock(String filename) throws FileNotFoundException {
+    public boolean loadDataFromDock(String filename) throws FileNotFoundException, DockOverflowException {
         Vehicle cruiser;
         File file = new File(filename);
         if(!file.exists()){
@@ -180,11 +176,7 @@ public class DockCollection {
             else if(line.split(String.valueOf(separator))[0].equals("Cruiser")){
                 cruiser = new Cruiser(line.split(String.valueOf(separator))[1]);
                 boolean result = false;
-                try {
-                    result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
-                } catch (DockOverflowException e) {
-                    e.printStackTrace();
-                }
+                result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
                 if(!result){
                     return false;
                 }

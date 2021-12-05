@@ -82,6 +82,7 @@ public class FormDock extends JPanel {
                 dock.setBackground(new Color(0,0,0,0));
                 elGroup.add(dock);
                 dock.setLayout(null);
+                logger.log(Level.INFO, "Go to dock: "+dock.getName());
                 Draw();
             }
         });
@@ -150,7 +151,7 @@ public class FormDock extends JPanel {
                     createConfigWindow();
                     break;
                 case "RemoveCruiser":
-                    Cruiser cruiser = null;
+                    Cruiser cruiser;
                     try {
                         cruiser = (Cruiser) dock.Minus(dock, Integer.parseInt(removeIdInput.getText()));
                         removedStages.enqueue(cruiser);
@@ -186,6 +187,7 @@ public class FormDock extends JPanel {
                     break;
                 case "RemoveDock":
                     if(dockCollection.modelList.indexOf(dock) > -1){
+                        logger.log(Level.INFO, "Dock is removed: "+dock.getName());
                         dockCollection.DelDock(dockCollection.modelList.get(dockCollection.modelList.indexOf(dock)).getName());
                         cruiserWindow.getGraphics().clearRect(0,50, 1300, 750);
                     }
@@ -198,8 +200,9 @@ public class FormDock extends JPanel {
                     if(!removedStages.isEmpty()){
                         try {
                             cruiser = (Cruiser) removedStages.dequeue();
+                            logger.log(Level.INFO, "Cruiser is dequeue: "+cruiser.toString());
                         } catch (InterruptedException interruptedException) {
-                            interruptedException.printStackTrace();
+                            logger.log(Level.ERROR, "Interrupted Exception");
                         }
                     }
                     if(cruiser != null){
@@ -220,6 +223,7 @@ public class FormDock extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Collection saved successfully");
                             }
                         } catch (Exception exception) {
+                            logger.log(Level.FATAL, "Fatal unexpected error");
                         }
                     }
                     break;
@@ -231,6 +235,9 @@ public class FormDock extends JPanel {
                             if(dockCollection.loadData(file.getAbsolutePath())){
                                 JOptionPane.showMessageDialog(null, "Collection loaded successfully");
                             }
+                        } catch (DockOverflowException dockOverflowException) {
+                            logger.log(Level.WARN, "Dock overflow exception");
+                            JOptionPane.showMessageDialog(null, "Dock overflow", "Waring", JOptionPane.WARNING_MESSAGE);
                         } catch (FileNotFoundException fileNotFoundException) {
                             logger.log(Level.ERROR, "File not found");
                             JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
@@ -246,6 +253,7 @@ public class FormDock extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Dock saved successfully");
                             }
                         } catch (Exception exception) {
+                            logger.log(Level.FATAL, "Fatal unexpected error");
                         }
                     }
                     break;
@@ -257,6 +265,9 @@ public class FormDock extends JPanel {
                             if(dockCollection.loadDataFromDock(file.getAbsolutePath())){
                                 JOptionPane.showMessageDialog(null, "Dock loaded successfully");
                             }
+                        } catch (DockOverflowException dockOverflowException) {
+                            logger.log(Level.WARN, "Dock overflow exception");
+                            JOptionPane.showMessageDialog(null, "Dock overflow", "Waring", JOptionPane.WARNING_MESSAGE);
                         } catch (FileNotFoundException fileNotFoundException) {
                             logger.log(Level.ERROR, "File not found");
                             JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.ERROR_MESSAGE);
