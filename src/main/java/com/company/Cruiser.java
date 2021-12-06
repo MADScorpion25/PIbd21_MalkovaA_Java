@@ -190,8 +190,7 @@ public class Cruiser extends Vehicle {
             return false;
         }
         else {
-            Cruiser cruiserObj = (Cruiser) obj;
-            return equals(cruiserObj);
+            return equals((Cruiser)obj);
         }
     }
 }

@@ -192,32 +192,45 @@ public class WarCruiser extends Cruiser{
         return res+separator+super.toHexString(DopColor)+separator+Locator+separator+HelicopterStation+separator+Artillery+separator+String.valueOf(weaponID)+separator+String.valueOf(weaponCount);
     }
 
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof WarCruiser)) {
+            return false;
+        }
+        else {
+            return equals((WarCruiser)obj);
+        }
+    }
     public boolean equals(WarCruiser other) {
-       if(!super.equals(other)){
-           return false;
-       }
-       else if (HelicopterStation != other.HelicopterStation)
-       {
-           return false;
-       }
-       else if (Artillery != other.Artillery)
-       {
-           return false;
-       }
-       else if (Locator != other.Locator)
-       {
-           return false;
-       }
-       else if (DopColor != other.DopColor)
-       {
-           return false;
-       }
-       else if (weaponID != other.weaponID){
-           return false;
-       }
-       else if (weaponCount != other.weaponCount){
-           return false;
-       }
+        if (MaxSpeed != other.MaxSpeed) {
+            return false;
+        }
+        else if (Weight != other.Weight) {
+            return false;
+        }
+        else if (MainColor != other.MainColor) {
+            return false;
+        }
+        else if (HelicopterStation != other.HelicopterStation) {
+            return false;
+        }
+        else if (Artillery != other.Artillery) {
+            return false;
+        }
+        else if (Locator != other.Locator) {
+            return false;
+        }
+        else if (DopColor != other.DopColor) {
+            return false;
+        }
+        else if (weaponID != other.weaponID){
+            return false;
+        }
+        else if (weaponCount != other.weaponCount){
+            return false;
+        }
        return true;
     }
 }
