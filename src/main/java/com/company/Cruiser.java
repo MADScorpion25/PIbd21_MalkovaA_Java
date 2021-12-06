@@ -162,4 +162,36 @@ public class Cruiser extends Vehicle {
         String res = "#"+Integer.toHexString(color.getRGB()).substring(2);;
         return res;
     }
+
+    public boolean equals(Cruiser other) {
+        if (other == null) {
+            return false;
+        }
+        if(!Cruiser.class.getName().equals(other.getClass().getName())) {
+            return false;
+        }
+        if (MaxSpeed != other.MaxSpeed) {
+            return false;
+        }
+        if (Weight != other.Weight) {
+            return false;
+        }
+        if (MainColor != other.MainColor) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Cruiser)) {
+            return false;
+        }
+        else {
+            Cruiser cruiserObj = (Cruiser) obj;
+            return equals(cruiserObj);
+        }
+    }
 }

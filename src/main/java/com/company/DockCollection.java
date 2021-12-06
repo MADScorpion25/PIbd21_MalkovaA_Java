@@ -81,9 +81,8 @@ public class DockCollection {
         writer.println("DockCollection");
         for(Map.Entry<String, Dock<ITransport, IWeapon>> dock : dockStages.entrySet()){
             writer.println("Dock"+separator+dock.getKey());
-            ArrayList list = dock.getValue().get_places();
-            for(int i = 0; i < list.size(); i++){
-                ITransport cruiser = dock.getValue().indexator(i);
+            List<ITransport> list = dock.getValue().get_places();
+            for(ITransport cruiser : list){
                 if(cruiser.getClass().equals(Cruiser.class)){
                     writer.println("Cruiser"+separator+cruiser.toString());
                 }
@@ -95,7 +94,7 @@ public class DockCollection {
         writer.close();
         return true;
     }
-    public boolean loadData(String filename) throws FileNotFoundException, DockOverflowException {
+    public boolean loadData(String filename) throws FileNotFoundException, DockOverflowException, DockAlreadyHaveException {
         Vehicle cruiser;
         File file = new File(filename);
         if(!file.exists()){
@@ -115,11 +114,7 @@ public class DockCollection {
             else if(line.split(String.valueOf(separator))[0].equals("Cruiser")){
                 cruiser = new Cruiser(line.split(String.valueOf(separator))[1]);
                 boolean result = false;
-                try {
-                    result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
-                } catch (DockOverflowException e) {
-                    e.printStackTrace();
-                }
+                result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
                 if(!result){
                     return false;
                 }
@@ -141,9 +136,8 @@ public class DockCollection {
         File file = new File(filename);
         PrintWriter writer = new PrintWriter(file);
         writer.println("Dock"+separator+dock.getName());
-        ArrayList list = dock.get_places();
-        for(int i = 0; i < list.size(); i++){
-            ITransport cruiser = dock.indexator(i);
+        ArrayList<ITransport> list = dock.get_places();
+        for(ITransport cruiser : list){
             if(cruiser.getClass().equals(Cruiser.class)){
                 writer.println("Cruiser"+separator+((Cruiser)cruiser).toString());
             }
@@ -154,7 +148,7 @@ public class DockCollection {
         writer.close();
         return true;
     }
-    public boolean loadDataFromDock(String filename) throws FileNotFoundException, DockOverflowException {
+    public boolean loadDataFromDock(String filename) throws FileNotFoundException, DockOverflowException, DockAlreadyHaveException {
         Vehicle cruiser;
         File file = new File(filename);
         if(!file.exists()){

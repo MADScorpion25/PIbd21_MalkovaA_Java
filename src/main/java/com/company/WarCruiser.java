@@ -78,6 +78,14 @@ public class WarCruiser extends Cruiser{
         Artillery = artillery;
     }
 
+    public int getWeaponID() {
+        return weaponID;
+    }
+
+    public int getWeaponCount() {
+        return weaponCount;
+    }
+
     public WarCruiser(int maxSpeed, float weight, Color mainColor, Color dopColor,
                       boolean locator, boolean helicopterStation, boolean artillery, int cruiserWidth, int cruiserHeight) {
         super(maxSpeed, weight, mainColor, cruiserWidth, cruiserHeight);
@@ -182,5 +190,34 @@ public class WarCruiser extends Cruiser{
     public String toString() {
         String res = super.toString();
         return res+separator+super.toHexString(DopColor)+separator+Locator+separator+HelicopterStation+separator+Artillery+separator+String.valueOf(weaponID)+separator+String.valueOf(weaponCount);
+    }
+
+    public boolean equals(WarCruiser other) {
+       if(!super.equals(other)){
+           return false;
+       }
+       else if (HelicopterStation != other.HelicopterStation)
+       {
+           return false;
+       }
+       else if (Artillery != other.Artillery)
+       {
+           return false;
+       }
+       else if (Locator != other.Locator)
+       {
+           return false;
+       }
+       else if (DopColor != other.DopColor)
+       {
+           return false;
+       }
+       else if (weaponID != other.weaponID){
+           return false;
+       }
+       else if (weaponCount != other.weaponCount){
+           return false;
+       }
+       return true;
     }
 }
