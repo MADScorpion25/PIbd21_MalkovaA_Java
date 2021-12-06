@@ -181,7 +181,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
         _places.sort((Comparator<? super T>) new CruiserComparer());
     }
 
-    public void info() {
+    public void getInfo() {
         for(ITransport train: _places) {
             System.out.println(train.toString());
         }
