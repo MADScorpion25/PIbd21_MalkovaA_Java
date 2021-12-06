@@ -30,7 +30,6 @@ public class FormDock extends JPanel {
     private JMenu file, fileDock;
     private JMenuItem save, load, saveDock, loadDock;
     private static final Logger logger = Logger.getLogger(FormDock.class);
-
     public FormDock() throws ParseException{
         cruiserWindow = new JFrame();
         cruiserWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
