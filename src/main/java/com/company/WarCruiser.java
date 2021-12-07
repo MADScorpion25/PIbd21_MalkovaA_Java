@@ -1,7 +1,9 @@
 package com.company;
 import java.awt.*;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
-public class WarCruiser extends Cruiser{
+public class WarCruiser extends Cruiser implements Iterator<String> {
     /// <summary>
     /// Дополнительный цвет
     /// </summary>
@@ -21,6 +23,8 @@ public class WarCruiser extends Cruiser{
     IWeapon weapons;
     private int weaponID = -1, weaponCount = 0;
     private boolean Artillery;
+    private int current = -1;
+    private final int specsCounter = 9;
 
     public int getMaxSpeed() {
         return MaxSpeed;
@@ -232,5 +236,47 @@ public class WarCruiser extends Cruiser{
             return false;
         }
        return true;
+    }
+
+    @Override
+    public boolean hasNext() {
+        if(current <= specsCounter - 1){
+            current++;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String next() {
+        if(current == 0){
+            return "Weight: "+Weight;
+        }
+        else if(current == 1){
+            return "MaxSpeed: "+MaxSpeed;
+        }
+        else if(current == 2){
+            return "MainColor: "+MainColor;
+        }
+        else if(current == 3){
+            return "DopColor: "+DopColor;
+        }
+        else if(current == 4){
+            return "isHelicopterStation: "+HelicopterStation;
+        }
+        else if(current == 5){
+            return "isArtillery: "+Artillery;
+        }
+        else if(current == 6){
+            return "isLocator: "+Locator;
+        }
+        else if(current == 7){
+            return "Weapon Id: "+weaponID;
+        }
+        return "Weapon Count: "+weaponCount;
+    }
+    @Override
+    public void remove() {
+        current = -1;
     }
 }

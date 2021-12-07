@@ -4,8 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.function.Consumer;
 
-public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
+public class Dock<T extends ITransport, P extends IWeapon> extends JPanel{
     /// <summary>
     /// Массив объектов, которые храним
     /// </summary>
@@ -36,6 +39,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     private final int _parkPlacesWidth = 6;
     /// <param name="picWidth">Рамзер парковки - ширина</param>
     /// <param name="picHeight">Рамзер парковки - высота</param>
+    private int current = -1;
     private String name;
     public Dock(int picWidth, int picHeight)
     {
@@ -179,12 +183,6 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
 
     public void Sort() {
         _places.sort((Comparator<? super T>) new CruiserComparer());
-    }
-
-    public void getInfo() {
-        for(ITransport train: _places) {
-            System.out.println(train.toString());
-        }
     }
 }
 
