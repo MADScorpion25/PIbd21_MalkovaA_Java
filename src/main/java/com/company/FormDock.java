@@ -160,7 +160,7 @@ public class FormDock extends JPanel {
                         logger.log(Level.WARN, "Dock not found: "+Integer.parseInt(removeIdInput.getText()));
                         JOptionPane.showMessageDialog(null, "Dock not found", "Warning!", JOptionPane.WARNING_MESSAGE);
                     } catch (NumberFormatException numberFormatException) {
-                        logger.log(Level.WARN, "Not correct enter format");
+                        logger.log(Level.ERROR, "Not correct enter format");
                         JOptionPane.showMessageDialog(null, "Not correct enter format", "Warning!", JOptionPane.WARNING_MESSAGE);
                     } catch (Exception exception){
                         logger.log(Level.FATAL, "Fatal unexpected error");
