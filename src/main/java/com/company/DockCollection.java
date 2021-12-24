@@ -179,11 +179,7 @@ public class DockCollection {
             else if(line.split(String.valueOf(separator))[0].equals("WarCruiser")){
                 cruiser = new WarCruiser(line.split(String.valueOf(separator))[1]);
                 boolean result = false;
-                try {
-                    result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
-                } catch (DockOverflowException e) {
-                    e.printStackTrace();
-                }
+                result = dockStages.get(key).Plus(dockStages.get(key), cruiser);
                 if(!result){
                     return false;
                 }
