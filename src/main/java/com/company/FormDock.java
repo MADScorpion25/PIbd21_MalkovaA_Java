@@ -13,10 +13,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
-import java.util.Random;
+import java.util.function.Consumer;
 
 public class FormDock extends JPanel {
-    private JButton createCruiser, removeCruiser, createDock, removeDock, getRemovedCruiser;
+    private JButton createCruiser, removeCruiser, createDock, removeDock, getRemovedCruiser, sortCruisers;
     private JFrame cruiserWindow;
     private JPanel rulePanel;
     private Container elGroup;
@@ -108,8 +108,13 @@ public class FormDock extends JPanel {
 
         removeCruiser = new JButton("Remove Cruiser");
         removeCruiser.setActionCommand("RemoveCruiser");
-        removeCruiser.setBounds(1310, 100, 150, 30);
+        removeCruiser.setBounds(1310, 50, 150, 30);
         rulePanel.add(removeCruiser);
+
+        sortCruisers = new JButton("Sort Cruisers");
+        sortCruisers.setActionCommand("SortCruisers");
+        sortCruisers.setBounds(1310, 90, 150, 30);
+        rulePanel.add(sortCruisers);
 
         JLabel indexLabel = new JLabel("Index: ");
         indexLabel.setBounds(1320, 140, 50, 30);
@@ -133,6 +138,7 @@ public class FormDock extends JPanel {
         load.addActionListener(actionListener);
         saveDock.addActionListener(actionListener);
         loadDock.addActionListener(actionListener);
+        sortCruisers.addActionListener(actionListener);
         cruiserWindow.setVisible(true);
         super.repaint();
     }
@@ -278,6 +284,10 @@ public class FormDock extends JPanel {
                         }
                     }
                     break;
+                case "SortCruisers":
+                    if(dock != null) dock.Sort();
+                    Draw();
+                    break;
             }
         }
     }
@@ -289,6 +299,9 @@ public class FormDock extends JPanel {
             } catch (DockOverflowException dockOverflowException) {
                 logger.log(Level.WARN, "Dock overflow exception");
                 JOptionPane.showMessageDialog(null, "Dock is full", "Warning", JOptionPane.WARNING_MESSAGE);
+            } catch (DockAlreadyHaveException e) {
+                logger.log(Level.WARN, "Cruiser is already exists");
+                JOptionPane.showMessageDialog(null, "Cruiser is already exists", "Warning", JOptionPane.WARNING_MESSAGE);
             } catch (NullPointerException nullPointerException) {
                 logger.log(Level.ERROR, "Dock is not created or chosen");
                 JOptionPane.showMessageDialog(null, "Dock is not created or chosen", "Error", JOptionPane.ERROR_MESSAGE);

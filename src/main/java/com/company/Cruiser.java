@@ -1,8 +1,10 @@
 package com.company;
 import java.awt.*;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.function.Consumer;
 
-public class Cruiser extends Vehicle {
+public class Cruiser extends Vehicle implements Iterator<String> {
     Random rnd = new Random();
     /// <summary>
     /// Ширина отрисовки крейсера
@@ -24,10 +26,8 @@ public class Cruiser extends Vehicle {
     /// Основной цвет кузова
     /// </summary>
     public Color MainColor;
-    /// <summary>
-    /// Дополнительный цвет
-    /// </summary>
-    public Color DopColor;
+    private int current = -1;
+    private final int specsCounter = 3;
     protected final char separator = ';';
 
     public int getMaxSpeed() {
@@ -52,10 +52,6 @@ public class Cruiser extends Vehicle {
 
     public void setMainColor(Color mainColor) {
         MainColor = mainColor;
-    }
-
-    public Color getDopColor() {
-        return DopColor;
     }
 
     public int getCruiserWidth() {
@@ -161,5 +157,63 @@ public class Cruiser extends Vehicle {
     public String toHexString(Color color) {
         String res = "#"+Integer.toHexString(color.getRGB()).substring(2);;
         return res;
+    }
+
+    public boolean equals(Cruiser other) {
+        if (other == null) {
+            return false;
+        }
+        if(!Cruiser.class.getName().equals(other.getClass().getName())) {
+            return false;
+        }
+        if (MaxSpeed != other.MaxSpeed) {
+            return false;
+        }
+        if (Weight != other.Weight) {
+            return false;
+        }
+        if (MainColor != other.MainColor) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Cruiser)) {
+            return false;
+        }
+        else {
+            return equals((Cruiser)obj);
+        }
+    }
+
+    @Override
+    public boolean hasNext() {
+        if(current <= specsCounter - 1){
+            current++;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String next() {
+        if(current == 0){
+            return "Weight: "+ Weight;
+        }
+        else if(current == 1){
+            return "MaxSpeed: "+MaxSpeed;
+        }
+        else{
+            return "MainColor: "+MainColor;
+        }
+    }
+
+    @Override
+    public void remove() {
+        current = -1;
     }
 }

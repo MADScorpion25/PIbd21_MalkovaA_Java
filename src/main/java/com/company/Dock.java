@@ -3,8 +3,12 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.function.Consumer;
 
-public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
+public class Dock<T extends ITransport, P extends IWeapon> extends JPanel{
     /// <summary>
     /// Массив объектов, которые храним
     /// </summary>
@@ -35,6 +39,7 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     private final int _parkPlacesWidth = 6;
     /// <param name="picWidth">Рамзер парковки - ширина</param>
     /// <param name="picHeight">Рамзер парковки - высота</param>
+    private int current = -1;
     private String name;
     public Dock(int picWidth, int picHeight)
     {
@@ -51,11 +56,14 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     /// <param name="p">Парковка</param>
     /// <param name="cruiser">Добавляемый крейсер</param>
     /// <returns></returns>
-    public boolean Plus(Dock<T, P> p, T cruiser) throws DockOverflowException {
+    public boolean Plus(Dock<T, P> p, T cruiser) throws DockOverflowException, DockAlreadyHaveException {
         if (p._maxCount <= p._places.size()) {
             throw new DockOverflowException();
         }
-        p._places.add(cruiser);
+        if (_places.contains(cruiser)){
+            throw new DockAlreadyHaveException();
+        }
+        else p._places.add(cruiser);
         return true;
     }
     /// <summary>
@@ -160,6 +168,21 @@ public class Dock<T extends ITransport, P extends IWeapon> extends JPanel {
     }
     public T indexator(int index){
         return _places.get(index);
+    }
+    public T GetNext(int index) {
+        if (index < 0 || index >= _places.size())
+        {
+            return null;
+        }
+        return _places.get(index);
+    }
+
+    public void myClear() {
+        _places.clear();
+    }
+
+    public void Sort() {
+        _places.sort((Comparator<? super T>) new CruiserComparer());
     }
 }
 

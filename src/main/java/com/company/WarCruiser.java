@@ -1,7 +1,9 @@
 package com.company;
 import java.awt.*;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
-public class WarCruiser extends Cruiser{
+public class WarCruiser extends Cruiser implements Iterator<String> {
     /// <summary>
     /// Дополнительный цвет
     /// </summary>
@@ -21,6 +23,8 @@ public class WarCruiser extends Cruiser{
     IWeapon weapons;
     private int weaponID = -1, weaponCount = 0;
     private boolean Artillery;
+    private int current = -1;
+    private final int specsCounter = 9;
 
     public int getMaxSpeed() {
         return MaxSpeed;
@@ -76,6 +80,14 @@ public class WarCruiser extends Cruiser{
 
     private void setArtillery(boolean artillery) {
         Artillery = artillery;
+    }
+
+    public int getWeaponID() {
+        return weaponID;
+    }
+
+    public int getWeaponCount() {
+        return weaponCount;
     }
 
     public WarCruiser(int maxSpeed, float weight, Color mainColor, Color dopColor,
@@ -182,5 +194,89 @@ public class WarCruiser extends Cruiser{
     public String toString() {
         String res = super.toString();
         return res+separator+super.toHexString(DopColor)+separator+Locator+separator+HelicopterStation+separator+Artillery+separator+String.valueOf(weaponID)+separator+String.valueOf(weaponCount);
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof WarCruiser)) {
+            return false;
+        }
+        else {
+            return equals((WarCruiser)obj);
+        }
+    }
+    public boolean equals(WarCruiser other) {
+        if (MaxSpeed != other.MaxSpeed) {
+            return false;
+        }
+        else if (Weight != other.Weight) {
+            return false;
+        }
+        else if (MainColor != other.MainColor) {
+            return false;
+        }
+        else if (HelicopterStation != other.HelicopterStation) {
+            return false;
+        }
+        else if (Artillery != other.Artillery) {
+            return false;
+        }
+        else if (Locator != other.Locator) {
+            return false;
+        }
+        else if (DopColor != other.DopColor) {
+            return false;
+        }
+        else if (weaponID != other.weaponID){
+            return false;
+        }
+        else if (weaponCount != other.weaponCount){
+            return false;
+        }
+       return true;
+    }
+
+    @Override
+    public boolean hasNext() {
+        if(current <= specsCounter - 1){
+            current++;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String next() {
+        if(current == 0){
+            return "Weight: "+Weight;
+        }
+        else if(current == 1){
+            return "MaxSpeed: "+MaxSpeed;
+        }
+        else if(current == 2){
+            return "MainColor: "+MainColor;
+        }
+        else if(current == 3){
+            return "DopColor: "+DopColor;
+        }
+        else if(current == 4){
+            return "isHelicopterStation: "+HelicopterStation;
+        }
+        else if(current == 5){
+            return "isArtillery: "+Artillery;
+        }
+        else if(current == 6){
+            return "isLocator: "+Locator;
+        }
+        else if(current == 7){
+            return "Weapon Id: "+weaponID;
+        }
+        return "Weapon Count: "+weaponCount;
+    }
+    @Override
+    public void remove() {
+        current = -1;
     }
 }
